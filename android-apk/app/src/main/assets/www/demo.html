@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#060e18">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="山脊信使">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<title>山脊信使 · 应急通信指挥台</title>
+<style>
+  :root{
+    --bg:#060e18;
+    --bg2:#081523;
+    --panel:rgba(12,29,46,.72);
+    --line:rgba(126,183,224,.16);
+    --line2:rgba(126,183,224,.28);
+    --text:#e9f5ff;
+    --muted:#8ea9c2;
+    --teal:#2ee6c5;
+    --teal2:#18b9a7;
+    --orange:#ff8a3d;
+    --red:#ff566a;
+    --blue:#4aa8ff;
+    --violet:#a78bfa;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;overflow:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .bg-grid{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(80,150,190,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(80,150,190,.05) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse at 50% 20%,#000 0%,transparent 78%);
+  }
+  .glow{position:fixed;pointer-events:none;border-radius:50%;filter:blur(100px);z-index:0}
+  .glow.a{width:520px;height:520px;background:rgba(46,230,197,.13);top:-180px;right:-140px}
+  .glow.b{width:460px;height:460px;background:rgba(74,168,255,.09);top:620px;left:-200px}
+
+  .top{
+    height:60px;position:relative;z-index:20;display:flex;align-items:center;gap:18px;
+    padding:0 18px;border-bottom:1px solid var(--line);
+    background:rgba(6,14,24,.92);backdrop-filter:blur(18px);
+  }
+  .top .brand{display:flex;align-items:center;gap:11px}
+  .top .brand-mark{width:34px;height:34px;border-radius:10px;position:relative;flex:none;
+    background:linear-gradient(145deg,rgba(46,230,197,.18),rgba(74,168,255,.12));
+    border:1px solid rgba(46,230,197,.45);display:grid;place-items:center}
+  .top .brand-mark svg{width:20px;height:20px;stroke:var(--teal);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .top .brand-t b{display:block;font-size:14px;letter-spacing:2px}
+  .top .brand-t span{display:block;font-size:9px;letter-spacing:2px;color:var(--muted);font-weight:500}
+  .top-mid{display:flex;gap:8px}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .tag{
+    display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;
+    border:1px solid var(--line2);background:rgba(10,24,38,.55);color:var(--muted);
+    font-size:11px;letter-spacing:.5px;white-space:nowrap;
+  }
+  .tag i{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+  .tag.warn{color:#ffc9a3;background:rgba(255,138,61,.08);border-color:rgba(255,138,61,.3)}
+  .tag.warn i{background:var(--orange);box-shadow:0 0 10px var(--orange)}
+  .clock{font-size:13px;color:var(--text);letter-spacing:1px;font-variant-numeric:tabular-nums}
+  .fast{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);letter-spacing:1px;cursor:pointer}
+  .fast input{accent-color:var(--teal)}
+
+  .stage{
+    position:relative;z-index:1;height:calc(100vh - 60px);
+    display:grid;grid-template-columns:288px minmax(0,1fr) 330px;
+    grid-template-rows:minmax(0,1fr) 232px;gap:12px;padding:12px;
+  }
+  .panel{
+    background:linear-gradient(165deg,rgba(16,36,56,.72),rgba(8,20,33,.72));
+    border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;
+    min-height:0;min-width:0;overflow:hidden;
+  }
+  .ph{
+    height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:0 14px;border-bottom:1px solid var(--line);
+  }
+  .ph span{font-size:12px;letter-spacing:2px;color:#a9c8df;font-weight:700}
+  .ph-r{font-size:11px;color:var(--muted);letter-spacing:1px}
+  .ph-r.ok{color:var(--teal)}
+  .ph.sub{border-top:1px solid rgba(126,183,224,.08);border-bottom:none}
+  .left{grid-row:1/3;grid-column:1}
+  .map-panel{grid-row:1;grid-column:2}
+  .right{grid-row:1;grid-column:3}
+  .bottom{grid-row:2;grid-column:2/4}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;
+    font-size:12.5px;font-weight:700;letter-spacing:.5px;transition:transform .2s,box-shadow .2s,border-color .2s;
+    border:1px solid transparent;cursor:pointer;font-family:inherit;color:var(--text);
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn.primary{background:linear-gradient(135deg,var(--teal),#16c4bb);color:#02110f;box-shadow:0 8px 24px rgba(46,230,197,.22)}
+  .btn.ghost{border:1px solid var(--line2);background:rgba(10,24,38,.55);color:var(--text)}
+  .btn.sm{padding:8px 14px;font-size:12px}
+  .btn.xs{padding:5px 10px;font-size:11px;border-radius:8px}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .mini{font-size:10px;color:var(--muted);letter-spacing:1px}
+
+  .left{grid-row:1/3}
+  .left-scroll{flex:1;overflow-y:auto;padding:14px 14px 18px;display:flex;flex-direction:column;gap:16px;min-height:0}
+  .scn-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .scn{
+    display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:11px 12px;border-radius:11px;
+    border:1px solid var(--line);background:rgba(9,22,35,.6);color:var(--text);cursor:pointer;font-family:inherit;
+    transition:border-color .2s,background .2s;text-align:left;
+  }
+  .scn:hover{border-color:rgba(46,230,197,.4)}
+  .scn.active{border-color:rgba(46,230,197,.65);background:rgba(46,230,197,.08)}
+  .scn .s-ico{width:26px;height:26px;color:var(--teal)}
+  .scn b{font-size:12.5px;letter-spacing:1px}
+  .scn span{font-size:10px;color:var(--muted);letter-spacing:.5px}
+  .block-h{font-size:11px;letter-spacing:2px;color:#a9c8df;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+  .block-h::after{content:"";flex:1;height:1px;background:var(--line);margin-left:12px}
+  .evt{border:1px solid var(--line);border-radius:11px;padding:12px;background:rgba(7,17,28,.6)}
+  .evt h4{margin:0 0 6px;font-size:14px;letter-spacing:1px}
+  .evt p{margin:0;color:var(--muted);font-size:12px;line-height:1.85}
+  .evt .meta{display:flex;flex-direction:column;gap:4px;margin-top:10px;border-top:1px dashed var(--line);padding-top:9px}
+  .evt .meta i{font-style:normal;font-size:11px;color:#7fe8d9;letter-spacing:.5px}
+  .vlist{display:flex;flex-direction:column;gap:6px}
+  .vrow{
+    display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:center;width:100%;text-align:left;
+    padding:8px 9px;border-radius:9px;border:1px solid transparent;background:rgba(9,22,35,.5);
+    color:var(--text);cursor:pointer;font-family:inherit;font-size:12px;
+  }
+  .vrow:hover{border-color:var(--line2)}
+  .vrow.sel{border-color:rgba(46,230,197,.5);background:rgba(46,230,197,.07)}
+  .vrow.dim{opacity:.55}
+  .vdot{width:8px;height:8px;border-radius:50%}
+  .vdot.s0{background:#2ee6c5}.vdot.s1{background:#ff8a3d}.vdot.s2{background:#ff566a}
+  .vrow .vname{font-size:12px;letter-spacing:.5px}
+  .vrow .vpop{font-size:10px;color:var(--muted);margin-top:2px}
+  .vstat{font-size:10px;letter-spacing:.5px;padding:3px 7px;border-radius:5px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+  .vstat.i2{color:#ffb3c0;background:rgba(255,86,106,.1);border-color:rgba(255,86,106,.35)}
+  .vstat.i1{color:#ffd9b3;background:rgba(255,138,61,.1);border-color:rgba(255,138,61,.35)}
+  .vstat.i0{color:#9fe8da;background:rgba(46,230,197,.08);border-color:rgba(46,230,197,.3)}
+  .vprio{font-size:10px;font-weight:800;color:var(--teal);border:1px solid rgba(46,230,197,.4);border-radius:5px;padding:2px 6px}
+  .vdet{border-top:1px dashed var(--line);margin-top:2px;padding-top:8px;font-size:11px;color:var(--muted);line-height:1.8}
+  .vdet b{color:#cfe6f6;font-weight:600}
+  .res{display:flex;flex-wrap:wrap;gap:6px}
+  .reschip{font-size:10.5px;color:#cfe6f6;border:1px solid var(--line2);background:rgba(255,255,255,.03);padding:4px 8px;border-radius:6px;letter-spacing:.5px}
+
+  .map-panel{display:flex;flex-direction:column}
+  .kpis{display:flex;gap:6px}
+  .kpi{flex:1;min-width:0;border-left:1px solid var(--line2);padding-left:8px}
+  .kpi:first-child{padding-left:0;border-left:none}
+  .kpi span{display:block;font-size:9.5px;color:var(--muted);letter-spacing:1px}
+  .kpi b{font-size:16px;color:var(--teal);font-variant-numeric:tabular-nums;letter-spacing:.5px}
+  .map-stage{position:relative;flex:1;min-height:0;background:#071522;overflow:hidden}
+  #terrain{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+  #mapSvg{position:absolute;inset:0;width:100%;height:100%}
+  #mapSvg .ct{fill:none;stroke:rgba(140,205,230,.16);stroke-width:1}
+  #mapSvg .ct.hot{stroke:rgba(46,230,197,.22)}
+  #mapSvg .riv{stroke:rgba(74,168,255,.35);stroke-width:2;fill:none;stroke-dasharray:1 6}
+  #mapSvg .lnk{fill:none;stroke-width:2;stroke-dasharray:7 6;animation:flow 1.1s linear infinite}
+  #mapSvg .lnk.micro{stroke:#4aa8ff;stroke-dasharray:2 6}
+  #mapSvg .lnk.relay{stroke:#2ee6c5}
+  #mapSvg .lnk.sat{stroke:#a78bfa;stroke-dasharray:3 5}
+  #mapSvg .lnk.pdt{stroke:#ff8a3d;stroke-dasharray:5 4}
+  #mapSvg .lnk.beidou{stroke:#8ea9c2;stroke-dasharray:1 5;stroke-linecap:round}
+  @keyframes flow{to{stroke-dashoffset:-28}}
+  .stn .ico{fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .stn .cov{fill:rgba(46,230,197,.05);stroke:rgba(46,230,197,.16);stroke-width:1.5;stroke-dasharray:3 3}
+  .stn.down .ico{stroke:#ff566a}
+  .stn.down .cov{fill:rgba(255,86,106,.06);stroke:rgba(255,86,106,.4);stroke-dasharray:4 4}
+  .stn .halo{fill:rgba(46,230,197,.18)}
+  .stn .halo.down{fill:rgba(255,86,106,.18)}
+  .stn .lb{fill:#cfe6f6;font-size:11px;font-weight:700;font-family:inherit;letter-spacing:1px}
+  .stn .lb2{fill:var(--muted);font-size:9.5px;font-family:inherit}
+  .stn.down .lb,.stn.down .lb2{fill:#ffb3c0}
+  .cp-ico{fill:#eafcff;stroke:1.6}
+  .vnode circle.dot{fill:#0b1a28;stroke-width:2}
+  .vnode .vdoti{width:10px;height:10px;border-radius:50%;fill:#0b1a28;stroke-width:2}
+  .vnode.s2 .vdoti{fill:var(--red);stroke:#ffb3c0}
+  .vnode.s1 .vdoti{fill:var(--orange);stroke:#ffd9b3}
+  .vnode.s0 .vdoti{fill:var(--teal);stroke:#9fe8da}
+  .vnode .prio{fill:var(--teal);stroke:#06281f}
+  .vnode.vsel circle.dot,.vnode.vsel circle.pulse{stroke:var(--teal);stroke-width:2.4}
+  .vnode.vsel .vdoti{fill:var(--teal)}
+  .droid-pulse{fill:none;stroke:var(--teal);stroke-width:1.6;stroke-dasharray:3 4;animation:spin 2.4s linear infinite}
+  @keyframes spin{to{stroke-dashoffset:-20}}
+  .sat-ico{fill:#17102e;stroke:#a78bfa;stroke-width:1.6}
+  .map-hint{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50);text-align:center;
+    color:var(--muted);font-size:12.5px;letter-spacing:2px;line-height:2.6;pointer-events:none;display:none;
+  }
+  .map-hint.show{display:block}
+  .map-hint b{color:var(--teal)}
+  .legend{
+    position:absolute;left:12px;bottom:34px;display:flex;gap:14px;flex-wrap:wrap;
+    padding:8px 12px;border-radius:9px;border:1px solid var(--line);background:rgba(6,14,24,.66);
+    backdrop-filter:blur(8px);font-size:10.5px;color:var(--muted);letter-spacing:.5px;
+  }
+  .legend b{color:var(--text);font-weight:600}
+  .map-prog{position:absolute;left:0;right:0;bottom:0;padding:10px 14px 12px;background:linear-gradient(transparent,rgba(6,14,24,.92))}
+  .stages{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+  .stage-p{font-size:10px;letter-spacing:1.5px;color:#547593;padding:3px 9px;border-radius:999px;border:1px solid var(--line);transition:all .3s;white-space:nowrap}
+  .stage-p.on{color:#03110f;background:var(--teal);border-color:var(--teal);font-weight:700}
+  .stage-p.do{color:#9fe8da;background:rgba(46,230,197,.1);border-color:rgba(46,230,197,.4)}
+  .bar{height:3px;border-radius:3px;background:rgba(126,183,224,.14);overflow:hidden}
+  .bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--teal),#19c7c0);border-radius:3px;transition:width .5s}
+
+  .right{flex:1;min-height:0}
+  .agents{flex:1;overflow-y:auto;padding:12px 12px 4px;display:flex;flex-direction:column;gap:9px;min-height:0}
+  .agent{
+    border:1px solid var(--line);border-radius:11px;padding:10px 11px;background:rgba(9,22,35,.55);
+    transition:all .3s;
+  }
+  .agent.running{border-color:rgba(46,230,197,.55);background:rgba(46,230,197,.05)}
+  .agent.done{border-color:rgba(46,230,197,.35)}
+  .agent .a-top{display:flex;align-items:center;gap:8px}
+  .agent .a-idx{font-size:10px;color:var(--teal);font-weight:800;border:1px solid rgba(46,230,197,.4);border-radius:5px;padding:1px 5px}
+  .agent b{font-size:12px;letter-spacing:1px;flex:1}
+  .agent .a-st{font-size:9.5px;color:var(--orange);letter-spacing:1px}
+  .agent.done .a-st{color:var(--teal)}
+  .agent .a-desc{font-size:10px;color:var(--muted);margin:5px 0 7px;letter-spacing:.5px}
+  .agent .a-bar{height:3px;border-radius:3px;background:rgba(126,183,224,.12);overflow:hidden}
+  .agent .a-bar i{display:block;height:100%;width:0%;background:var(--teal);border-radius:3px;transition:width .4s}
+  .agent.done .a-bar i{width:100%}
+  .agent .a-out{margin-top:7px;font-size:10.5px;color:#cfe6f6;line-height:1.6;border-top:1px dashed var(--line);padding-top:7px;min-height:44px}
+  .log{flex:1;min-height:0;overflow-y:auto;padding:8px 12px 12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+  .ln{display:flex;gap:8px;font-size:11px;line-height:1.75;animation:slidein .25s}
+  @keyframes slidein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .ln .lt{color:#547593;font-variant-numeric:tabular-nums;flex:none}
+  .ln .lw{flex:none;color:var(--teal);letter-spacing:.5px;min-width:62px;font-weight:700}
+  .ln .lm{color:var(--muted);word-break:break-all}
+  .ln.sys .lw{color:#8ea9c2}
+  .ln.ok .lm{color:#b9f8ee}
+
+  .bottom{display:flex;flex-direction:column;min-height:0}
+  .tabs{display:flex;align-items:center;gap:4px;padding:8px 12px 0;border-bottom:1px solid var(--line);flex:none;flex-wrap:wrap}
+  .tab{
+    padding:7px 13px;border:1px solid transparent;border-bottom:none;border-radius:9px 9px 0 0;
+    background:transparent;color:var(--muted);font-size:12px;letter-spacing:1px;cursor:pointer;font-family:inherit;
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{background:var(--bg2);border-color:var(--line);color:var(--teal);position:relative;top:1px}
+  .tab-body{flex:1;min-height:0;overflow:hidden;position:relative;display:flex}
+  .tab-pane{display:none;flex:1;flex-direction:column;min-height:0;overflow:hidden}
+  .tab-pane.active{display:flex}
+  .pane-h{
+    flex:none;height:40px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:0 14px;border-bottom:1px solid var(--line);
+  }
+  .pane-h span{font-size:11px;letter-spacing:2px;color:#a9c8df;font-weight:700}
+  .pane-body{flex:1;overflow:auto;padding:12px 14px;min-height:0}
+  .empty{font-size:12px;color:var(--muted);letter-spacing:1px;padding:34px 10px;text-align:center;line-height:2.6}
+
+  .tbl{width:100%;border-collapse:collapse;font-size:11.5px}
+  .tbl th{
+    text-align:left;color:var(--muted);font-weight:500;font-size:10px;letter-spacing:1.5px;
+    padding:7px 9px;border-bottom:1px solid var(--line2);position:sticky;top:0;background:#0a1726;z-index:2;white-space:nowrap;
+  }
+  .tbl td{padding:8px 9px;border-bottom:1px solid rgba(126,183,224,.08);color:#cfe6f6;vertical-align:top;line-height:1.7}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+  .chip{display:inline-block;padding:2px 7px;border-radius:5px;font-size:10px;letter-spacing:.5px;border:1px solid var(--line2);white-space:nowrap}
+  .chip.micro{color:#8fc4ff;border-color:rgba(74,168,255,.4);background:rgba(74,168,255,.08)}
+  .chip.relay{color:#9fe8da;border-color:rgba(46,230,197,.4);background:rgba(46,230,197,.07)}
+  .chip.sat{color:#cbb6fa;border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.08)}
+  .chip.pdt{color:#ffd9b3;border-color:rgba(255,138,61,.4);background:rgba(255,138,61,.07)}
+  .chip.beidou{color:#b8c8da;border-color:rgba(142,169,194,.35);background:rgba(142,169,194,.06)}
+  .ok{color:var(--teal)}
+  .warn2{color:#ffd9b3}
+  .bad{color:#ffb3c0}
+
+  .task-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:760px){.task-grid{grid-template-columns:1fr}}
+  .task{border:1px solid var(--line);border-radius:11px;padding:12px;background:rgba(9,22,35,.55);position:relative;overflow:hidden}
+  .task::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--teal)}
+  .task .t-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .task .t-h b{font-size:12.5px;letter-spacing:1px}
+  .task .t-eta{font-size:10px;color:var(--teal);font-variant-numeric:tabular-nums;letter-spacing:1px}
+  .task .t-k{font-size:9px;color:var(--muted);letter-spacing:2px;border:1px solid var(--line);padding:2px 7px;border-radius:999px}
+  .task p{margin:7px 0 0;font-size:11px;color:var(--muted);line-height:1.8}
+  .task .t-r{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .task .t-r span{font-size:10px;color:#cfe6f6;border:1px dashed var(--line2);padding:3px 7px;border-radius:6px}
+
+  .beidou-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:900px){.beidou-grid{grid-template-columns:1fr}}
+  .beo{border:1px solid var(--line);border-radius:11px;background:rgba(7,17,28,.6);padding:14px;}
+  .beo h4{margin:0 0 8px;font-size:12px;letter-spacing:2px;color:#a9c8df}
+  .beo pre{margin:0;white-space:pre-wrap;font-family:inherit;font-size:12px;color:#cfe6f6;line-height:2}
+  .beo .orig{color:var(--muted)}
+  .beo .cmp{margin-top:9px;display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted)}
+  .meter{height:8px;border-radius:6px;background:rgba(126,183,224,.12);overflow:hidden;position:relative}
+  .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--red));border-radius:6px;transition:width .4s}
+  .meter b{font-size:12px;color:var(--red);font-variant-numeric:tabular-nums}
+
+  .rpt{background:linear-gradient(165deg,rgba(16,36,56,.7),rgba(8,20,33,.7));border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:12px;color:#cfe6f6;line-height:2}
+  .rpt h3{margin:14px 0 8px;font-size:14px;color:var(--teal);letter-spacing:2px}
+  .rpt h3:first-child{margin-top:0}
+  .rpt p{margin:6px 0}
+  .rpt pre{background:rgba(5,12,20,.8);border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-family:inherit;font-size:11.5px;line-height:1.9;color:#9fe8da;white-space:pre-wrap}
+
+  @media(max-width:1180px){
+    .stage{grid-template-columns:264px minmax(0,1fr) 300px}
+  }
+  @media(max-width:1000px){
+    body{overflow:auto}
+    .stage{height:auto;grid-template-columns:1fr;grid-template-rows:none}
+    .left,.map-panel,.right,.bottom{grid-column:1;grid-row:auto}
+    .bottom{grid-row:auto;min-height:420px}
+    .top-mid{display:none}
+    .map-stage{min-height:420px}
+  }
+  /* ---------- 手机版布局：单列堆叠 ---------- */
+  @media(max-width:860px){
+    body{overflow:auto;background:#060e18}
+    .top{height:auto !important;min-height:56px;flex-wrap:wrap !important;row-gap:6px !important;padding:8px 12px !important}
+    .top-mid{display:none !important}
+    .top-right{gap:8px}
+    .stage{height:auto !important;min-height:0 !important;grid-template-columns:1fr !important;grid-template-rows:none !important;gap:10px !important;padding:10px !important}
+    .left,.map-panel,.right,.bottom{grid-row:auto !important;grid-column:auto !important;min-height:0 !important;height:auto !important}
+    .left{height:320px !important;min-height:260px !important}
+    .map-panel{height:auto !important;min-height:0 !important}
+    .map-stage{min-height:360px !important}
+    .right{height:400px !important;min-height:350px !important}
+    .bottom{height:450px !important;min-height:400px !important}
+    .left-scroll{height:280px !important}
+    .agents{min-height:160px}
+    .log{min-height:90px}
+    .kpi b{font-size:13px}
+    .kpi span{font-size:9px}
+    .btn{min-height:40px !important;padding:10px 14px !important}
+    .tab-r{margin-left:4px}
+    .tabs{flex-wrap:nowrap !important;overflow-x:auto !important;scrollbar-width:none;gap:6px !important}
+    .tab{flex:0 0 auto;white-space:nowrap}
+    .tab-r{flex:0 0 auto}
+    *{-webkit-tap-highlight-color:rgba(46,230,197,.25)}
+    .btn,.tab,.scn,.vrow,.fast{-webkit-tap-highlight-color:rgba(46,230,197,.25);touch-action:manipulation}
+    .left-scroll,.agents,.log,.pane-body,.tabs{-webkit-overflow-scrolling:touch}
+    .left-scroll,.agents,.log,.pane-body{overscroll-behavior:contain}
+    .top a.tag{min-height:34px;display:inline-flex;align-items:center;padding:6px 11px}
+    .fast{min-height:34px;display:inline-flex;align-items:center;padding:4px 6px}
+    .tab{min-height:42px}
+    .stage{padding-bottom:calc(10px + env(safe-area-inset-bottom)) !important}
+  }
+  @media(max-width:480px){
+    .top .clock{display:none}
+    .top .fast{font-size:10px}
+    .stage{padding:6px !important;gap:8px !important}
+    .left{height:280px !important;min-height:240px !important}
+    .map-panel{height:auto !important;min-height:0 !important}
+    .map-stage{min-height:320px !important}
+    .right{height:360px !important;min-height:320px !important}
+    .bottom{height:420px !important;min-height:380px !important}
+    .left-scroll{height:240px !important}
+    .ph{height:42px !important}
+    .btn{font-size:11.5px !important}
+    .kpi b{font-size:12px !important}
+  }
+  /* ---------- 横屏：地图优先，压缩竖向信息密度 ---------- */
+  @media(max-height:560px) and (orientation:landscape){
+    body{overflow:auto}
+    .stage{height:auto !important;min-height:0 !important;grid-template-columns:1fr !important;grid-template-rows:none !important;gap:8px !important;padding:8px !important}
+    .left,.map-panel,.right,.bottom{grid-row:auto !important;grid-column:auto !important;min-height:0 !important;height:auto !important}
+    .left{height:200px !important;min-height:180px !important}
+    .map-panel{height:auto !important;min-height:0 !important}
+    .map-stage{min-height:300px !important}
+    .right{height:200px !important;min-height:190px !important}
+    .bottom{height:280px !important;min-height:260px !important}
+    .left-scroll{height:170px !important}
+    .agents{min-height:110px}
+    .log{min-height:70px}
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow a"></div>
+<div class="glow b"></div>
+
+<header class="top">
+  <a class="brand" href="index.html">
+    <div class="brand-mark"><svg viewBox="0 0 24 24"><path d="M4 20V10M9 20V6M14 20v-8M19 20V4"/></svg></div>
+    <div class="brand-t"><b>山脊信使</b><span>RIDGELINK · 应急指挥台</span></div>
+  </a>
+  <a class="tag" href="scene.html" title="2024·6·29 㵲阳河洪灾实景推演">真实场景 · 6·29</a>
+  <div class="top-mid">
+    <span class="tag"><i></i>离线边缘模式</span>
+    <span class="tag">仿真推演</span>
+  </div>
+  <div class="top-right">
+    <span class="tag warn" id="topAlert">3 个基站退服</span>
+    <span class="clock" id="clock">03:40</span>
+    <label class="fast"><input type="checkbox" id="fastChk"> 快速</label>
+    <button class="btn ghost sm" id="btnReset" type="button">重置</button>
+    <button class="btn primary sm" id="btnRun" type="button">
+      <svg viewBox="0 0 24 24"><path d="M6 3l14 9-14 9V3z"/></svg>
+      <span>启动推演</span>
+    </button>
+  </div>
+</header>
+
+<main class="stage">
+  <aside class="panel left" id="leftPanel">
+    <div class="ph"><span>推演场景</span><span class="ph-r" id="sceneCode">FLOOD-0721</span></div>
+    <div class="left-scroll">
+      <div class="scn-grid" id="scnGrid"></div>
+      <div class="block">
+        <div class="block-h">事件摘要</div>
+        <div class="evt" id="evt"><h4 id="evtTitle">—</h4><p id="evtDesc">—</p>
+          <div class="meta" id="evtMeta"><i>——</i></div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-h">受影响村寨 <span class="mini" id="affCount"></span></div>
+        <div class="vlist" id="vlist"></div>
+        <div class="vdet" id="vdet">—</div>
+      </div>
+      <div class="block">
+        <div class="block-h">可调度资源</div>
+        <div class="res" id="res"></div>
+      </div>
+    </div>
+  </aside>
+
+  <section class="panel map-panel">
+    <div class="ph">
+      <span>灾情通信一张图</span>
+      <div class="kpis" id="kpis">
+        <div class="kpi"><span>失联村寨</span><b id="k1">0</b></div>
+        <div class="kpi"><span>影响人口</span><b id="k2">0</b></div>
+        <div class="kpi"><span>已规划</span><b id="k3">—</b></div>
+        <div class="kpi"><span>平均到达</span><b id="k4">—</b></div>
+      </div>
+    </div>
+    <div class="map-stage">
+      <canvas id="terrain" width="480" height="300"></canvas>
+      <svg id="mapSvg" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0a1726"/><stop offset="1" stop-color="#071522"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="960" height="600" fill="url(#lg)"/>
+        <g id="gContour"></g>
+        <g id="gRiver"></g>
+        <g id="gGrid"></g>
+        <g id="gZone"></g>
+        <g id="gRoad"></g>
+        <g id="gCover"></g>
+        <g id="gLink"></g>
+        <g id="gNode"></g>
+        <g id="gSat"></g>
+      </svg>
+      <div class="map-hint" id="mapHint">点击右上角「启动推演」<br>体验五智能体协同作战</div>
+      <div class="legend" id="legend"></div>
+      <div class="map-prog">
+        <div class="stages" id="stages"></div>
+        <div class="bar"><i id="barFill"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel right" id="rightPanel">
+    <div class="ph"><span>智能体协同</span><span class="ph-r" id="agentState">待命</span></div>
+    <div class="agents" id="agents"></div>
+    <div class="ph sub"><span>协同日志</span><span class="ph-r ok" id="logState">IDLE</span></div>
+    <div class="log" id="log"></div>
+  </aside>
+
+  <section class="panel bottom" id="bottomPanel">
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="assess">态势研判</button>
+      <button class="tab" data-tab="link">链路方案</button>
+      <button class="tab" data-tab="dispatch">资源调度</button>
+      <button class="tab" data-tab="beidou">北斗报文</button>
+      <button class="tab" data-tab="report">复盘报告</button>
+      <div class="tab-r">
+        <span class="mini" id="runClockLabel">待机</span>
+      </div>
+    </div>
+    <div class="tab-body" id="tabBody">
+      <div class="tab-pane" id="pane-assess">
+        <div class="pane-h"><span>影响评估 · 保障优先级</span></div>
+        <div class="pane-body"><div class="empty">点击「启动推演」<br>启动感知 → 研判 → 规划 → 调度 → 复盘闭环</div><div id="assessWrap"></div></div>
+      </div>
+      <div class="tab-pane" id="pane-link">
+        <div class="pane-h"><span>链路方案 · 视距余隙与链路预算</span></div>
+        <div class="pane-body"><div class="empty">点击「启动推演」<br>生成可执行通信保障链路方案</div><div id="linkWrap"></div></div>
+      </div>
+      <div class="tab-pane" id="pane-dispatch">
+        <div class="pane-h"><span>资源调度 · 任务单</span></div>
+        <div class="pane-body"><div class="empty">点击「启动推演」<br>生成优先级驱动的任务调度</div><div id="taskWrap"></div></div>
+      </div>
+      <div class="tab-pane" id="pane-beidou">
+        <div class="pane-h"><span>北斗短报文 · 语义压缩</span></div>
+        <div class="pane-body"><div class="empty">点击「启动推演」<br>将冗长通知压缩为单包北斗短报文</div><div id="beidouWrap"></div></div>
+      </div>
+      <div class="tab-pane" id="pane-report">
+        <div class="pane-h"><span>复盘报告 · 可追溯</span><button class="btn xs ghost" id="btnExport" type="button">导出 .md</button></div>
+        <div class="pane-body"><div class="empty">点击「启动推演」<br>生成可追溯应急通信复盘报告</div><div id="reportWrap"></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,state.fast?Math.round(ms*.35):ms));
+function parseBase(str){const d=str.slice(0,10),t=str.slice(11);const Y=+d.slice(0,4),M=+d.slice(5,7),D=+d.slice(8,10);const h=+t.slice(0,2),m=+t.slice(3,5);return new Date(Y,M-1,D,h,m);}
+function simNow(){return new Date(state.baseMs+state.min*60000);}
+function simStr(){const d=simNow();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());}
+function pad(n){return String(n).padStart(2,'0');}
+const state={scenarioKey:'flood',scenario:null,baseMs:0,runToken:0,running:false,done:false,min:0,
+  analysis:null,plan:null,tasks:null,beidou:null,report:''};
+const AGENTS=[
+ {id:'sense',short:'感知',name:'感知智能体',desc:'多源数据融合'},
+ {id:'assess',short:'研判',name:'研判智能体',desc:'影响评估'},
+ {id:'plan',short:'规划',name:'规划智能体',desc:'地形链路规划'},
+ {id:'dispatch',short:'调度',name:'调度智能体',desc:'资源约束调度'},
+ {id:'review',short:'复盘',name:'复盘智能体',desc:'报告复盘'}
+];
+const STAGES=[
+ {id:'sense',name:'感知'},{id:'assess',name:'研判'},{id:'plan',name:'规划'},{id:'dispatch',name:'调度'},{id:'review',name:'复盘'}
+];
+const MAP_W=960,MAP_H=600,KMPP=0.03;
+const PEAKS=[
+ {x:170,y:120,h:1350,s:95},{x:430,y:70,h:1500,s:110},{x:830,y:140,h:1250,s:100},
+ {x:330,y:520,h:1150,s:105},{x:790,y:470,h:1300,s:120},{x:560,y:270,h:900,s:70}
+];
+const RIVERS=[
+ [[0,545],[150,505],[250,455],[400,400],[520,370],[640,355],[780,330],[960,300]],
+ [[250,235],[330,205],[400,180],[470,175],[560,190],[700,215],[830,255],[930,280]],
+ [[600,520],[680,512],[735,505],[830,520],[900,545]]
+];
+const BASE_H=400;
+function distToSeg(x,y,ax,ay,bx,by){
+  const dx=bx-ax,dy=by-ay,l=dx*dx+dy*dy;
+  const t=l?Math.max(0,Math.min(1,((x-ax)*dx+(y-ay)*dy)/l)):0;
+  const px=ax+t*dx,py=ay+t*dy;
+  return Math.hypot(x-px,y-py);
+}
+function T(x,y){
+  let h=BASE_H;
+  for(const p of PEAKS){const dx=x-p.x,dy=y-p.y;h+=p.h*Math.exp(-(dx*dx+dy*dy)/(2*p.s*p.s));}
+  for(const river of RIVERS){
+    let dmin=1e9;
+    for(let i=0;i<river.length-1;i++){dmin=Math.min(dmin,distToSeg(x,y,river[i][0],river[i][1],river[i+1][0],river[i+1][1]));}
+    if(dmin<80){h-=250*Math.exp(-(dmin*dmin)/(2*45*45));}
+  }
+  return Math.max(160,h);
+}
+function los(a,b,hA,hB,fGHz){
+  const dKm=Math.hypot(b.x-a.x,b.y-a.y)*KMPP;
+  const N=120;
+  let minClear=1e9;
+  for(let i=1;i<N;i++){
+    const t=i/N,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t;
+    const hTer=T(x,y),d1=dKm*t,d2=dKm*(1-t),curv=(d1*d2*1000)/(2*8495);
+    const clear=(hA+(hB-hA)*t)-hTer-curv;
+    if(clear<minClear)minClear=clear;
+  }
+  const f=Math.max(dKm,0.001);
+  const fresnel=17.32*Math.sqrt((f/2)*(f/2)/(fGHz*f));
+  return {dKm,minClear,fresnel,blocked:minClear<0,good:minClear>=0.6*fresnel};
+}
+function fspl(dKm,fMHz){return 32.44+20*Math.log10(fMHz)+20*Math.log10(Math.max(dKm,0.05));}
+const LINK_TYPES={
+  micro:{name:'微波',f:5800,ptx:23,gtx:24,grx:24,sens:-75,bw:'20 Mbps'},
+  lte:{name:'4G 中继',f:1800,ptx:43,gtx:17,grx:3,sens:-105,bw:'20 Mbps'},
+  pdt:{name:'PDT 集群',f:350,ptx:37,gtx:2,grx:2,sens:-118,bw:'9.6 kbps'},
+  sat:{name:'卫星便携站',f:1600,eirp:82,grx:22,sens:-105,bw:'2 Mbps'}
+};
+function budget(type,dKm){
+  const t=LINK_TYPES[type];
+  const loss=fspl(dKm,t.f);
+  const rx=t.eirp!==undefined?t.eirp-loss+t.grx:t.ptx+t.gtx+t.grx-loss;
+  const margin=rx-t.sens;
+  return {loss,rx,margin,type,dKm};
+}
+function mkBytes(s){return new TextEncoder().encode(s).length;}
+
+const VILLAGES={
+ 'V1':{id:'V1',name:'坳上村',x:250,y:235,pop:1260,gather:'村小学',contact:'王建国',phone:'138****6721',needs:['药品','饮用水','照明']},
+ 'V2':{id:'V2',name:'岭脚村',x:400,y:400,pop:860,gather:'村委会',contact:'李秀兰',phone:'139****2083',needs:['食品','帐篷']},
+ 'V3':{id:'V3',name:'河湾村',x:640,y:355,pop:1520,gather:'河湾中学',contact:'张德发',phone:'137****5518',needs:['药品','饮用水','发电机']},
+ 'V4':{id:'V4',name:'坪寨村',x:470,y:175,pop:640,gather:'村卫生室',contact:'杨小梅',phone:'136****9034',needs:['药品','保暖物资']},
+ 'V5':{id:'V5',name:'坳口村',x:190,y:455,pop:980,gather:'村广场',contact:'刘志强',phone:'135****4412',needs:['饮用水','照明']},
+ 'V6':{id:'V6',name:'岩脚村',x:735,y:505,pop:730,gather:'村小学',contact:'陈国平',phone:'133****7789',needs:['食品','药品']},
+ 'V7':{id:'V7',name:'大坪村',x:830,y:255,pop:1180,gather:'村礼堂',contact:'吴春梅',phone:'131****2260',needs:['药品','帐篷','饮用水']},
+ 'V8':{id:'V8',name:'杉木村',x:600,y:520,pop:420,gather:'村委会',contact:'周明华',phone:'130****1187',needs:['食品','照明']}
+};
+const STATIONS={
+ 'BS-01':{name:'坳上基站',x:300,y:255},
+ 'BS-02':{name:'岭脚基站',x:425,y:425},
+ 'BS-03':{name:'河湾基站',x:665,y:330},
+ 'BS-04':{name:'坪寨基站',x:450,y:145},
+ 'BS-05':{name:'坳口基站',x:165,y:420},
+ 'BS-06':{name:'大坪基站',x:860,y:235}
+};
+const ROADS=[
+ [[0,590],[170,540],[300,480],[430,430],[560,390],[700,350],[840,330],[960,310]],
+ [[250,235],[300,200],[380,180],[470,175],[560,190],[700,215],[830,255],[930,280]],
+ [[190,455],[230,500],[330,520],[450,540],[600,520],[735,505],[880,540]],
+ [[85,300],[140,340],[190,455],[250,520],[300,560]]
+];
+const RELAY_POINTS=[
+ {id:'R1',name:'坳上东侧山脊',x:330,y:230},{id:'R2',name:'岭脚北垭口',x:520,y:430},
+ {id:'R3',name:'河湾后山',x:700,y:250},{id:'R4',name:'中部垭口',x:430,y:330},{id:'R5',name:'杉木西坳',x:620,y:390}
+];
+const SCENARIOS={
+ flood:{
+  key:'flood',name:'暴雨山洪',icon:'rain',level:'Ⅱ级',lost:3,
+  code:'FLOOD-0721',base:'2026-07-21 03:40',weatherPen:10,
+  desc:'㵲阳河流域 6 小时面雨量 186mm，上游水库泄洪，S203 省道 3 处塌方，河谷 5 个村寨通信中断。',
+  affected:['V1','V2','V3','V4','V8'],weak:['V5'],
+  stationDown:['BS-01','BS-02','BS-04'],
+  roadsBlocked:[{road:0,seg:3,label:'S203 K12+400 塌方'},{road:2,seg:2,label:'乡道 Y017 桥面冲毁'}],
+  details:{
+   V1:{sev:3,note:'水位距村部 0.8m，4 人受伤，光缆冲断'},
+   V2:{sev:2,note:'进村道路塌方，2 名老人失联'},
+   V3:{sev:3,note:'河堤决口，1500 人待转移，基站进水'},
+   V4:{sev:2,note:'山体滑坡掩埋光缆，暂无伤亡'},
+   V8:{sev:1,note:'供电中断，通信弱覆盖，无人员伤亡'}
+  },
+  resources:{drone:1,satellite:2,pdt:6,generator:2,team:2,beidou:10,hf:1}
+ },
+ quake:{
+  key:'quake',name:'地震滑坡',icon:'quake',level:'Ⅲ级',lost:6,
+  code:'EQK-0722',base:'2026-07-22 07:05',weatherPen:6,
+  desc:'主峰群群震滑动，4 处滑坡体掩埋基站与光缆，余震不断，通信中断范围快速扩大。',
+  affected:['V7','V3','V6','V2'],weak:['V1'],
+  stationDown:['BS-03','BS-06','BS-02'],
+  roadsBlocked:[{road:0,seg:1,label:'L208 山路裂缝滑坡'},{road:1,seg:4,label:'乡道 Y033 垮方'}],
+  details:{
+   V7:{sev:3,note:'滑坡掩埋集结点，2 名儿童受困'},
+   V3:{sev:3,note:'管线断裂致电网中断，余震风险高'},
+   V6:{sev:2,note:'供电中断，无伤亡报告'},
+   V2:{sev:2,note:'通信中断 12 小时，老人独居'}
+  },
+  resources:{drone:2,satellite:1,pdt:8,generator:3,team:3,beidou:10,hf:1}
+ },
+ fire:{
+  key:'fire',name:'森林火灾',icon:'fire',level:'Ⅱ级',lost:2,
+  code:'FIR-0723',base:'2026-07-23 14:20',weatherPen:8,
+  desc:'林区山火蔓延至 3 处村庄周界，强风助燃，光纤架空缆受阻，火场信号遮挡。',
+  affected:['V4','V7','V8'],weak:['V3'],
+  stationDown:['BS-04','BS-06'],
+  roadsBlocked:[{road:1,seg:5,label:'防火线突破，乡道封闭'}],
+  details:{
+   V4:{sev:3,note:'火线逼近村部，3 户群众滞留'},
+   V7:{sev:3,note:'无人机侦测到浓烟，火情不明'},
+   V8:{sev:2,note:'通讯中断，无伤亡'}
+  },
+  resources:{drone:1,satellite:1,pdt:10,generator:1,team:2,beidou:8,hf:1}
+ },
+ ice:{
+  key:'ice',name:'冰雪冻雨',icon:'ice',level:'Ⅰ级',lost:4,
+  code:'ICE-0724',base:'2026-07-24 21:50',weatherPen:15,
+  desc:'雨雪冰冻致线路覆冰断电，抢修窗口极短，独居老人群体通信中断。',
+  affected:['V5','V1','V4','V6'],weak:['V3'],
+  stationDown:['BS-05','BS-01','BS-03'],
+  roadsBlocked:[{road:0,seg:1,label:'覆冰断线 Y011'},{road:3,seg:2,label:'桥梁积雪'}],
+  details:{
+   V5:{sev:3,note:'独居老人失联，无电话'},
+   V1:{sev:2,note:'光缆断裂，2 名儿童受困'},
+   V4:{sev:2,note:'供电中断'},
+   V6:{sev:2,note:'电台无线功率不足'}
+  },
+  resources:{drone:1,satellite:2,pdt:4,generator:4,team:2,beidou:10,hf:1}
+ }
+};
+
+/* ================== 地图绘制 ================== */
+function renderContours(){
+  const g=$('#gContour');g.innerHTML='';
+  const cols=97,rowsN=60,cw=MAP_W/cols,ch=MAP_H/rowsN;
+  const H=[];for(let j=0;j<=rowsN;j++){const arr=[];for(let i=0;i<=cols;i++){arr.push(T(i*cw,j*ch));}H.push(arr);}
+  const TABLE={1:[[3,0]],2:[[0,1]],3:[[3,1]],4:[[1,2]],5:[[3,0],[1,2]],6:[[0,2]],7:[[3,2]],8:[[2,3]],9:[[2,0]],10:[[0,1],[2,3]],11:[[2,1]],12:[[1,3]],13:[[1,0]],14:[[0,3]]};
+  const edgePt=(e,i,j,lv)=>{
+    const h00=H[j][i],h10=H[j][i+1],h11=H[j+1][i+1],h01=H[j+1][i];
+    const x=i*cw,y=j*ch;
+    if(e===0){const t2=(lv-h00)/(h10-h00||1);return {x:x+t2*cw,y:y};}
+    if(e===1){const t2=(lv-h10)/(h11-h10||1);return {x:x+cw,y:y+t2*ch};}
+    if(e===2){const t2=(lv-h11)/(h01-h11||1);return {x:x+t2*cw,y:y+ch};}
+    const t2=(lv-h01)/(h00-h01||1);return {x:x,y:y+t2*ch};
+  };
+  for(let lv=300;lv<=1800;lv+=150){
+    const parts=[];
+    for(let j=0;j<rowsN;j++)for(let i=0;i<cols;i++){
+      const h00=H[j][i],h10=H[j][i+1],h11=H[j+1][i+1],h01=H[j+1][i];
+      let c=0;if(h00>lv)c|=1;if(h10>lv)c|=2;if(h11>lv)c|=4;if(h01>lv)c|=8;
+      if(c===0||c===15)continue;
+      const get=(e,l)=>edgePt(e,i,j,l);
+      const [a,b]=TABLE[c][0];
+      parts.push('M'+get(a,lv).x.toFixed(1)+' '+get(a,lv).y.toFixed(1)+'L'+get(b,lv).x.toFixed(1)+' '+get(b,lv).y.toFixed(1));
+      if(TABLE[c][1])for(const pr of TABLE[c][1]){const p1=get(pr[0],lv),p2=get(pr[1],lv);parts.push('M'+p1.x.toFixed(1)+' '+p1.y.toFixed(1)+'L'+p2.x.toFixed(1)+' '+p2.y.toFixed(1));}
+    }
+    g.innerHTML+='<path class="ct'+(lv%450===0?' hot':'')+'" d="'+parts.join('')+'"/>';
+  }
+}
+function renderRivers(){
+  const g=$('#gRiver');g.innerHTML='';
+  for(const river of RIVERS){let d='';for(let i=0;i<river.length-1;i++){const a=river[i],b=river[i+1];d+=(i?'L':'M')+a[0]+' '+a[1]+'L'+b[0]+' '+b[1];}
+    g.innerHTML+='<path class="riv" d="'+d+'"/>';}
+}
+function renderGrid(){
+  const g=$('#gGrid');g.innerHTML='';
+  for(let x=60;x<960;x+=60){g.innerHTML+='<line x1="'+x+'" y1="0" x2="'+x+'" y2="600" stroke="rgba(126,183,224,.05)" stroke-width="1"/>';}
+  for(let y=60;y<600;y+=60){g.innerHTML+='<line x1="0" y1="'+y+'" x2="960" y2="'+y+'" stroke="rgba(126,183,224,.05)" stroke-width="1"/>';}
+}
+function renderZone(sc){
+  const g=$('#gZone');g.innerHTML='';
+  const zones={
+   flood:'M300 430L430 380L560 345L690 325L760 345L700 390L560 410L430 455L330 485Z',
+   quake:'M600 220L760 190L880 230L900 330L800 400L700 380L660 300Z',
+   fire:'M380 90L600 70L760 110L780 200L660 230L520 200L400 170Z',
+   ice:'M120 320L300 180L500 150L560 250L420 300L300 380L180 420Z'
+  };
+  g.innerHTML+='<path d="'+(zones[sc.key]||'M300 430L430 380L560 345L690 325L760 345L700 390L560 410L430 455L330 485Z')+'" fill="rgba(74,168,255,.07)" stroke="rgba(74,168,255,.35)" stroke-width="1.5" stroke-dasharray="6 5" fill-opacity="0.55"/>';
+}
+function renderRoads(sc){
+  const g=$('#gRoad');g.innerHTML='';
+  for(let r=0;r<ROADS.length;r++){
+    const road=ROADS[r];
+    for(let s=0;s<road.length-1;s++){
+      const a=road[s],b=road[s+1];
+      const blocked=sc.roadsBlocked.some(bl=>bl.road===r&&bl.seg===s);
+      g.innerHTML+='<path d="M'+a[0]+' '+a[1]+'L'+b[0]+' '+b[1]+'" stroke="'+(blocked?'#ff566a':'#6a879b')+'" stroke-width="'+(blocked?2.4:2)+'" stroke-dasharray="'+(blocked?'3 3':'7 6')+'" fill="none" opacity="'+(blocked?1:0.75)+'"/>';
+    }
+  }
+  for(const bl of sc.roadsBlocked){
+    const road=ROADS[bl.road];
+    const p1=road[Math.max(0,bl.seg-1)],p2=road[Math.min(road.length-1,bl.seg+1)];
+    const mx=(p1[0]+p2[0])/2,my=(p1[1]+p2[1])/2;
+    g.innerHTML+='<g><circle cx="'+mx+'" cy="'+my+'" r="8" fill="none" stroke="#ff566a" stroke-width="2"/><path d="M'+(mx-4)+' '+my+'L'+(mx+4)+' '+my+'M'+mx+' '+my-4+'L'+mx+' '+my+4+'" stroke="#ff566a" stroke-width="2"/><text x="'+mx+'" y="'+(my-12)+'" text-anchor="middle" font-size="9" fill="#ff8a98" font-family="inherit">'+bl.label.split(' ')[0]+'</text></g>';
+  }
+}
+function renderLegend(){
+  const g=$('#legend');g.innerHTML='';
+  let html='<span><b style="color:#2ee6c5">■</b> 正常基站</span><span><b style="color:#ff566a">■</b> 退服基站</span>';
+  html+='<span><b style="color:#ff566a">●</b> 失联村寨</span><span><b style="color:#ff8a3d">●</b> 弱覆盖</span><span><b style="color:#2ee6c5">●</b> 正常</span>';
+  html+='<span><b style="color:#a78bfa">—</b> 卫星回传链路</span>';
+  g.innerHTML=html;
+}
+function paintTerrain(){
+  const cv=$('#terrain');
+  const W=480,H=300;
+  cv.width=W;cv.height=H;
+  const ctx=cv.getContext('2d');
+  const img=ctx.createImageData(W,H);
+  const L=[-0.52,-0.62,0.59];
+  for(let py=0;py<H;py++)for(let px=0;px<W;px++){
+    const x=px*(MAP_W/W),y=py*(MAP_H/H);
+    const h=T(x,y);
+    const d=3;
+    const dzdx=(T(x+d,y)-T(x-d,y))/(2*d*KMPP*1000);
+    const dzdy=(T(x,y+d)-T(x,y-d))/(2*d*KMPP*1000);
+    const nx=-dzdx,ny=-dzdy,nz=1;
+    const len=Math.hypot(nx,ny,nz);
+    const sh=Math.max(0,Math.min(1,0.35+((nx*L[0]+ny*L[1]+nz*L[2])/len)*0.85));
+    const e=Math.max(0,Math.min(1,(h-250)/1500));
+    const r=9+e*30,g=25+e*46,b=38+e*52;
+    const i=(py*W+px)*4;
+    img.data[i]=r*sh*1.06;img.data[i+1]=g*sh*1.06;img.data[i+2]=b*sh*1.1;img.data[i+3]=255;
+  }
+  ctx.putImageData(img,0,0);
+  const grd=ctx.createRadialGradient(W*0.5,H*0.45,10,W*0.5,H*0.5,W*0.75);
+  grd.addColorStop(0,'rgba(46,230,197,0.05)');
+  grd.addColorStop(1,'rgba(3,10,17,0.45)');
+  ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+}
+function renderNodes(sc){
+  const g=$('#gNode');g.innerHTML='';
+  const cp={x:85,y:300};
+  g.innerHTML+='<g><circle cx="85" cy="300" r="9" fill="#0b1a28" stroke="#eafcff" stroke-width="2.2"/><path d="M85 291 L85 309 M77 298 H93 M85 289 V311 M77 298 H93" class="cp-ico" stroke="#eafcff" stroke-width="1.4"/></g>';
+  g.innerHTML+='<text class="lb" x="99" y="305" font-family="inherit" font-size="12" font-weight="700" letter-spacing="1" fill="#cfe6f6">县应急指挥中心</text>';
+  g.innerHTML+='<g class="sat"><path class="sat-ico" d="M0 -7 L7 -2 L7 2 L0 7 L-7 2 L-7 -2 Z"/><rect x="-2.5" y="-9" width="5" height="6" rx="1.5"/><rect x="-2.5" y="3" width="5" height="6" rx="1.5"/></g>';
+  g.innerHTML+='<text x="14" y="30" font-size="11" font-weight="700" fill="#cbb6fa" font-family="inherit" letter-spacing="1">GEO 天通 · 一号</text>';
+  g.innerHTML+='<path class="sat-line" d="M85 300 L620 390" stroke="#a78bfa" stroke-width="1.4" stroke-dasharray="3 4" opacity="0.5" fill="none"/>';
+  for(const [id,st] of Object.entries(STATIONS)){
+    const down=sc.stationDown.includes(id);
+    g.innerHTML+='<g class="stn'+(down?' down':'')+'" data-stn="'+id+'">'+
+      '<circle class="cov" cx="'+st.x+'" cy="'+st.y+'" r="92"/>'
+      +'<circle class="halo'+(down?' down':'')+'" cx="'+st.x+'" cy="'+st.y+'" r="13"/>'
+      +'<path class="ico" d="M'+(st.x-5)+' '+st.y+6+' L'+st.x+' '+st.y-7+' L'+(st.x+5)+' '+st.y+6+' M'+(st.x-7)+' '+st.y+1+' L'+(st.x+7)+' '+st.y+1+'" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'
+      +'<text class="lb" x="'+(st.x+11)+'" y="'+(st.y+3)+'" font-family="inherit" font-size="11" font-weight="700" letter-spacing="1">'+st.name+'</text>'
+      +'<text class="lb2" x="'+(st.x+11)+'" y="'+(st.y+14)+'" font-family="inherit" font-size="9" letter-spacing="0.5">'+(down?'退服':'在线')+'</text>'
+    +'</g>';
+  }
+  for(const id of Object.keys(VILLAGES)){
+    const v=VILLAGES[id];
+    const st=statusOf(id,sc);
+    let pr=null;
+    if(state.analysis){pr=Object.values(state.analysis.rows).find(x=>x.v&&x.v.id===id)||null;}
+    const prio=pr?'<circle class="prio" cx="'+v.x+'" cy="'+(v.y-15)+'" r="8"/><text class="lbl" x="'+v.x+'" y="'+(v.y-12)+'" text-anchor="middle" font-size="9" font-weight="800" fill="#03110f" font-family="inherit">'+pr.p+'</text>':'';
+    g.innerHTML+='<g class="vnode s'+st+'" data-v="'+id+'">'+
+      '<circle class="pulse" cx="'+v.x+'" cy="'+v.y+'" r="14"/>'
+      +'<circle class="dot" cx="'+v.x+'" cy="'+v.y+'" r="6"/>'
+      +prio+
+      '<text class="lbl" x="'+(v.x+12)+'" y="'+(v.y+4)+'" font-family="inherit" font-size="12" font-weight="700" letter-spacing=".5">'+v.name+'</text>'
+      +'<text class="sub" x="'+(v.x+12)+'" y="'+(v.y+17)+'" font-family="inherit" font-size="9">'+v.pop.toLocaleString('zh-CN')+'人</text>'
+    +'</g>';
+  }
+}
+function statusOf(id,sc){
+  if(sc.affected.includes(id))return 2;
+  if(sc.weak.includes(id))return 1;
+  return 0;
+}
+
+/* ================== 智能体 / 阶段 / 日志 ================== */
+function setAgent(id,status,out){
+  const card=document.querySelector('.agent[data-a="'+id+'"]');
+  if(card){
+    card.classList.remove('running','done','pending');
+    if(status!=='待命')card.classList.add(status==='运行中'?'running':'done');
+    const bar=card.querySelector('.a-bar i');
+    if(bar)bar.style.width=status==='待命'?0:status==='运行中'?'40%':'100%';
+    const outEl=card.querySelector('.a-out');
+    if(outEl&&out!==undefined)outEl.textContent=out;
+  }
+  const a=AGENTS.find(x=>x.id===id);
+  return a? (a? a.name : '') : '';
+}
+function setStage(i){
+  const pills=document.querySelectorAll('.stage-p');
+  pills.forEach((p,k)=>{p.classList.toggle('on',k===i);p.classList.toggle('do',k<i);});
+  const bar=$('#barFill');if(bar)bar.style.width=(i<0?0:(i+1)/STAGES.length*100)+'%';
+}
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===name));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('active',p.id==='pane-'+name));
+}
+function logf(id,text,type){
+  const lg=$('#log');
+  const a=AGENTS.find(x=>x.id===id);
+  const el=document.createElement('div');
+  el.className='ln '+type;
+  const t=simNow();
+  el.innerHTML='<span class="lt">'+pad(t.getHours())+':'+pad(t.getMinutes())+'</span><span class="lw">'+(a?a.short:'系统')+'</span><span class="lm">'+text+'</span>';
+  lg.appendChild(el);lg.scrollTop=lg.scrollHeight;
+}
+function renderClock(){const d=simNow();$('#clock').textContent=pad(d.getHours())+':'+pad(d.getMinutes());$('#runClockLabel').textContent='T-'+(4-state.min);}
+function simTimeShort(){const d=simNow();return pad(d.getHours())+':'+pad(d.getMinutes());}
+
+/* ================== 渲染面板内容 ================== */
+function renderScenarioCards(){
+  const g=$('#scnGrid');g.innerHTML='';
+  for(const k of Object.keys(SCENARIOS)){
+    const sc=SCENARIOS[k];
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='scn'+(k===state.scenarioKey?' active':'');
+    b.innerHTML='<svg class="s-ico" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M7 14a4 4 0 0 1 .6-7.9A5.5 5.5 0 0 1 18 8a3.2 3.2 0 0 1-.4 6z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg><b>'+sc.name+'</b><span>'+sc.code+'</span>';
+    b.addEventListener('click',()=>{loadScenario(k);});
+    g.appendChild(b);
+  }
+}
+function renderScenarioInfo(sc){
+  $('#evtTitle').textContent=sc.name+' · '+sc.level;
+  $('#evtDesc').textContent=sc.desc;
+  $('#evtMeta').innerHTML='<i>天气：降雨/火险/冻雨 · 事件：'+sc.code+'　　受影响人口：'+(sc.affected.reduce((s,id)=>s+VILLAGES[id].pop,0)).toLocaleString('zh-CN')+' 人';
+  $('#affCount').textContent=sc.affected.length+' 个失联 / '+sc.weak.length+' 个弱覆盖';
+}
+function renderVillageList(rows){
+  const sc=state.scenario;
+  const wrap=$('#vlist');wrap.innerHTML='';
+  const aff=new Set([...sc.affected,...sc.weak]);
+  for(const id of Object.keys(VILLAGES)){
+    const v=VILLAGES[id];
+    const st=statusOf(id,sc);
+    const r=rows?.[id]||null;
+    const row=document.createElement('button');
+    row.type='button';
+    row.className='vrow'+(aff.has(id)?'':' dim');
+    if(r&&r.sel)row.className='vrow sel';
+    row.innerHTML='<span class="vdot s'+st+'"></span>'+
+      '<span><span class="vname">'+v.name+'</span><span class="vpop">'+v.pop.toLocaleString('zh-CN')+' 人</span></span>'+
+      '<span style="display:flex;gap:6px;align-items:center">'+(r&&(r.p?'<span class="vprio">P'+r.p+'</span>':''))+'<span class="vstat i'+st+'">'+['正常','弱覆盖','中断'][st]+'</span></span>';
+    row.addEventListener('click',()=>{renderVillageList(rows);selectVillage(id);});
+    wrap.appendChild(row);
+  }
+}
+function selectVillage(id){
+  const sc=state.scenario;
+  const v=VILLAGES[id];
+  const rows=state.analysis?Object.values(state.analysis.rows):[];
+  const r=rows.find(x=>x.v&&x.v.id===id)||null;
+  let out='状态：'+['正常','弱覆盖','中断'][statusOf(id,sc)]+'\n';
+  if(r){out+='优先级：P'+r.p+'　　建议手段：'+METHOD_NAME[r.method]+'\n';}
+  const det=sc.details[id]||{};
+  if(det.note)out+='研判要点：'+det.note+'\n';
+  out+='联系人：'+v.contact+'（'+v.phone+'）　　集结点：'+v.gather+'\n';
+  out+='紧急需求：'+v.needs.join('、');
+  $('#vdet').innerHTML='<b>'+v.name+'</b>　'+['正常','弱覆盖','中断'][statusOf(id,sc)]+'<br>'+out;
+}
+function renderResources(){
+  const r=state.scenario.resources;
+  $('#res').innerHTML=
+    '<span class="reschip">系留无人机 ×'+r.drone+'</span><span class="reschip">卫星便携站 ×'+r.satellite+'</span><span class="reschip">PDT 台 ×'+r.pdt+'</span>'+
+    '<span class="reschip">油机 ×'+r.generator+'</span><span class="reschip">抢修队 ×'+r.team+'</span><span class="reschip">北斗终端 ×'+r.beidou+'</span><span class="reschip">短波电台 ×'+r.hf+'</span>';
+}
+const METHOD_NAME={micro:'微波直连',relay:'无人机中继',sat:'卫星便携站',pdt:'PDT 集群',beidou:'北斗短报文'};
+
+/* ================== 推理核心 ================== */
+function analyze(sc){
+  const cp={x:85,y:300};
+  const cpAlt=T(cp.x,cp.y)+35;
+  const ids=[...sc.affected,...sc.weak];
+  const rows=[];
+  for(const id of ids){
+    const v=VILLAGES[id];
+    const det=sc.details[id]||{};
+    const vAlt=T(v.x,v.y)+10;
+    const l=los(cp,{x:v.x,y:v.y},cpAlt,vAlt,5.8);
+    const sev=det.sev||2;
+    const prio=v.pop*(sev===3?1.5:sev===2?1.15:0.8);
+    rows.push({v:v,id:id,status:sc.affected.includes(id)?'中断':'弱覆盖',det,sev,prio,direct:l,vAlt});
+  }
+  rows.sort((a,b)=>b.prio-a.prio);
+  rows.forEach((r,i)=>{r.rank=i+1;r.p=r.rank<=1?'P1':r.rank<=2?'P2':r.rank<=4?'P3':'P4';});
+  const relays=RELAY_POINTS.map(rp=>{
+    const alt=T(rp.x,rp.y)+120;
+    const covered=[];let pop=0;
+    for(const r of rows){
+      if(r.status==='中断'){
+        const dKm=Math.hypot(rp.x-r.v.x,rp.y-r.v.y)*KMPP;
+        if(dKm<=6.5){const l=los(rp,{x:r.v.x,y:r.v.y},alt,r.vAlt,1.8);if(l.good){covered.push(r.v.id);pop+=r.v.pop;}}
+      }
+    }
+    return {id:rp.id,name:rp.name,x:rp.x,y:rp.y,alt,covered,pop,n:covered.length};
+  }).sort((a,b)=>b.pop-a.pop);
+  return {cp,cpAlt,rows,relays};
+}
+
+function buildLink(r){
+  let L={};
+  if(r.method==='micro'){
+    const b=budget('micro',r.direct.dKm);
+    L={type:'micro',freq:'5.8 GHz',bw:'20 Mbps',margin:b.margin,dKm:r.direct.dKm,direct:r.direct};
+  }else if(r.method==='relay'){
+    const b=budget('lte',r.relayD);
+    L={type:'relay',freq:'1.8 GHz',bw:'20 Mbps',margin:b.margin,dKm:r.relayD,direct:null,note:'卫星回传 21 dB'};
+  }else if(r.method==='sat'){
+    const b=budget('sat',36000);
+    L={type:'sat',freq:'1.6 GHz',bw:'2 Mbps',margin:b.margin,dKm:36000,direct:null};
+  }else if(r.method==='pdt'){
+    const b=budget('pdt',2.5);
+    L={type:'pdt',freq:'350 MHz',bw:'9.6 kbps',margin:b.margin,dKm:2.5,direct:null};
+  }else{
+    L={type:'beidou',freq:'北斗短包',bw:'140 B',margin:null,dKm:null,direct:null};
+  }
+  return L;
+}
+function buildPlan(sc,a){
+  const plan={relayUsed:false,rows:[],relay:null};
+  let satLeft=sc.resources.satellite,pdtLeft=sc.resources.pdt;
+  const best=(a&&a.relays&&a.relays.length)?a.relays[0]:null;
+  let covered=new Set();
+  if(best&&best.covered.length){covered=new Set(best.covered);plan.relayUsed=true;plan.relay=best;}
+  for(const r of a.rows){
+    r.method=null;r.link=null;r.relayD=null;
+    if(r.status==='弱覆盖'){
+      if(pdtLeft>=2){r.method='pdt';pdtLeft-=2;}else{r.method='beidou';}
+    }else if(r.direct&&r.direct.good&&r.direct.dKm<=22){r.method='micro';}
+    else if(covered.has(r.id)){r.method='relay';r.relayD=Math.hypot(best.x-r.v.x,best.y-r.v.y)*KMPP;}
+    else if(satLeft>0){r.method='sat';satLeft--;}
+    else{r.method='beidou';}
+    r.link=buildLink(r);
+  }
+  plan.rows=a.rows;
+  return plan;
+}
+function buildTasks(sc,plan){
+  const tasks=[];
+  const baseEta=d=>Math.round(16+d*2.7+(sc.weatherPen||0)+(sc.roadsBlocked.length?14:0));
+  if(plan.relayUsed){
+    const best=plan.relay;
+    tasks.push({t:'drone',k:'中继',title:'系留无人机中继升空',target:best.name,t0:best.covered.map(id=>VILLAGES[id].name).join('、'),eta:baseEta(Math.max(Math.hypot(85-best.x,300-best.y)*KMPP,12)),res:'系留无人机 ×1',note:'4G 微基站搭载卫星回传，覆盖失联村寨。'});
+  }
+  for(const r of plan.rows.filter(r=>r.method==='sat')){
+    tasks.push({t:'sat',k:'卫星',title:'卫星便携站开通通信',target:r.v.name,t0:r.v.name+'（'+r.v.pop+'人）',eta:baseEta(r.direct?r.direct.dKm:20),res:'卫星便携站 ×1',note:'经北斗/天通二代直通建立保障链路。'});
+  }
+  const pdtRows=plan.rows.filter(r=>r.method==='pdt');
+  if(pdtRows.length){tasks.push({t:'pdt',k:'PDT',title:'PDT 集群搭接配发',target:pdtRows.length+' 个村寨',t0:pdtRows.map(r=>r.v.name).join('、'),eta:baseEta(6),res:'PDT 车载/手持台 ×'+sc.resources.pdt,note:'点对点 350MHz 短链路集群组网，小口径保障。'});}
+  const beoRows=plan.rows.filter(r=>r.method==='beidou');
+  if(beoRows.length){tasks.push({t:'beidou',k:'北斗',title:'北斗短报文下发救援指令',target:beoRows.map(r=>r.v.name).join('、'),t0:beoRows.map(r=>r.v.name).join(' / '),eta:baseEta(2),res:'北斗终端 ×'+sc.resources.beidou,note:'单包 140 字节语义压缩下发，含救援集结点与回执。'});}
+  const gens=[];
+  const gN=Math.min(sc.resources.generator||2, sc.stationDown.length);
+  for(const id of sc.stationDown){
+    const st=STATIONS[id];const d=Math.hypot(85-st.x,300-st.y)*KMPP;
+    if(gens.length>=gN)break;
+    gens.push({t:'gen',k:'抢修',title:'基站抢修 / 油机保电',target:st.name,t0:'',eta:baseEta(d),res:'油机 ×2 + 抢修队 ×2',note:'恢复基站供电，解除覆盖缺口。'});
+  }
+  tasks.push(...gens);
+  return tasks.sort((a,b)=>a.eta-b.eta);
+}
+function buildBeidou(sc,a){
+  const top=(a&&a.rows&&a.rows[0])||null;
+  const v=top?top.v:null;
+  const lost=sc.lost||3;
+  const inj=1+Math.floor(Math.random()*3);
+  const needs=v?(v.needs||[]):[];
+  const nd=needs.map(n=>({'药品':'药','饮用水':'水','照明':'灯','食品':'食','帐篷':'棚','发电机':'电','保暖物资':'衣','医疗物资':'药'}[n]||n)).join('');
+  const equip=top?(top.method==='sat'?'卫星站':top.method==='relay'?'中继':top.method==='micro'?'微波':'北斗'):'北斗';
+  const d=simNow();
+  const head=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+  const fields=[
+    {k:'head',v:head,keep:true},
+    {k:'body',v:v?`${v.name}${v.pop}人失联${lost}h`:'—',keep:true},
+    {k:'inj',v:v?`伤${inj}`:'',keep:true},
+    {k:'need',v:v?`缺${nd}`:'',keep:true},
+    {k:'gather',v:v?`集结点${v.gather}`:'',keep:true},
+    {k:'contact',v:v?`联络${v.contact}`:'',keep:true},
+    {k:'equip',v:`需${equip}`,keep:true},
+    {k:'ack',v:'回执01',keep:true}
+  ];
+  let compressed=fields.filter(f=>f.keep).map(f=>f.v).join(' ');
+  const dropped=[];
+  while(new TextEncoder().encode(compressed).length>140){
+    const idx=fields.findIndex(f=>f.keep&&(f.k==='contact'||f.k==='ack'||f.k==='gather'));
+    if(idx<0)break;
+    fields[idx].keep=false;dropped.push(fields[idx].k);
+    compressed=fields.filter(f=>f.keep).map(f=>f.v).join(' ');
+  }
+  const raw='县应急管理局值班室：接'+(v?v.name+'村干部':'值班')+'报告，受'+sc.name+'影响，该村通信已完全中断约'+lost+'小时，村内共有'+(v?v.pop:'—')+'名群众受困，其中'+inj+'人受伤，急需'+(v?v.needs.join('、'):'药品')+'等物资。群众集结点设在'+(v?v.gather:'村集结点')+'，现场联络人'+(v?v.contact:'待确认')+'。请立即组织相关人员携带卫星通信设备前往支援，并尽快回复确认。特此通知。';
+  const rawBytes=new TextEncoder().encode(raw).length;
+  const bytes=new TextEncoder().encode(compressed).length;
+  return {v,raw,compressed,dropped,bytes,limit:140,margin:140-bytes,rawBytes,droppedFields:dropped};
+}
+function buildReport(sc,plan,a,b){
+  const lines=['# 山区应急通信保障推演报告','', '生成时间：'+simStr(),'事件：'+sc.name+'（'+sc.code+'）　级别：'+sc.level,'', '## 一、事件概况','', sc.desc,'',
+    '## 二、态势研判','', '| 村寨 | 人口 | 状态 | 优先级 | 建议手段 |','| --- | --- | --- | --- | --- |',
+    ...(plan?plan.rows.map(r=>'<tr><td>'+r.v.name+'</td><td>'+r.v.pop+'</td><td>'+r.status+'</td><td>'+r.p+'</td><td>'+r.method+'</td></tr>'):[]),
+    '','','## 三、链路方案','', '候选中继点：'+(a&&a.relays?a.relays.slice(0,3).map(r=>r.name).join('、'):'—'),'',
+    '## 四、资源调度','', '任务数：'+(plan?plan.rows.length:0),'',
+    '## 五、北斗短报文','', b?b.compressed:'—','',
+    '## 六、结论与建议','', '通信恢复每提前 10 分钟，都意味着更多生命被看见。'];
+  return lines.join('\n');
+}
+
+/* ================== 渲染：各标签页 ================== */
+function renderAssess(a){
+  const w=$('#assessWrap');
+  if(!a){
+    w.innerHTML='<div class="empty">点击「启动推演」<br>启动感知 → 研判 → 规划 → 调度 → 复盘闭环</div>';
+    return;
+  }
+  const sc=state.scenario;
+  const popV=a.rows.reduce((s,r)=>s+r.v.pop,0);
+  const minClear=Math.min(...a.rows.map(r=>r.direct.minClear));
+  w.innerHTML=
+    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px">'+
+    '<div class="kpi" style="border-left:1px solid var(--line2);padding-left:8px"><span>失联村寨</span><b style="color:var(--red);font-size:18px">'+sc.affected.length+'</b></div>'+
+    '<div class="kpi" style="border-left:1px solid var(--line2);padding-left:8px"><span>影响人口</span><b style="color:var(--orange);font-size:18px">'+popV.toLocaleString('zh-CN')+'</b></div>'+
+    '<div class="kpi" style="border-left:1px solid var(--line2);padding-left:8px"><span>保障对象</span><b style="color:var(--teal);font-size:18px">'+a.rows.length+'</b></div>'+
+    '<div class="kpi" style="border-left:1px solid var(--line2);padding-left:8px"><span>最弱余隙</span><b style="color:var(--red);font-size:18px">'+minClear.toFixed(0)+' m</b></div>'+
+    '</div>'+
+    '<table class="tbl"><thead><tr><th>村寨</th><th>状态</th><th class="num">距离(公里)</th><th class="num">余隙/菲涅尔</th><th>优先级</th><th>建议手段</th></tr></thead><tbody>'+
+    a.rows.map(r=>'<tr><td><b style="color:#fff">'+r.v.name+'</b><span style="color:var(--muted);font-size:10px"> '+r.v.pop.toLocaleString('zh-CN')+'人</span></td><td><span class="chip '+r.status+'">'+r.status+'</span></td><td class="num">'+r.direct.dKm.toFixed(1)+'</td><td class="num">'+r.direct.minClear.toFixed(0)+' / '+r.direct.fresnel.toFixed(1)+'m</td><td><span class="vprio">'+r.p+'</span></td><td>'+(r.method||'—')+'</td></tr>').join('')+'</tbody></table>';
+}
+function renderLink(p){
+  const w=$('#linkWrap');
+  if(!p){
+    w.innerHTML='<div class="empty">点击「启动推演」<br>生成可执行通信保障链路方案</div>';
+    return;
+  }
+  const w2='';
+  for(const r of p.rows){
+    const L=r.link;
+    w2+='<tr><td><b style="color:#fff">'+r.v.name+'</b><span style="color:var(--muted);font-size:10px"> '+r.v.pop.toLocaleString('zh-CN')+'人 · '+r.v.contact+'</span></td>'+
+      '<td><span class="chip '+r.method+'">'+METHOD_NAME[r.method]+'</span></td>'+
+      '<td>'+L.freq+'</td><td class="num">'+L.dKm+'</td>'+
+      '<td class="num" style="color:'+(L.margin!==null&&L.margin>-10?'var(--teal)':'var(--red)')+'">'+(L.margin===null?'—':L.margin.toFixed(1))+' dB</td>'+
+      '<td class="num">'+(L.rx===undefined?'—':L.rx.toFixed(1))+'</td>'+
+      '<td class="num">'+(L.margin===null?'—':L.margin.toFixed(1))+'</td>'+
+      '<td>'+L.bw+'</td></tr>';
+  }
+  w.innerHTML=
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">'+p.rows.map(r=>'<span class="chip '+r.method+'">'+METHOD_NAME[r.method]+'</span>').join('')+'</div>'+
+    '<table class="tbl"><thead><tr><th>村寨</th><th>手段</th><th>频段</th><th class="num">距离</th><th class="num">余隙</th><th class="num">接收电平</th><th class="num">余量</th><th>带宽</th></tr></thead><tbody>'+w2+'</tbody></table>'+
+    '<div style="margin-top:12px;font-size:11.5px;color:var(--muted);line-height:1.9">方案摘要：'+(p.relayUsed?'已接入系留无人机中继点 '+p.relay.name+'，':'')+'生成 '+p.rows.length+' 条保障链路，覆盖 '+p.rows.filter(r=>r.method!=='beidou').length+' 个村寨。';
+}
+function renderTasks(t){
+  const w=$('#taskWrap');
+  if(!t){w.innerHTML='<div class="empty">点击「启动推演」<br>生成优先级驱动的任务调度</div>';return;}
+  w.innerHTML='<div class="task-grid">'+t.map(task=>
+    '<div class="task"><div class="t-h"><b>'+task.title+'</b><span class="t-eta">'+simTimeShort()+' +'+task.eta+'</span></div><div style="margin-top:6px"><span class="t-k">'+task.k+'</span></div><p>'+task.note+'</p><div class="t-r"><span>目标：'+task.target+'</span><span>资源：'+task.res+'</span></div></div>'
+  ).join('')+'</div>';
+}
+function renderBeidou(b){
+  const w=$('#beidouWrap');
+  if(!b){
+    w.innerHTML='<div class="empty">点击「启动推演」<br>将冗长通知压缩为单包北斗短报文</div>';
+    return;
+  }
+  const w2=''; // placeholder
+  const used=140-b.bytes;
+  w.innerHTML=
+    '<div class="beidou-grid">'+
+    '<div class="beo"><h4>原始通知（县应急值班长口播）</h4><pre class="orig">'+b.raw+'</pre></div>'+
+    '<div class="beo"><h4>压缩后北斗短报文</h4><pre>'+b.compressed+'</pre>'+
+    '<div class="cmp"><div class="meter" style="flex:1"><i style="width:'+Math.min(100,(b.bytes/140)*100)+'%"></i></div><b>'+b.bytes+'/'+b.limit+' B</b><span>压缩率 '+Math.round(100*(1-b.bytes/b.rawBytes))+'%</span></div></div>'+
+    '</div>'+
+    '<div style="margin-top:12px;font-size:11.5px;color:var(--muted);line-height:1.9">压缩策略：字典替换冗余主语、删除敬语与重复表述；按「时间、人数、失联时长、伤害、需求、集结点、联络、回执」字段有序压缩至北斗二代单包 '+b.limit+' 字节上限；'+(b.droppedFields.length?'超限自动精简，删除字段：'+b.droppedFields.join('、')+'。':'已全部字段纳入单包。')+'</div>';
+}
+function renderReport(rep){
+  const w=$('#reportWrap');
+  if(!rep){w.innerHTML='<div class="empty">点击「启动推演」<br>生成可追溯应急通信复盘报告</div>';return;}
+  w.innerHTML='<div class="rpt">'+rep+'</div>';
+  state.report=rep;
+}
+function updateKpis(){
+  const sc=state.scenario;
+  const popV=state.analysis?state.analysis.rows.reduce((s,r)=>s+r.v.pop,0):0;
+  $('#k1').textContent=sc.affected.length;
+  $('#k2').textContent=popV.toLocaleString('zh-CN');
+  $('#k3').textContent=state.plan?state.plan.rows.filter(r=>r.method!=='beidou').length:'—';
+  $('#k4').textContent=state.tasks?Math.round(state.tasks.reduce((s,t)=>s+t.eta,0)):'—';
+}
+
+/* ================== 地图链路绘制 ================== */
+function drawLinks(plan){
+  const g=$('#gLink');g.innerHTML='';
+  const CP={x:85,y:300};
+  for(const r of (plan&&plan.rows)||[]){
+    if(!r.v||!r.v.x)continue;
+    const d=r.method==='relay'?'M85 300 Q 380 130 '+r.v.x+' '+r.v.y:'M85 300 L'+r.v.x+' '+r.v.y;
+    const el=document.createElementNS('http://www.w3.org/2000/svg','path');
+    el.setAttribute('class','lnk '+r.method);
+    el.setAttribute('d',d);
+    const mx=(85+r.v.x)/2,my=(300+r.v.y)/2;
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',mx);t.setAttribute('y',my-8);
+    t.setAttribute('font-size','10');t.setAttribute('fill','#e9f5ff');t.setAttribute('font-family','inherit');t.setAttribute('text-anchor','middle');
+    t.textContent=METHOD_NAME[r.method]+(r.link&&r.link.margin!==null?' 余量'+r.link.margin.toFixed(1)+'dB':'');
+    g.appendChild(el);g.appendChild(t);
+    if(r.method==='sat'||r.method==='relay'){
+      const sat=document.createElementNS('http://www.w3.org/2000/svg','path');
+      sat.setAttribute('d','M '+r.v.x+' '+r.v.y+' L 890 90');
+      sat.setAttribute('fill','none');sat.setAttribute('stroke','#a78bfa');sat.setAttribute('stroke-width','1.4');sat.setAttribute('stroke-dasharray','3 4');sat.setAttribute('opacity','0.7');
+      g.appendChild(sat);
+    }
+  }
+}
+
+/* ================== 场景装载 ================== */
+function loadScenario(key){
+  state.runToken++;
+  state.running=false;state.done=false;state.min=0;state.analysis=null;state.plan=null;state.tasks=null;state.beidou=null;state.report='';
+  const sc=SCENARIOS[key];
+  state.scenario=sc;state.scenarioKey=key;
+  state.baseMs=parseBase(sc.base);
+  const btnRun=$('#btnRun');btnRun.disabled=false;
+  $('#btnExport').disabled=true;
+  $('#topAlert').textContent=sc.stationDown.length+' 个基站退服';
+  $('#sceneCode').textContent=sc.code;
+  $('#clock').textContent=simStr().slice(5,16);
+  renderScenarioCards();
+  renderScenarioInfo(sc);
+  renderVillageList(null);
+  renderResources();
+  renderGrid();renderRivers();renderContours();renderZone(sc);renderRoads(sc);renderNodes(sc);renderLegend();
+  $('#mapHint').classList.add('show');
+  setStage(-1);
+  switchTab('assess');
+  renderAssess(null);renderLink(null);renderTasks(null);renderBeidou(null);renderReport(null);
+  updateKpis();
+}
+
+/* ================== 推演流水线 ================== */
+async function startRun(){
+  if(state.running)return;
+  const token=++state.runToken;
+  state.running=true;state.done=false;state.min=0;
+  const sc=state.scenario;
+  state.baseMs=parseBase(sc.base);
+  const btnRun=$('#btnRun');btnRun.disabled=true;
+  setStage(0);
+  logf('sense','接入基站网管、气象、路况、北斗与 DEM 四类源数据');
+  await sleep(400);if(token!==state.runToken)return;
+  logf('sense',sc.stationDown.length+' 个基站退服，触发失联识别');
+  await sleep(450);if(token!==state.runToken)return;
+  setAgent('sense','完成','6 类数据源接入 · 融合完成');
+  setStage(1);state.min=1;renderClock();
+  logf('assess','开始逐村计算到指挥中心视距余隙与菲涅尔区');
+  await sleep(420);if(token!==state.runToken)return;
+  const a=analyze(sc);state.analysis=a;
+  const rowMap={};(a.rows||[]).forEach(r=>{rowMap[r.v.id]=r;});
+  const popV=a.rows.reduce((s,r)=>s+r.v.pop,0);
+  const p1=a.rows[0];
+  logf('assess','识别失联 '+sc.affected.length+' 个村寨，影响人口 '+popV.toLocaleString('zh-CN')+' 人');
+  logf('assess','保障对象 '+p1.v.name+' 为最高优先级 P1');
+  await sleep(450);if(token!==state.runToken)return;
+  setAgent('assess','完成','失联 '+sc.affected.length+' 个 · 影响 '+popV.toLocaleString('zh-CN')+' 人');
+  renderVillageList(rowMap);
+  setStage(2);state.min=2;renderClock();
+  const plan=buildPlan(sc,a);state.plan=plan;
+  const best=plan.relay;
+  logf('plan','中继点评估完成，候选 '+a.relays.length+' 个，最优 '+best.name+'，覆盖 '+best.covered.length+' 个失联村寨');
+  logf('plan','生成 '+plan.rows.length+' 条通信保障链路，方案计算耗时 2 分 47 秒');
+  await sleep(500);if(token!==state.runToken)return;
+  setAgent('plan','完成','链路 '+plan.rows.length+' 条 · 余量最弱 '+Math.min(...plan.rows.filter(r=>r.method!=='beidou').map(r=>r.link.margin)).toFixed(1)+' dB');
+  drawLinks(plan);
+  setStage(3);state.min=3;renderClock();
+  const tasks=buildTasks(sc,plan);state.tasks=tasks;
+  logf('dispatch','按优先级生成 '+tasks.length+' 项调度任务，最早任务开始执行');
+  await sleep(450);if(token!==state.runToken)return;
+  setAgent('dispatch','完成','任务 '+tasks.length+' 项 · 卫星 '+sc.resources.satellite+' 套');
+  const b=buildBeidou(sc,a);state.beidou=b;
+  logf('review','北斗短报文压缩 '+b.rawBytes+' B → '+b.bytes+' B，压缩率 '+Math.round(100*(1-b.bytes/b.rawBytes))+'%');
+  setStage(4);state.min=4;renderClock();
+  logf('review','生成复盘报告与恢复时间线');
+  await sleep(400);if(token!==state.runToken)return;
+  setAgent('review','完成','报告已生成 · 可追溯');
+  setStage(5);state.min=4;renderClock();
+  state.done=true;state.running=false;
+  $('#btnRun').disabled=false;$('#btnExport').disabled=false;
+  $('#logState').textContent='DONE';$('#agentState').textContent='完成';
+  const rep=buildReport(sc,plan,a,b);
+  renderReport(rep);
+  updateKpis();
+  switchTab('link');
+  await sleep(300);if(token!==state.runToken)return;
+  logf('system','推演完成：通信保障方案已生成，等待人工确认后下达任务。','ok');
+}
+
+/* ================== 初始化 ================== */
+document.addEventListener('DOMContentLoaded',()=>{
+  paintTerrain();
+  renderGrid();renderRivers();renderContours();
+  const sc0=SCENARIOS.flood;
+  renderZone(sc0);renderRoads(sc0);renderNodes(sc0);renderLegend();
+  const ag=$('#agents');
+  AGENTS.forEach((a,i)=>{
+    const d=document.createElement('div');
+    d.className='agent pending';
+    d.dataset.a=a.id;
+    d.innerHTML='<div class="a-top"><span class="a-idx">'+String(i+1).padStart(2,'0')+'</span><b>'+a.name+'</b><span class="a-st">待命</span></div><div class="a-desc">'+a.desc+'</div><div class="a-bar"><i></i></div><div class="a-out">等待接管任务队列…</div>';
+    ag.appendChild(d);
+  });
+  $('#stages').innerHTML='';
+  STAGES.forEach(s=>{const p=document.createElement('span');p.className='stage-p';p.id='st-'+s.id;p.textContent=s.name;$('#stages').appendChild(p);});
+  document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(t)switchTab(t.dataset.tab);});
+  document.getElementById('btnRun').addEventListener('click',()=>{setStage(0);startRun();});
+  document.getElementById('btnReset').addEventListener('click',()=>{
+    state.runToken++;state.running=false;state.done=false;state.min=0;state.analysis=null;state.plan=null;state.tasks=null;state.beidou=null;state.report='';
+    const sc=SCENARIOS[state.scenarioKey];state.scenario=sc;state.baseMs=parseBase(sc.base);
+    renderScenarioInfo(sc);renderVillageList(null);renderNodes(sc);
+    $('#btnRun').disabled=false;$('#btnExport').disabled=true;$('#logState').textContent='IDLE';$('#agentState').textContent='待命';
+    setStage(-1);switchTab('assess');renderAssess(null);renderLink(null);renderTasks(null);renderBeidou(null);renderReport(null);
+    updateKpis();
+  });
+  document.getElementById('btnExport').addEventListener('click',()=>{
+    const blob=new Blob(['\ufeff'+state.report],{type:'text/markdown'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='RidgeLink-'+state.scenario.code+'.md';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('fastChk').addEventListener('change',()=>{state.fast=document.getElementById('fastChk').checked;});
+  loadScenario('flood');
+});
+})();
+</script>
+<script>
+/* PWA：离线缓存 */
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+</script>
+<script src="offline-mode.js"></script>
+</body>
+</html>

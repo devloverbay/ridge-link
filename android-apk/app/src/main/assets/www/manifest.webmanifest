@@ -1,0 +1,36 @@
+{
+  "name": "山脊信使 RidgeLink · 山区应急通信辅助智能体",
+  "short_name": "山脊信使",
+  "description": "面向山区断网、断路、断链场景的应急通信辅助智能体：灾情一张图、地形感知链路规划、资源调度与全流程复盘。",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#060e18",
+  "theme_color": "#060e18",
+  "categories": ["utilities", "productivity", "education"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

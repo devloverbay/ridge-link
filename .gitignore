@@ -1,0 +1,28 @@
+# ---- 构建产物 / 本地环境 ----
+.gradle/
+build/
+app/build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ---- IDE ----
+.idea/
+*.iml
+*.hprof
+
+# ---- 打包产物 ----
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# ---- 系统 / 临时 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+__MACOSX/
+*.log
+tmp/
+node_modules/

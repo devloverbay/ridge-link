@@ -1,0 +1,4 @@
+// 根工程不再声明 repositories / buildscript：
+// 仓库来源统一在 settings.gradle 的 pluginManagement 与 dependencyResolutionManagement 中管理，
+// 插件版本直接写在 app/build.gradle 的 plugins {} 里。
+// 这样避免了 FAIL_ON_PROJECT_REPOS 与 allprojects.repositories 的冲突。
