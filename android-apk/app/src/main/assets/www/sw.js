@@ -5,7 +5,7 @@
  *   - 静态资源：缓存优先
  * 更新页面后，把 CACHE 版本号 +1 即可让所有客户端换新缓存。
  */
-const CACHE = 'ridgelink-v8';
+const CACHE = 'ridgelink-v9';
 
 const CORE = [
   './',

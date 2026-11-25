@@ -13,6 +13,9 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.statusBarColor = 0xFF060E18.toInt()
+        window.navigationBarColor = 0xFF060E18.toInt()
+
         webView = WebView(this)
 
         val settings: WebSettings = webView.settings
