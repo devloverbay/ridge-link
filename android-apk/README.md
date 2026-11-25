@@ -8,8 +8,8 @@
 
 ## 目录结构
 
-```
-android-apk/                     ← GitHub 仓库根目录必须是这一层
+```text
+android-apk/                     ← 如果单独为它建仓库，仓库根目录必须是这一层
 ├── settings.gradle
 ├── build.gradle                 ← 故意留空：仓库来源统一在 settings.gradle
 ├── gradle.properties
