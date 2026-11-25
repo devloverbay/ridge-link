@@ -1605,6 +1605,9 @@ function setCase(id){
   state.water=C.water.start;
   state.sel=null; state.plan=[];
   NODES=C.nodes.map(n=>Object.assign({},n));
+  staticDone=false;
+  gContour.innerHTML=''; gRoad.innerHTML=''; gRiver.innerHTML=''; gLabel.innerHTML='';
+  gFlood.innerHTML=''; gLink.innerHTML='';
 
   renderHero();
   $('#mapTitle').textContent=C.titles.map;
