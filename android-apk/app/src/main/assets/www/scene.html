@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#060e18">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="山脊信使">
 <meta name="format-detection" content="telephone=no">
 <link rel="manifest" href="manifest.webmanifest">
@@ -867,8 +867,9 @@ function renderStatic(){
   if(staticDone) return;
   staticDone=true;
 
-  /* 等高线 */
-  const cols=80, rows=50, cw=MAPW/cols, chh=MAPH/rows;
+  /* 等高线：手机端降低网格密度，减少 SVG 路径量，避免滚动卡顿 */
+  const small = window.matchMedia && window.matchMedia('(max-width:720px)').matches;
+  const cols = small ? 56 : 80, rows = small ? 35 : 50, cw = MAPW / cols, chh = MAPH / rows;
   const Hh=[];
   for(let j=0;j<=rows;j++){
     const arr=[];
