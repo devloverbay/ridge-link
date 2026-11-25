@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<title>真实场景 · 㵲阳河 2024·6·29 洪灾实景推演 | 山脊信使</title>
+<title>真实场景 · 榕江 2025·6·24 / 6·28 特大洪水实景推演 | 山脊信使</title>
 <style>
   :root{
     --bg:#060e18;--bg2:#081523;
@@ -123,6 +123,26 @@
   .chip.ok{color:#8ef0dd;border-color:rgba(46,230,197,.3);background:rgba(46,230,197,.08)}
   .chip.warn{color:#ffc9a3;border-color:rgba(255,138,61,.3);background:rgba(255,138,61,.08)}
 
+  /* ---------- case switch ---------- */
+  .cases{
+    display:flex;gap:8px;margin:20px 0 0;padding:6px;border-radius:14px;
+    border:1px solid var(--line);background:rgba(6,14,24,.72);backdrop-filter:blur(12px);
+    overflow-x:auto;scrollbar-width:none;
+  }
+  .cases::-webkit-scrollbar{display:none}
+  .case{
+    flex:1;min-width:236px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;
+    padding:11px 14px;border-radius:10px;border:1px solid transparent;background:transparent;
+    color:var(--muted);cursor:pointer;text-align:left;
+    transition:background .18s,color .18s,border-color .18s;
+  }
+  .case:hover{background:rgba(126,183,224,.07);color:var(--text)}
+  .case b{font-size:12.5px;letter-spacing:.6px;font-weight:700;display:flex;align-items:center;gap:7px}
+  .case b i{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.55;flex:none}
+  .case span{font-size:10px;letter-spacing:.5px;opacity:.8;line-height:1.5}
+  .case.on{background:rgba(46,230,197,.1);border-color:rgba(46,230,197,.35);color:var(--teal)}
+  .case.on b i{opacity:1;box-shadow:0 0 10px currentColor}
+
   /* ---------- tabs ---------- */
   .tabs{
     position:sticky;top:58px;z-index:40;margin:26px 0 0;display:flex;gap:6px;
@@ -208,6 +228,16 @@
   .btn.ghost:hover{border-color:rgba(46,230,197,.5)}
   .btn.sm{padding:7px 12px;font-size:11.5px}
   .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+  .link-order{
+    font-size:10.5px;line-height:1.7;color:#7f9cb5;padding:9px 11px;border-radius:9px;
+    border:1px dashed rgba(126,183,224,.22);background:rgba(8,20,33,.5);
+  }
+  .link-order b{color:var(--violet);font-weight:700}
+  .link-order i{font-style:normal;color:#5f7b93;margin:0 5px}
+  .sat-note{
+    font-size:10.5px;line-height:1.75;color:#c3b5f5;padding:9px 11px;border-radius:9px;
+    border:1px solid rgba(167,139,250,.28);background:rgba(167,139,250,.08);
+  }
 
   .side-scroll{flex:1;overflow-y:auto;padding:14px 16px 20px;min-height:0;max-height:640px}
   .empty{font-size:11.5px;line-height:1.9;color:var(--muted);text-align:center;padding:26px 8px}
@@ -346,6 +376,8 @@
     .kpi:last-child{grid-column:1/-1}
     .honest{grid-template-columns:1fr}
     .honest .h-ico{display:none}
+    .cases{margin:14px -12px 0;border-radius:0;border-left:0;border-right:0;padding:6px 12px}
+    .case{min-width:196px;min-height:56px;padding:9px 12px}
     .tabs{top:58px;padding:6px;margin:14px -12px 0;border-radius:0;border-left:0;border-right:0}
     .tab{min-width:118px;padding:10px 11px;font-size:11.5px;min-height:44px}
     .nav a{padding:9px 12px;min-height:36px;display:inline-flex;align-items:center}
@@ -405,49 +437,32 @@
     <a href="pitch.html">路演</a>
   </nav>
   <div class="top-right">
-    <span class="tag live"><i></i>6·29 洪峰复盘</span>
+    <span class="tag live" id="tagLive"><i></i>6·24 / 6·28 洪峰复盘</span>
   </div>
 </header>
 
 <main class="wrap">
   <!-- ================= HERO ================= -->
   <section class="hero">
-    <div class="badge"><i></i>真实场景 · 贵州黔东南 · 㵲阳河流域</div>
-    <h1>2024·6·29 㵲阳河洪水<br><em>实景推演</em>：从洪峰到信道恢复</h1>
-    <p class="lede">
-      以镇远县“6·29”洪峰为真实蓝本：㵲阳河镇远段洪峰水位 <b>465.5 m</b>，超保证水位 <b>4.5 m</b>，
-      洪峰流量 <b>3235 m³/s</b>，创历史新高；当地 14:00 将防汛Ⅲ级响应上调为Ⅱ级，累计安全转移群众 <b>6000 余人</b>。
-      在同一套真实河谷格局上，推演“通信中断 → 影响评估 → 中继选点 → 资源调度 → 复盘”的完整处置链。
-    </p>
-
-    <div class="kpis">
-      <div class="kpi teal"><b>465.5<small>m</small></b><span>洪峰水位 · 大菜园（二）站</span><span class="src real">公开报道</span></div>
-      <div class="kpi red"><b>+4.5<small>m</small></b><span>超保证水位（461 m）</span><span class="src real">公开报道</span></div>
-      <div class="kpi"><b>3235<small>m³/s</small></b><span>相应洪峰流量</span><span class="src real">公开报道</span></div>
-      <div class="kpi orange"><b>6000<small>余人</small></b><span>累计安全转移群众</span><span class="src real">公开报道</span></div>
-      <div class="kpi"><b>5680<small>人</small></b><span>5 个村寨失联（模型）</span><span class="src sim">推演</span></div>
-    </div>
-
-    <div class="honest">
-      <div class="h-ico"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17v.01"/></svg></div>
-      <div>
-        <h4>数据说明：哪些是真的，哪些是推演</h4>
-        <p>
-          本页把两类信息严格分开，避免把推演结果当成灾情事实。
-          <b style="color:#8ef0dd">真实</b>：行政区划与地名、县域海拔区间（354–1132 m）、2024-06-29 洪峰水位/流量、响应级别、转移人数、通信受损的定性描述。
-          <b style="color:#ffc9a3">推演</b>：村寨级失联人数、基站退服清单、链路预算数值、中继选点与调度方案。
-          <b style="color:#9db8cf">示意</b>：地图为示意图，非测绘图；地形由公开海拔区间重建，不代表实测 DEM。
-        </p>
-        <div class="row">
-          <span class="chip ok">地名 / 行政区划 · 真实</span>
-          <span class="chip ok">洪峰 465.5 m / 3235 m³/s · 真实</span>
-          <span class="chip ok">转移 6000 余人 · 真实</span>
-          <span class="chip warn">失联人数 / 退服基站 · 推演</span>
-          <span class="chip warn">链路余量 / 中继选点 · 推演</span>
-        </div>
-      </div>
-    </div>
+    <div class="badge" id="heroBadge"></div>
+    <h1 id="heroTitle"></h1>
+    <p class="lede" id="heroLede"></p>
+    <div class="kpis" id="kpis"></div>
+    <div class="honest" id="honest"></div>
   </section>
+
+  <!-- ================= CASE SWITCH ================= -->
+  <div class="cases" role="tablist" aria-label="真实案例切换">
+    <button class="case on" data-case="rongjiang" role="tab" aria-selected="true">
+      <b><i></i>榕江 · 2025·6·24 / 6·28</b>
+      <span>都柳江两轮特大洪水 · 超保证 5.21 m · 单日转移 4.1 万人</span>
+    </button>
+    <button class="case" data-case="zhenyuan" role="tab" aria-selected="false">
+      <b><i></i>镇远 · 2024·6·29</b>
+      <span>㵲阳河洪水 · 洪峰 465.5 m · 转移 6000 余人</span>
+    </button>
+  </div>
+
 
   <!-- ================= TABS ================= -->
   <div class="tabs" role="tablist">
@@ -461,13 +476,13 @@
   <section class="sec on" id="sec-map">
     <div class="panel">
       <div class="ph">
-        <h3>㵲阳河 镇远—施秉段 · 实景示意</h3>
-        <div class="r" id="mapMeta">水位 461.0 m · 保证水位基准</div>
+        <h3 id="mapTitle">都柳江 榕江段 · 三河汇流实景示意</h3>
+        <div class="r" id="mapMeta">水位 251.50 m · 保证水位基准</div>
       </div>
       <div class="map-grid">
         <div class="map-canvas">
           <div class="map-scroll">
-          <svg id="map" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="㵲阳河实景示意地图">
+          <svg id="map" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="都柳江流域实景示意地图">
             <defs>
               <linearGradient id="gradRiver" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0" stop-color="#2f7fc4"/><stop offset="1" stop-color="#4aa8ff"/>
@@ -485,15 +500,15 @@
           </svg>
           </div>
           <div class="map-hint">← 左右滑动查看全图 →</div>
-          <div class="legend">
-            <span><i style="background:#4aa8ff"></i>㵲阳河</span>
+          <div class="legend" id="legend">
+            <span><i style="background:#4aa8ff"></i><span id="lgRiver">都柳江</span></span>
             <span><i style="background:#2ee6c5"></i>正常基站</span>
             <span><i style="background:#ff8a3d"></i>弱覆盖</span>
             <span><i style="background:#ff566a"></i>退服</span>
             <span><i style="background:#a78bfa"></i>中继点</span>
             <span><i style="background:rgba(74,168,255,.45)"></i>淹没范围</span>
             <span><i style="background:#ff566a;border-radius:1px"></i>塌方阻断</span>
-            <span style="color:#6f8ba4">图宽约 27 km · 示意比例</span>
+            <span style="color:#6f8ba4" id="lgScale">图宽约 27 km · 示意比例</span>
           </div>
         </div>
 
@@ -501,19 +516,24 @@
           <div class="ctrl">
             <div class="ctrl-row">
               <span class="ctrl-label">实时水位（可拖动）</span>
-              <span class="wl"><b id="wlVal">461.0</b><span>m</span></span>
+              <span class="wl"><b id="wlVal">251.50</b><span>m</span></span>
             </div>
-            <input type="range" id="wl" min="461" max="465.5" step="0.1" value="461" aria-label="水位调节">
+            <input type="range" id="wl" min="251.5" max="256.71" step="0.01" value="251.5" aria-label="水位调节">
             <div class="ctrl-row">
-              <span class="ctrl-label" id="wlNote">保证水位 461.0 m</span>
-              <button class="btn ghost sm" id="btnPeak">跳到洪峰 465.5 m</button>
+              <span class="ctrl-label" id="wlNote">保证水位 251.5 m</span>
+              <button class="btn ghost sm" id="btnPeak">跳到 6·24 洪峰 256.71 m</button>
             </div>
+            <button class="btn ghost sm" id="btnPeak2" style="align-self:flex-start">跳到 6·28 洪峰 253.50 m</button>
             <div class="toggles">
               <label class="tg"><input type="checkbox" id="tgFlood" checked>显示淹没范围</label>
               <label class="tg"><input type="checkbox" id="tgLink" checked>显示可用链路</label>
               <label class="tg"><input type="checkbox" id="tgLabel" checked>显示村寨名称</label>
             </div>
             <button class="btn primary" id="btnPlan">一键生成中继方案</button>
+            <div class="link-order" id="linkOrder">
+              链路优先级 <i>›</i> 地面基站 <i>›</i> 微波中继 <i>›</i> <b>卫星直连</b><br>
+              卫星直连不依赖地面网：北斗短报文（文字）＋ 天通卫星（语音/数据），作为最后兜底；需专用终端或支持卫星通信的机型。
+            </div>
           </div>
 
           <div class="side-scroll" id="detail">
@@ -532,7 +552,7 @@
   <section class="sec" id="sec-time">
     <div class="panel" style="padding:18px">
       <div class="ph" style="padding:0 0 14px;border-bottom:none">
-        <h3>2024-06-28 → 06-30 · 逐时复盘</h3>
+        <h3 id="tlTitle">2025-06-23 → 06-30 · 两轮洪峰逐时复盘</h3>
         <div class="r">左：公开报道节点　右：模型推演节点</div>
       </div>
       <div class="tl-wrap">
@@ -573,8 +593,8 @@
           <h3>或直接粘贴</h3>
         </div>
         <textarea id="ta" spellcheck="false" placeholder="id,name,type,x,y,elev,pop,station,status
-N01,高碑村,村,95,286,520,820,BS-07,down
-N02,镇远古城,县城,470,300,465,52000,BS-01,down"></textarea>
+N01,古州镇,县城,470,306,255,86000,BS-01,down
+N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
         <div class="imp-actions">
           <button class="btn primary sm" id="btnApply">解析并应用</button>
           <button class="btn ghost sm" id="btnLoadSample">填入示例</button>
@@ -588,7 +608,7 @@ N02,镇远古城,县城,470,300,465,52000,BS-01,down"></textarea>
   <section class="sec" id="sec-flow">
     <div class="panel" style="padding:18px">
       <div class="ph" style="padding:0 0 14px;border-bottom:none">
-        <h3>24 小时值班链路 · 谁在什么时间做什么</h3>
+        <h3 id="flowTitle">48 小时值班链路 · 谁在什么时间做什么</h3>
         <div class="r">点开每一步查看输出与时限</div>
       </div>
       <div class="flow-head" id="flowHead"></div>
@@ -596,7 +616,7 @@ N02,镇远古城,县城,470,300,465,52000,BS-01,down"></textarea>
     </div>
   </section>
 
-  <div class="footnote">
+  <div class="footnote" id="footnote">
     <b>资料来源（公开报道 / 政府网站，2024-06-29 至 2024-07-11）</b><br>
     中新网《㵲阳河流域镇远段出现洪峰水位已安全转移6000余人暂无伤亡》
     <a href="https://www.chinanews.com.cn/sh/2024/06-30/10243104.shtml" target="_blank" rel="noopener">chinanews.com.cn/sh/2024/06-30/10243104.shtml</a><br>
@@ -616,35 +636,93 @@ N02,镇远古城,县城,470,300,465,52000,BS-01,down"></textarea>
 const $ = (s,r)=> (r||document).querySelector(s);
 const $$ = (s,r)=> Array.prototype.slice.call((r||document).querySelectorAll(s));
 const NS = 'http://www.w3.org/2000/svg';
-const MAPW=960, MAPH=600, KMPP=0.0285;
+const MAPW=960, MAPH=600;
+let C=null;                      /* 当前案例（镇远 / 榕江） */
 const pad2=n=>String(n).padStart(2,'0');
 const fmt=n=>n.toLocaleString('zh-CN');
 
-/* ---------------- 地形 ---------------- */
-const BASE=420;
-const HILLS=[
-  {x:452,y:118,h:330,s:92},   /* 石屏山（镇远城北） */
-  {x:150,y:158,h:365,s:104},  /* 云台山（施秉方向） */
-  {x:298,y:66,h:320,s:88},
-  {x:604,y:520,h:305,s:112},  /* 南部山地（金堡—报京） */
-  {x:862,y:168,h:285,s:100},
-  {x:786,y:522,h:268,s:96},
-  {x:206,y:474,h:245,s:86},
-  {x:470,y:70,h:250,s:80}
-];
-const RIVER=[
-  [0,300],[90,296],[152,310],[212,320],[270,300],[330,318],[380,300],
-  [420,330],[455,300],[492,332],[530,306],[575,330],[640,336],[700,330],
-  [760,344],[830,336],[900,350],[960,340]
-];
-const ROADS=[
-  {name:'G60 沪昆高速',cls:'hw',pts:[[0,252],[110,248],[222,260],[330,252],[408,266],[470,248],[556,260],[660,252],[760,266],[858,256],[960,268]]},
-  {name:'湘黔铁路',cls:'rail',pts:[[0,362],[118,354],[238,360],[340,352],[428,364],[520,354],[620,362],[718,354],[818,364],[918,356]]},
-  {name:'乡道 Y017',cls:'road',pts:[[470,292],[512,356],[556,398],[600,430],[658,454],[706,472]]},
-  {name:'乡道 Y022',cls:'road',pts:[[470,292],[440,240],[420,196],[386,168],[350,160]]},
-  {name:'村道 C09',cls:'road',pts:[[150,300],[124,196],[130,140],[140,104]]}
-];
-const BLOCKED=[{r:2,s:2},{r:4,s:2}]; /* 推演：塌方阻断 */
+/* ================ 地形数据（按案例切换） ================ */
+
+/* —— 镇远 · 㵲阳河 —— */
+const GEO_ZY={
+  base:420, kmpp:0.0285,
+  valley:{w:70,d:210,s:38},
+  hills:[
+    {x:452,y:118,h:330,s:92},   /* 石屏山（镇远城北） */
+    {x:150,y:158,h:365,s:104},  /* 云台山（施秉方向） */
+    {x:298,y:66,h:320,s:88},
+    {x:604,y:520,h:305,s:112},  /* 南部山地（金堡—报京） */
+    {x:862,y:168,h:285,s:100},
+    {x:786,y:522,h:268,s:96},
+    {x:206,y:474,h:245,s:86},
+    {x:470,y:70,h:250,s:80}
+  ],
+  river:[[0,300],[90,296],[152,310],[212,320],[270,300],[330,318],[380,300],
+         [420,330],[455,300],[492,332],[530,306],[575,330],[640,336],[700,330],
+         [760,344],[830,336],[900,350],[960,340]],
+  tribs:[],
+  roads:[
+    {name:'G60 沪昆高速',cls:'hw',pts:[[0,252],[110,248],[222,260],[330,252],[408,266],[470,248],[556,260],[660,252],[760,266],[858,256],[960,268]]},
+    {name:'湘黔铁路',cls:'rail',pts:[[0,362],[118,354],[238,360],[340,352],[428,364],[520,354],[620,362],[718,354],[818,364],[918,356]]},
+    {name:'乡道 Y017',cls:'road',pts:[[470,292],[512,356],[556,398],[600,430],[658,454],[706,472]]},
+    {name:'乡道 Y022',cls:'road',pts:[[470,292],[440,240],[420,196],[386,168],[350,160]]},
+    {name:'村道 C09',cls:'road',pts:[[150,300],[124,196],[130,140],[140,104]]}
+  ],
+  blocked:[{r:2,s:2},{r:4,s:2}],
+  riverName:'㵲阳河',
+  marks:[
+    {x:452,y:118,t:'石屏山',cls:'peak'},
+    {x:150,y:158,t:'云台山',cls:'peak'},
+    {x:604,y:520,t:'南部山地',cls:'peak'},
+    {x:90,y:296,t:'高碑湖',cls:'water'},
+    {x:520,y:236,t:'铁溪峡谷',cls:'water'},
+    {x:470,y:340,t:'㵲阳河',cls:'water'},
+    {x:930,y:318,t:'→ 岑巩 / 玉屏',cls:'dir'}
+  ]
+};
+
+/* —— 榕江 · 都柳江（三河汇流） —— */
+const GEO_RJ={
+  base:380, kmpp:0.040,
+  valley:{w:82,d:200,s:46},
+  hills:[
+    {x:655,y:98,h:430,s:126},   /* 雷公山南坡（县境北部） */
+    {x:330,y:512,h:440,s:132},  /* 月亮山（县境南部，主峰约 1490 m） */
+    {x:452,y:252,h:110,s:38},   /* 五榕山（县城北侧） */
+    {x:196,y:76,h:300,s:100},
+    {x:168,y:432,h:250,s:92},
+    {x:860,y:196,h:265,s:96},
+    {x:646,y:520,h:285,s:104},
+    {x:520,y:170,h:205,s:82}
+  ],
+  river:[[0,286],[84,298],[150,292],[218,306],[286,298],[348,312],[408,298],
+         [470,306],[532,318],[598,312],[660,330],[726,336],[796,330],[872,346],[960,340]],
+  tribs:[
+    /* 寨蒿河：自北向南入都柳江 */
+    [[470,44],[468,112],[473,190],[470,306]],
+    /* 平永河：自西北向东南入都柳江 */
+    [[116,96],[196,152],[278,220],[358,268],[430,296]],
+    /* 车江（三宝侗寨一带） */
+    [[560,404],[542,368],[520,330]]
+  ],
+  roads:[
+    {name:'G76 厦蓉高速',cls:'hw',pts:[[0,214],[120,220],[240,214],[350,228],[470,216],[590,226],[700,218],[820,230],[960,222]]},
+    {name:'贵广高铁',cls:'rail',pts:[[0,392],[120,386],[250,394],[380,386],[500,396],[630,388],[760,396],[900,388],[960,392]]},
+    {name:'G321 国道',cls:'road',pts:[[0,270],[110,282],[230,276],[340,288],[452,282],[560,296],[672,290],[790,302],[900,296],[960,300]]},
+    {name:'乡道 X864',cls:'road',pts:[[470,306],[452,250],[448,196],[452,140],[462,96]]},
+    {name:'乡道 X876',cls:'road',pts:[[470,306],[400,360],[340,420],[300,468],[286,510]]}
+  ],
+  blocked:[{r:3,s:2},{r:4,s:1}],
+  riverName:'都柳江',
+  marks:[
+    {x:655,y:98,t:'雷公山南坡',cls:'peak'},
+    {x:330,y:512,t:'月亮山',cls:'peak'},
+    {x:452,y:252,t:'五榕山',cls:'peak'},
+    {x:90,y:298,t:'都柳江上游',cls:'water'},
+    {x:612,y:386,t:'三宝侗寨 · 车江',cls:'water'},
+    {x:924,y:318,t:'→ 从江 / 黎平',cls:'dir'}
+  ]
+};
 
 const dist2seg=(x,y,ax,ay,bx,by)=>{
   const dx=bx-ax, dy=by-ay, l=dx*dx+dy*dy;
@@ -653,18 +731,23 @@ const dist2seg=(x,y,ax,ay,bx,by)=>{
   return Math.hypot(x-px,y-py);
 };
 const distToRiver=(x,y)=>{
+  const R=C.geo.river;
   let m=1e9;
-  for(let i=0;i<RIVER.length-1;i++) m=Math.min(m,dist2seg(x,y,RIVER[i][0],RIVER[i][1],RIVER[i+1][0],RIVER[i+1][1]));
+  for(let i=0;i<R.length-1;i++) m=Math.min(m,dist2seg(x,y,R[i][0],R[i][1],R[i+1][0],R[i+1][1]));
+  for(const t of C.geo.tribs){
+    for(let i=0;i<t.length-1;i++) m=Math.min(m,dist2seg(x,y,t[i][0],t[i][1],t[i+1][0],t[i+1][1]));
+  }
   return m;
 };
 function T(x,y){
-  let h=BASE;
-  for(const p of HILLS){
+  const g=C.geo;
+  let h=g.base;
+  for(const p of g.hills){
     const dx=x-p.x, dy=y-p.y;
     h += p.h*Math.exp(-(dx*dx+dy*dy)/(2*p.s*p.s));
   }
   const dr=distToRiver(x,y);
-  if(dr<70) h -= 210*Math.exp(-(dr*dr)/(2*38*38));
+  if(dr<g.valley.w) h -= g.valley.d*Math.exp(-(dr*dr)/(2*g.valley.s*g.valley.s));
   return Math.max(150,h);
 }
 
@@ -672,7 +755,7 @@ function T(x,y){
 function los(a,b,aglA,aglB,fGHz){
   /* aglA / aglB 为天线离地高度（m），端点绝对高度由地形 T() 决定 */
   const hA=T(a.x,a.y)+aglA, hB=T(b.x,b.y)+aglB;
-  const dKm=Math.hypot(b.x-a.x,b.y-a.y)*KMPP;
+  const dKm=Math.hypot(b.x-a.x,b.y-a.y)*C.geo.kmpp;
   const N=110; let minClear=1e9;
   for(let i=1;i<N;i++){
     const t=i/N, x=a.x+(b.x-a.x)*t, y=a.y+(b.y-a.y)*t;
@@ -706,8 +789,8 @@ function diffLoss(L){
   return Math.max(0, 6.9+20*Math.log10(Math.sqrt((v-0.1)*(v-0.1)+1)+v-0.1));
 }
 
-/* ---------------- 真实数据：村寨 ---------------- */
-const REAL_NODES=[
+/* ---------------- 真实数据：村寨（镇远） ---------------- */
+const NODES_ZY=[
   {id:'N01',name:'高碑村',type:'村',x:95,y:286,elev:520,pop:820,station:'BS-07',lost:620,needs:['药品','饮用水'],note:'施秉县甘溪乡，㵲阳河景区上游，高碑湖回水顶托'},
   {id:'N02',name:'镇远古城',type:'县城',x:470,y:300,elev:465,pop:52000,station:'BS-01',lost:0,needs:['排涝','供电'],note:'㵲阳镇，S 形河道穿城，沿河街道进水'},
   {id:'N03',name:'铁溪村',type:'村',x:520,y:250,elev:500,pop:560,station:'BS-01',lost:380,needs:['药品','照明'],note:'㵲阳镇北部峡谷，唯一进村道路塌方'},
@@ -722,7 +805,7 @@ const REAL_NODES=[
   {id:'N12',name:'大地乡',type:'乡',x:140,y:100,elev:900,pop:3200,station:'BS-04',lost:0,needs:['保暖'],note:'县域西北高海拔乡'},
   {id:'N13',name:'尚寨土家族乡',type:'乡',x:470,y:100,elev:700,pop:3800,station:'BS-01',lost:0,needs:['药品'],note:'北部土家族聚居乡'}
 ];
-const STATIONS=[
+const STATIONS_ZY=[
   {id:'BS-01',name:'古城北站',x:452,y:268,status:'down',power:'市电中断',backhaul:'光缆中断'},
   {id:'BS-02',name:'蕉溪站',x:660,y:296,status:'down',power:'进水',backhaul:'光缆中断'},
   {id:'BS-03',name:'青溪站',x:722,y:292,status:'weak',power:'油机',backhaul:'微波'},
@@ -732,16 +815,49 @@ const STATIONS=[
   {id:'BS-07',name:'高碑站',x:102,y:258,status:'down',power:'市电中断',backhaul:'光缆中断'},
   {id:'BS-08',name:'羊坪站',x:796,y:306,status:'up',power:'市电',backhaul:'光缆'}
 ];
-const RELAYS=[
+const RELAYS_ZY=[
   {id:'R1',name:'石屏山',x:440,y:150,elev:932,kind:'relay'},
   {id:'R2',name:'云台山',x:160,y:170,elev:830,kind:'relay'},
   {id:'R3',name:'铁溪垭口',x:560,y:210,elev:559,kind:'relay'},
   {id:'R4',name:'报京坳',x:770,y:498,elev:777,kind:'relay'}
 ];
 
+/* ---------------- 真实数据：村寨（榕江） ---------------- */
+const NODES_RJ=[
+  {id:'N01',name:'古州镇',type:'县城',x:470,y:306,elev:255,pop:86000,station:'BS-01',lost:2600,needs:['排涝','供电','饮用水'],note:'都柳江、寨蒿河、平永河三河汇流处；6·24 洪水 1 小时覆盖近半个城区，6·28 全城警报撤离'},
+  {id:'N02',name:'村超球场',type:'地标',x:512,y:340,elev:252,pop:0,station:'BS-01',lost:0,needs:['清淤','临时照明'],note:'“村超”主场，6·24 与 6·28 两次被洪水漫过，赛事中断，后期转为物资集散与安置点'},
+  {id:'N03',name:'忠诚镇',type:'镇',x:600,y:320,elev:262,pop:12000,station:'BS-02',lost:1400,needs:['食品','帐篷'],note:'县城下游沿江低洼带，厂房与农田受淹，进镇道路积水'},
+  {id:'N04',name:'寨蒿镇',type:'镇',x:470,y:120,elev:460,pop:9600,station:'BS-03',lost:1200,needs:['药品','饮用水'],note:'寨蒿河上游暴雨中心，进镇道路两处塌方，光缆随桥冲断'},
+  {id:'N05',name:'平永镇',type:'镇',x:240,y:175,elev:480,pop:8800,station:'BS-04',lost:900,needs:['食品','药品'],note:'平永河上游，山洪与泥石流叠加，河道淤堵改道'},
+  {id:'N06',name:'平江镇',type:'镇',x:405,y:90,elev:620,pop:7200,station:'BS-07',lost:500,needs:['保暖','照明'],note:'北部高海拔，市电中断，油机上山需 3 小时'},
+  {id:'N07',name:'栽麻镇',type:'镇',x:640,y:195,elev:560,pop:6800,station:'BS-08',lost:0,needs:['饮用水'],note:'东北部侗寨聚居，地形遮蔽，属长期弱覆盖区'},
+  {id:'N08',name:'八开镇',type:'镇',x:250,y:430,elev:320,pop:9400,station:'BS-05',lost:700,needs:['药品','食品'],note:'都柳江上游左岸，沿江公路水毁，靠油机维持弱覆盖'},
+  {id:'N09',name:'定威乡',type:'乡',x:140,y:350,elev:400,pop:5600,station:'BS-05',lost:400,needs:['食品'],note:'西部山地，唯一通道塌方，物资需人背马驮'},
+  {id:'N10',name:'兴华乡',type:'乡',x:150,y:245,elev:500,pop:6200,station:'BS-04',lost:300,needs:['药品'],note:'西北部，光缆与道路同沟敷设，一并中断'},
+  {id:'N11',name:'计划乡',type:'乡',x:330,y:520,elev:700,pop:7800,station:'BS-05',lost:600,needs:['保暖','食品'],note:'月亮山腹地，苗族村寨分散，山体遮挡严重'},
+  {id:'N12',name:'三江乡',type:'乡',x:700,y:470,elev:780,pop:10500,station:'BS-06',lost:800,needs:['药品','照明'],note:'东南部高坡，转移道路单一，需错峰撤离'},
+  {id:'N13',name:'乐里镇',type:'镇',x:770,y:140,elev:600,pop:11200,station:'BS-08',lost:0,needs:['照明'],note:'东北部，地势较高，被设为临时安置点'}
+];
+const STATIONS_RJ=[
+  {id:'BS-01',name:'古州站',x:452,y:286,status:'down',power:'市电中断',backhaul:'光缆中断'},
+  {id:'BS-02',name:'忠诚站',x:612,y:300,status:'down',power:'进水',backhaul:'光缆中断'},
+  {id:'BS-03',name:'寨蒿站',x:470,y:142,status:'down',power:'市电中断',backhaul:'光缆中断'},
+  {id:'BS-04',name:'平永站',x:244,y:196,status:'down',power:'市电中断',backhaul:'光缆中断'},
+  {id:'BS-05',name:'八开站',x:262,y:410,status:'weak',power:'油机',backhaul:'微波'},
+  {id:'BS-06',name:'三江站',x:706,y:448,status:'up',power:'市电',backhaul:'光缆'},
+  {id:'BS-07',name:'平江站',x:404,y:112,status:'weak',power:'油机',backhaul:'微波'},
+  {id:'BS-08',name:'栽麻站',x:646,y:214,status:'up',power:'市电',backhaul:'光缆'}
+];
+const RELAYS_RJ=[
+  {id:'R1',name:'五榕山',x:448,y:236,elev:620,kind:'relay'},
+  {id:'R2',name:'月亮山',x:336,y:498,elev:1490,kind:'relay'},
+  {id:'R3',name:'雷公山南坡',x:648,y:120,elev:1600,kind:'relay'},
+  {id:'R4',name:'三江山',x:716,y:430,elev:900,kind:'relay'}
+];
+
 /* ---------------- 状态 ---------------- */
-let NODES = REAL_NODES.map(n=>Object.assign({},n));
-const state={water:461.0, sel:null, showFlood:true, showLink:true, showLabel:true, plan:[]};
+let NODES=[];
+const state={water:251.5, sel:null, showFlood:true, showLink:true, showLabel:true, plan:[]};
 
 const svgEl=(tag,attrs)=>{
   const e=document.createElementNS(NS,tag);
@@ -798,10 +914,11 @@ function renderStatic(){
   gContour.appendChild(svgEl('path',{d:dHot,fill:'none',stroke:'rgba(126,183,224,.28)','stroke-width':1}));
 
   /* 道路 */
-  for(const rd of ROADS){
+  const roads=C.geo.roads;
+  for(const rd of roads){
     for(let s=0;s<rd.pts.length-1;s++){
       const a=rd.pts[s], b=rd.pts[s+1];
-      const blocked=BLOCKED.some(x=>x.r===ROADS.indexOf(rd)&&x.s===s);
+      const blocked=C.geo.blocked.some(x=>x.r===roads.indexOf(rd)&&x.s===s);
       gRoad.appendChild(svgEl('path',{
         d:'M'+a[0]+' '+a[1]+'L'+b[0]+' '+b[1],
         fill:'none',
@@ -812,27 +929,28 @@ function renderStatic(){
       }));
     }
   }
-  /* 河流 */
+  /* 河流（干流 + 支流） */
+  const RIV=C.geo.river;
   let dv='';
-  for(let i=0;i<RIVER.length-1;i++){
-    dv += (i?'L':'M')+RIVER[i][0]+' '+RIVER[i][1]+'L'+RIVER[i+1][0]+' '+RIVER[i+1][1];
+  for(let i=0;i<RIV.length-1;i++){
+    dv += (i?'L':'M')+RIV[i][0]+' '+RIV[i][1]+'L'+RIV[i+1][0]+' '+RIV[i+1][1];
+  }
+  for(const tr of C.geo.tribs){
+    let d='';
+    for(let i=0;i<tr.length-1;i++) d += (i?'L':'M')+tr[i][0]+' '+tr[i][1]+'L'+tr[i+1][0]+' '+tr[i+1][1];
+    gRiver.appendChild(svgEl('path',{d,fill:'none',stroke:'#1c5c8f','stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round',opacity:.45}));
+    gRiver.appendChild(svgEl('path',{d,fill:'none',stroke:'url(#gradRiver)','stroke-width':1.9,'stroke-linecap':'round','stroke-linejoin':'round',opacity:.85}));
   }
   gRiver.appendChild(svgEl('path',{d:dv,fill:'none',stroke:'#1c5c8f','stroke-width':9,'stroke-linecap':'round','stroke-linejoin':'round',opacity:.55}));
   gRiver.appendChild(svgEl('path',{d:dv,fill:'none',stroke:'url(#gradRiver)','stroke-width':3.4,'stroke-linecap':'round','stroke-linejoin':'round'}));
 
   /* 山峰与地名标注 */
-  const marks=[
-    {x:452,y:118,t:'石屏山',cls:'peak'},
-    {x:150,y:158,t:'云台山',cls:'peak'},
-    {x:604,y:520,t:'南部山地',cls:'peak'},
-    {x:90,y:296,t:'高碑湖',cls:'water'},
-    {x:520,y:236,t:'铁溪峡谷',cls:'water'},
-    {x:470,y:340,t:'㵲阳河',cls:'water'},
-    {x:930,y:318,t:'→ 岑巩 / 玉屏',cls:'dir'}
-  ];
-  for(const m of marks){
-    const c = m.cls==='peak'?'rgba(167,139,250,.75)' : m.cls==='water'?'rgba(122,190,240,.9)':'rgba(142,169,194,.75)';
-    const t=svgEl('text',{x:m.x,y:m.y,'text-anchor':'middle','font-size':m.cls==='dir'?9:9.5,fill:c,opacity:.95});
+  for(const m of C.geo.marks){
+    const c = m.cls==='peak'?'rgba(167,139,250,.75)'
+            : m.cls==='hot'?'rgba(255,138,61,.95)'
+            : m.cls==='water'?'rgba(122,190,240,.9)':'rgba(142,169,194,.75)';
+    const t=svgEl('text',{x:m.x,y:m.y,'text-anchor':'middle','font-size':m.cls==='dir'?9:(m.cls==='hot'?10:9.5),fill:c,opacity:.95});
+    if(m.cls==='hot') t.setAttribute('font-weight','700');
     t.textContent=m.t;
     if(m.cls==='peak') t.setAttribute('letter-spacing','1.5');
     gLabel.appendChild(t);
@@ -841,14 +959,21 @@ function renderStatic(){
 }
 
 /* ---------------- 动态图层 ---------------- */
-function floodHalf(){ return 3 + (state.water-461)*2.6; }
+function floodHalf(){
+  const w=C.water;
+  return w.halfBase + Math.max(0,state.water-w.guarantee)*w.halfK;
+}
 
 function renderFlood(){
   gFlood.innerHTML='';
   if(!state.showFlood) return;
   const half=floodHalf();
+  const RIV=C.geo.river;
   let dv='';
-  for(let i=0;i<RIVER.length-1;i++) dv += (i?'L':'M')+RIVER[i][0]+' '+RIVER[i][1]+'L'+RIVER[i+1][0]+' '+RIVER[i+1][1];
+  for(let i=0;i<RIV.length-1;i++) dv += (i?'L':'M')+RIV[i][0]+' '+RIV[i][1]+'L'+RIV[i+1][0]+' '+RIV[i+1][1];
+  for(const tr of C.geo.tribs){
+    for(let i=0;i<tr.length-1;i++) dv += 'M'+tr[i][0]+' '+tr[i][1]+'L'+tr[i+1][0]+' '+tr[i+1][1];
+  }
   gFlood.appendChild(svgEl('path',{
     d:dv,fill:'none',stroke:'rgba(74,168,255,.16)','stroke-width':half*2,
     'stroke-linecap':'round','stroke-linejoin':'round',filter:'url(#soft)'
@@ -859,7 +984,7 @@ function renderFlood(){
   }));
 }
 
-function stationOf(id){ return STATIONS.find(s=>s.id===id) || null; }
+function stationOf(id){ return C.stations.find(s=>s.id===id) || null; }
 function isSubmerged(n){ return distToRiver(n.x,n.y) < floodHalf(); }
 function lostTotal(){ return NODES.reduce((a,n)=>a+(n.lost||0),0); }
 function lostNodes(){ return NODES.filter(n=>n.lost>0); }
@@ -902,7 +1027,7 @@ function renderNodes(){
 
 function renderStations(){
   gStation.innerHTML='';
-  for(const s of STATIONS){
+  for(const s of C.stations){
     const c=STATUS_COLOR[s.status];
     const g=svgEl('g',{});
     if(s.status==='down'){
@@ -914,7 +1039,7 @@ function renderStations(){
     gStation.appendChild(g);
   }
   /* 中继点 */
-  for(const r of RELAYS){
+  for(const r of C.relays){
     const g=svgEl('g',{});
     g.appendChild(svgEl('path',{
       d:'M'+r.x+' '+(r.y-6)+'L'+(r.x+6)+' '+r.y+'L'+r.x+' '+(r.y+6)+'L'+(r.x-6)+' '+r.y+'Z',
@@ -926,13 +1051,13 @@ function renderStations(){
 
 function bestCandidates(node){
   const list=[];
-  for(const s of STATIONS){
+  for(const s of C.stations){
     if(s.status==='down') continue;
     const L=los(node,{x:s.x,y:s.y},12,25,1.8);
     const B=budget('lte',L.dKm,diffLoss(L));
     list.push({id:s.id,name:s.name,kind:'站点',status:s.status,L,B});
   }
-  for(const r of RELAYS){
+  for(const r of C.relays){
     const L=los(node,{x:r.x,y:r.y},12,45,5.8);
     const B=budget('relay',L.dKm,diffLoss(L));
     list.push({id:r.id,name:r.name,kind:'中继',status:'up',L,B});
@@ -953,7 +1078,7 @@ function renderLinks(){
     if(n.lost<=0) continue;
     const best=bestCandidates(n)[0];
     if(!best || best.B.margin<=0) continue;
-    const target = STATIONS.find(s=>s.id===best.id) || RELAYS.find(r=>r.id===best.id);
+    const target = C.stations.find(s=>s.id===best.id) || C.relays.find(r=>r.id===best.id);
     if(!target) continue;
     const ok=best.L.good;
     gLink.appendChild(svgEl('line',{
@@ -969,7 +1094,7 @@ function renderPlan(){
   if(state.plan.length===0) return;
   for(const p of state.plan){
     const n=NODES.find(x=>x.id===p.node);
-    const r=RELAYS.find(x=>x.id===p.relay);
+    const r=C.relays.find(x=>x.id===p.relay);
     if(!n||!r) continue;
     gLink.appendChild(svgEl('line',{
       x1:n.x,y1:n.y,x2:r.x,y2:r.y,
@@ -982,12 +1107,13 @@ function renderPlan(){
 function renderMapMeta(){
   const half=floodHalf();
   const sub=NODES.filter(isSubmerged).length;
-  $('#mapMeta').textContent='水位 '+state.water.toFixed(1)+' m · 淹没带约 '+(half*2*KMPP*1000).toFixed(0)+' m 宽 · 进水 '+sub+' 处';
-  $('#wlVal').textContent=state.water.toFixed(1);
+  const w=C.water;
+  $('#mapMeta').textContent='水位 '+state.water.toFixed(w.dec)+' m · 淹没带约 '+(half*2*C.geo.kmpp*1000).toFixed(0)+' m 宽 · 进水 '+sub+' 处';
+  $('#wlVal').textContent=state.water.toFixed(w.dec);
   const note=$('#wlNote');
-  if(state.water>=465.4) note.textContent='已达洪峰 465.5 m（超保证 4.5 m）';
-  else if(state.water>=463) note.textContent='超保证水位 '+ (state.water-461).toFixed(1) +' m';
-  else note.textContent='保证水位 461.0 m';
+  if(state.water>=w.peak-0.005) note.textContent='已达 '+w.peakLabel+' 洪峰 '+w.peak.toFixed(2)+' m（超保证 '+(w.peak-w.guarantee).toFixed(2)+' m）';
+  else if(state.water>w.guarantee+0.005) note.textContent='超保证水位 '+(state.water-w.guarantee).toFixed(2)+' m';
+  else note.textContent='保证水位 '+w.guarantee.toFixed(1)+' m';
 }
 
 /* ---------------- 详情卡 ---------------- */
@@ -1035,22 +1161,24 @@ function renderDetail(){
     '<div style="display:flex;flex-wrap:wrap;gap:6px">'+(n.needs||[]).map(x=>'<span class="chip">'+x+'</span>').join('')+'</div>'+
     '<div class="sub-t">链路预算（前 3 优）</div>'+
     '<div class="tblwrap"><table class="lt"><thead><tr><th>目标</th><th>距离<br>km</th><th>净空<br>m</th><th>损耗<br>dB</th><th>余量<br>dB</th><th>判定</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+    '<div class="sub-t">卫星直连（最后兜底）</div>'+
+    '<div class="sat-note">北斗短报文先回传文字与位置（约 116 字节），天通卫星随后建立语音/数据；不依赖地面基站与光缆。需北斗 / 天通专用终端或支持卫星通信的机型。</div>'+
     '<div style="margin-top:10px;font-size:10px;line-height:1.7;color:#6f8ba4">净空为最小菲涅尔区净空；余量 = 接收电平 − 接收灵敏度；距离按示意坐标换算，仅用于方法演示。</div>';
 }
 
 /* ---------------- 中继方案 ---------------- */
 function makePlan(){
-  const targets=lostNodes().sort((a,b)=>b.lost-a.lost).slice(0,4);
+  const targets=lostNodes().sort((a,b)=>b.lost-a.lost);
   state.plan=[];
   for(const n of targets){
     let best=null;
-    for(const r of RELAYS){
+    for(const r of C.relays){
       const L=los(n,{x:r.x,y:r.y},12,45,5.8);
       if(L.blocked || !L.good || L.dKm>12) continue;   /* 只接受视距可用且 12 km 内的中继 */
       const B=budget('relay',L.dKm,diffLoss(L));
       if(!best || B.margin>best.B.margin) best={node:n.id,relay:r.id,L,B,name:r.name,sat:false};
     }
-    /* 无可用中继时，按真实做法转卫星便携站兜底 */
+    /* 无可用中继时，直接转卫星直连兜底（北斗短报文 / 天通） */
     if(best) state.plan.push(best);
     else state.plan.push({node:n.id,relay:null,sat:true,nm:n.name});
   }
@@ -1062,7 +1190,7 @@ function makePlan(){
     state.plan.map(p=>{
       const n=NODES.find(x=>x.id===p.node)||{};
       if(p.sat){
-        return '<div class="plan-item"><span class="b" style="background:#4aa8ff"></span>'+(n.name||p.nm)+' → 卫星便携站兜底（无可用中继）</div>';
+        return '<div class="plan-item"><span class="b" style="background:#a78bfa"></span>'+(n.name||p.nm)+' → 卫星直连兜底（北斗短报文先通 / 天通语音）</div>';
       }
       return '<div class="plan-item"><span class="b"></span>'+(n.name||'')+' → '+p.name+'（'+p.L.dKm.toFixed(2)+' km，余量 +'+p.B.margin.toFixed(1)+' dB）</div>';
     }).join('');
@@ -1081,7 +1209,7 @@ function renderMap(){
 }
 
 /* ---------------- 时间线 ---------------- */
-const TL_REAL=[
+const TL_ZY_REAL=[
   {t:'06-28 08:00',title:'持续强降雨开始',body:'6 月 28 日至 29 日贵州持续暴雨，㵲阳河流域面雨量快速累积，上游来水同步增加。',key:false},
   {t:'06-28 20:00',title:'上游水库泄洪叠加',body:'受连续降雨和㵲阳河上游泄洪共同影响，镇远段水位进入快速上涨通道。',key:false},
   {t:'06-29 上午',title:'古城沿河进水',body:'洪水漫过堤岸涌入镇远古城，沿河街道、商铺被淹，部分居民被困，消防与公安紧急转移。',key:false},
@@ -1091,7 +1219,7 @@ const TL_REAL=[
   {t:'06-30 起',title:'水位回落与清淤恢复',body:'洪峰过境后水位回落，当地组织清淤、消杀，推动生产生活秩序恢复。',key:false},
   {t:'2024-07',title:'通信抢修：三级联动',body:'黔东南受灾地区部分机房停电、基站退服、光缆损毁；省州市县三级联动，调配油机发电、接续光缆、更换设备。',key:false}
 ];
-const TL_SIM=[
+const TL_ZY_SIM=[
   {t:'T+0 03:40',title:'模型触发：5 个村寨失联',body:'高碑、铁溪、蕉溪、金堡、报京相继失去信令，判定为区域性中断而非单点故障。',key:true},
   {t:'T+8 03:48',title:'感知智能体：多源融合',body:'融合基站退服告警、光缆 OTDR 断点、村级报灾短信、卫星云图降水估测，输出 13 个点位状态。',key:false},
   {t:'T+20 04:00',title:'研判智能体：影响评估',body:'按人口、道路阻断、淹没范围计算影响面，排序出 4 个一级优先级村寨。',key:false},
@@ -1101,18 +1229,44 @@ const TL_SIM=[
   {t:'T+180 07:00',title:'首条链路打通',body:'石屏山中继开通，蕉溪、铁溪恢复语音；卫星便携站在报京乡建立数据通道。',key:false},
   {t:'T+24h',title:'复盘智能体：输出报告',body:'生成断站时序、链路余量、资源周转率与 3 条改进建议，归档为下次演练基线。',key:false}
 ];
+/* —— 榕江 · 2025·6·24 / 6·28 —— */
+const TL_RJ_REAL=[
+  {t:'06-23 起',title:'都柳江流域持续强降雨',body:'贵州南部持续暴雨，都柳江干支流面雨量快速累积，上游来水同步增大。',key:false},
+  {t:'06-24 13:00（预计）',title:'首轮洪峰预报',body:'石灰厂水文站预计出现洪峰水位 255 m、流量 9650 m³/s，超保证水位 3.5 m。',key:false},
+  {t:'06-24 14:15',title:'实测 256.71 m · “百年一遇”',body:'洪峰水位 256.71 m，超保证水位（251.5 m）5.21 m，相应流量 1.14 万 m³/s；县城大面积进水，村超球场被淹。',key:true},
+  {t:'06-24 夜间',title:'首轮洪峰过境',body:'水位回落，当地组织清淤、消杀与群众安置，通信、电力、供水同步抢修。',key:false},
+  {t:'06-27 → 06-28',title:'新一轮强降雨叠加',body:'降雨再度加强，都柳江水位复涨，防汛形势由“恢复”重新转为“应战”。',key:false},
+  {t:'06-28 05:00',title:'启动防汛Ⅳ级响应',body:'榕江县启动防汛Ⅳ级应急响应，乡镇干部进村入户组织转移。',key:false},
+  {t:'06-28 09:30',title:'响应由Ⅲ级升至Ⅱ级',body:'根据雨水情发展，防汛应急响应级别继续上调，重点洪区开始分片撤离。',key:true},
+  {t:'06-28 12:30',title:'升至Ⅰ级 · 全城警报',body:'防汛应急响应升至Ⅰ级，全城拉响警报，公布“七大洪区”撤离路线，干部逐户敲门组织转移。',key:true},
+  {t:'06-28 17:00（预计）',title:'第二轮洪峰 253.50 m',body:'预计洪峰水位 253.50 m、流量 8360 m³/s，超保证水位 2.0 m；县城低洼片区再次受淹。',key:true},
+  {t:'06-28 18:00',title:'转移 11992 户 41574 人',body:'截至 28 日 18 时，全县转移 11992 户 41574 人，8000 余名干部参与抢险转移。',key:false},
+  {t:'06-30',title:'灾情统计与善后',body:'公开报道显示，本轮洪灾造成 6 人遇难、10.3 万人受灾；灾后清淤、防疫与安置同步推进。',key:false},
+  {t:'07-01',title:'灾后恢复获追加支持',body:'国家发展改革委追加 1 亿元中央预算内投资，支持榕江等地灾后恢复。',key:false}
+];
+const TL_RJ_SIM=[
+  {t:'T+0 03:20',title:'模型触发：10 个点位失联',body:'古州、忠诚、寨蒿、平永、平江、八开、定威、兴华、计划、三江相继失去信令，判定为流域性中断。',key:true},
+  {t:'T+8 03:28',title:'感知智能体：多源融合',body:'融合基站退服告警、光缆 OTDR 断点、北斗短报文首报与卫星云图降水估测，输出 13 个点位状态。',key:false},
+  {t:'T+20 03:40',title:'研判智能体：影响评估',body:'叠加淹没范围、道路阻断与人口密度，估算受影响 9400 人，排序出 4 个一级优先级点位。',key:false},
+  {t:'T+35 03:55',title:'规划智能体：中继选点',body:'在五榕山、月亮山、雷公山南坡、三江山 4 个备选点做视距与链路预算，剔除被山体遮挡的组合。',key:false},
+  {t:'T+45 04:05',title:'卫星直连：不等的兜底链路',body:'对定威、兴华 2 个无可用视距的点位，直接配北斗短报文终端与天通卫星电话；文字先通、语音后通，不依赖地面网。',key:true},
+  {t:'T+60 04:20',title:'调度智能体：资源约束',body:'在 2 套卫星便携站、6 部 PDT、2 台油机约束下生成任务序列，避开 2 处塌方与 1 处积水路段。',key:false},
+  {t:'T+75 04:35',title:'指挥长审批',body:'方案经县应急管理局指挥长签批，同步运营商、铁塔驻点与乡镇信息员。',key:true},
+  {t:'T+180 07:20',title:'首条链路打通',body:'五榕山中继开通，古州、忠诚恢复语音；北斗短报文在定威乡建立文字通道，回传人数、伤员与道路状态。',key:false},
+  {t:'T+24h',title:'复盘智能体：输出报告',body:'生成断站时序、链路余量、卫星直连使用率与资源周转率，归档为下次演练基线。',key:false}
+];
 function renderTimeline(){
   const r=$('#tlReal'), s=$('#tlSim');
-  r.innerHTML = TL_REAL.map(e=>
+  r.innerHTML = C.tlReal.map(e=>
     '<div class="ev'+(e.key?' key':'')+'"><div class="t">'+e.t+'</div><b>'+e.title+'</b><p>'+e.body+'</p><span class="src-tag">公开报道</span></div>'
   ).join('');
-  s.innerHTML = TL_SIM.map(e=>
+  s.innerHTML = C.tlSim.map(e=>
     '<div class="ev'+(e.key?' key':'')+'"><div class="t">'+e.t+'</div><b>'+e.title+'</b><p>'+e.body+'</p><span class="src-tag sim">模型推演</span></div>'
   ).join('');
 }
 
 /* ---------------- 业务链路 ---------------- */
-const FLOW=[
+const FLOW_ZY=[
   {t:'03:20',role:'气象 / 值班',g:false,title:'红色暴雨预警接入',body:'值班员收到气象红色预警与流域面雨量预报，系统自动预置应急资源清单，不做对外发布。',sla:'5 分钟',out:'<b>输出</b>：预警工单 + 预置资源清单（2 卫星站 / 6 PDT / 2 油机）'},
   {t:'03:40',role:'感知智能体',g:false,title:'失联村寨自动聚类',body:'多个基站同时退服且地理位置相邻，判定为区域性中断，避免按单站故障派单。',sla:'自动，秒级',out:'<b>输出</b>：5 个失联村寨、13 个点位状态、置信度 0.87'},
   {t:'03:48',role:'村级信息员',g:false,title:'北斗短报文首报',body:'村级信息员用北斗终端发送 116 字节压缩报文，报出人数、伤员、道路与需求四要素。',sla:'3 分钟',out:'<b>输出</b>：5 条村级首报，含 2 名伤员、1 处道路中断'},
@@ -1123,6 +1277,19 @@ const FLOW=[
   {t:'05:10',role:'铁塔 / 运营商',g:false,title:'油机上山与光缆接续',body:'两组抢修队按任务单出发，一组送油机恢复弱覆盖站，一组在断点处熔接光缆。',sla:'到场 ≤90 分钟',out:'<b>输出</b>：BS-05 恢复、光缆断点熔接 2 处'},
   {t:'07:00',role:'现场执行',g:false,title:'首条链路打通',body:'石屏山中继开通，蕉溪、铁溪恢复语音；卫星便携站在报京乡建立数据通道，回传现场照片。',sla:'目标 3 小时',out:'<b>输出</b>：3 个村寨恢复，剩余 2 个待道路抢通'},
   {t:'次日 04:00',role:'复盘智能体',g:false,title:'24 小时复盘与基线归档',body:'输出断站时序、链路余量曲线、资源周转率，形成 3 条改进建议并归档为下次演练基线。',sla:'自动生成',out:'<b>输出</b>：复盘报告 1 份 + 改进项 3 条'}
+];
+const FLOW_RJ=[
+  {t:'02:50',role:'气象 / 值班',g:false,title:'第二轮红色暴雨预警接入',body:'值班员收到气象红色预警与都柳江面雨量预报，系统按“6·24”首轮洪水的实际影响面预置资源，不做对外发布。',sla:'5 分钟',out:'<b>输出</b>：预警工单 + 预置资源清单（2 卫星站 / 6 PDT / 2 油机 / 4 台北斗终端）'},
+  {t:'03:20',role:'感知智能体',g:false,title:'流域性失联自动聚类',body:'10 个点位在 12 分钟内相继退服，且沿都柳江干支流分布，判定为流域性中断，避免按单站故障逐一派单。',sla:'自动，秒级',out:'<b>输出</b>：10 个失联点位、13 个点位状态、置信度 0.89'},
+  {t:'03:28',role:'村级信息员',g:false,title:'北斗短报文首报',body:'村级信息员在无地面信号条件下，用北斗终端发送 116 字节压缩报文，报出人数、伤员、道路与需求四要素。',sla:'3 分钟',out:'<b>输出</b>：7 条村级首报，含 3 名伤员、2 处道路中断'},
+  {t:'03:40',role:'研判智能体',g:false,title:'影响面评估与优先级排序',body:'叠加两轮洪峰淹没范围、道路阻断与人口密度，输出一级优先级 4 个点位、二级 4 个。',sla:'12 分钟',out:'<b>输出</b>：影响 9,400 人；一级：古州 / 寨蒿 / 平永 / 计划'},
+  {t:'03:55',role:'规划智能体',g:false,title:'中继选点与链路预算',body:'对五榕山、月亮山、雷公山南坡、三江山 4 个备选点做视距、菲涅尔净空与链路余量计算，剔除遮挡组合。',sla:'15 分钟',out:'<b>输出</b>：主方案 8 条链路，最小余量 +19.5 dB'},
+  {t:'04:05',role:'规划智能体',g:false,title:'卫星直连：先通文字，再通语音',body:'对定威、兴华 2 个无可用视距的点位直接启用卫星直连：北斗短报文先回传位置与需求，天通卫星电话随后建立语音；不等待道路抢通。',sla:'≤20 分钟',out:'<b>输出</b>：2 条卫星直连链路，首条报文 04:12 收到'},
+  {t:'04:20',role:'调度智能体',g:false,title:'资源约束下生成任务序列',body:'按“先通后畅”排序，绕开 2 处塌方与 1 处积水路段，把卫星便携站优先给道路最差的定威乡。',sla:'15 分钟',out:'<b>输出</b>：8 项任务、2 套卫星站、预计首通 07:20'},
+  {t:'04:35',role:'县应急局指挥长',g:true,title:'方案审批（人工闸门）',body:'指挥长核对优先级、卫星资源冲突与转移路线，签批后同步运营商、铁塔与乡镇；自动化动作必须经过这一闸门。',sla:'≤10 分钟',out:'<b>输出</b>：签批号 + 三方同步回执'},
+  {t:'05:00',role:'铁塔 / 运营商',g:false,title:'油机上山与光缆接续',body:'两组抢修队按任务单出发，一组送油机恢复弱覆盖站，一组在断点处熔接光缆；卫星直连链路持续保底。',sla:'到场 ≤90 分钟',out:'<b>输出</b>：BS-05 恢复、光缆断点熔接 2 处'},
+  {t:'07:20',role:'现场执行',g:false,title:'首条链路打通',body:'五榕山中继开通，古州、忠诚恢复语音；北斗短报文在定威乡建立文字通道，回传现场照片与需求清单。',sla:'目标 3 小时',out:'<b>输出</b>：4 个点位恢复，剩余 2 个靠卫星直连维持'},
+  {t:'次日 04:00',role:'复盘智能体',g:false,title:'24 小时复盘与基线归档',body:'输出断站时序、链路余量曲线、卫星直连使用率与资源周转率，形成 3 条改进建议并归档。',sla:'自动生成',out:'<b>输出</b>：复盘报告 1 份 + 改进项 3 条'}
 ];
 const AGENTS=[
   {id:'sense',name:'感知智能体',sub:'多源数据融合'},
@@ -1135,7 +1302,7 @@ function renderFlow(){
   $('#flowHead').innerHTML = AGENTS.map((a,i)=>
     '<div class="ag'+(i===0?' on':'')+'"><b>'+a.name+'</b><span>'+a.sub+'</span></div>'
   ).join('');
-  $('#steps').innerHTML = FLOW.map((f,i)=>
+  $('#steps').innerHTML = C.flow.map((f,i)=>
     '<div class="step'+(f.g?' gate':'')+(i===0?' open':'')+'">'+
       '<div class="step-h"><span class="tt">'+f.t+'</span>'+
       '<span class="role'+(f.g?' g':'')+'">'+f.role+'</span>'+
@@ -1155,7 +1322,8 @@ function renderFlow(){
 
 /* ---------------- 数据导入 ---------------- */
 const CSV_HEADER='id,name,type,x,y,elev,pop,station,status';
-const SAMPLE='N01,高碑村,村,95,286,520,820,BS-07,down\nN02,镇远古城,县城,470,300,465,52000,BS-01,down\nN03,铁溪村,村,520,250,500,560,BS-01,down\nN04,蕉溪镇,镇,648,326,450,8600,BS-02,down\nN05,金堡镇,镇,700,470,780,6100,BS-06,down\nN06,报京乡,乡,790,520,860,4800,BS-06,down';
+const SAMPLE_ZY='N01,高碑村,村,95,286,520,820,BS-07,down\nN02,镇远古城,县城,470,300,465,52000,BS-01,down\nN03,铁溪村,村,520,250,500,560,BS-01,down\nN04,蕉溪镇,镇,648,326,450,8600,BS-02,down\nN05,金堡镇,镇,700,470,780,6100,BS-06,down\nN06,报京乡,乡,790,520,860,4800,BS-06,down';
+const SAMPLE_RJ='N01,古州镇,县城,470,306,255,86000,BS-01,down\nN03,忠诚镇,镇,600,320,262,12000,BS-02,down\nN04,寨蒿镇,镇,470,120,460,9600,BS-03,down\nN05,平永镇,镇,240,175,480,8800,BS-04,down\nN06,平江镇,镇,405,90,620,7200,BS-07,down\nN08,八开镇,镇,250,430,320,9400,BS-05,weak\nN11,计划乡,乡,330,520,700,7800,BS-05,weak\nN12,三江乡,乡,700,470,780,10500,BS-06,up';
 
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
@@ -1231,6 +1399,11 @@ function applyRows(rows,msgEl){
 
 /* ---------------- 事件绑定 ---------------- */
 function bind(){
+  /* 案例切换 */
+  $$('.case').forEach(b=>{
+    b.addEventListener('click',()=>{ if(b.dataset.case!==CASE_ID) setCase(b.dataset.case); });
+  });
+
   /* tabs */
   $$('.tab').forEach(t=>{
     t.addEventListener('click',()=>{
@@ -1248,8 +1421,14 @@ function bind(){
     renderFlood(); renderNodes(); renderMapMeta(); renderDetail();
   });
   $('#btnPeak').addEventListener('click',()=>{
-    state.water=465.5;
-    $('#wl').value='465.5';
+    state.water=C.water.peak;
+    $('#wl').value=C.water.peak;
+    renderFlood(); renderNodes(); renderMapMeta(); renderDetail();
+  });
+  $('#btnPeak2').addEventListener('click',()=>{
+    if(!C.water.peak2) return;
+    state.water=C.water.peak2;
+    $('#wl').value=C.water.peak2;
     renderFlood(); renderNodes(); renderMapMeta(); renderDetail();
   });
 
@@ -1293,19 +1472,19 @@ function bind(){
     }
   }
   $('#btnApply').addEventListener('click',()=>tryImport($('#ta').value,$('#impMsg2')));
-  $('#btnLoadSample').addEventListener('click',()=>{ $('#ta').value=SAMPLE; });
+  $('#btnLoadSample').addEventListener('click',()=>{ $('#ta').value=C.sample; });
   $('#btnReset').addEventListener('click',()=>{
-    NODES=REAL_NODES.map(n=>Object.assign({},n));
+    NODES=C.nodes.map(n=>Object.assign({},n));
     state.plan=[]; state.sel=null;
     $('#planBox').style.display='none';
     $('#btnPlan').textContent='一键生成中继方案';
     $('#ta').value='';
     $('#impMsg').className='msg ok';
-    $('#impMsg').textContent='已恢复真实的 13 个点位数据集。';
+    $('#impMsg').textContent='已恢复当前案例的真实点位数据集（'+(C.id==='rongjiang'?'榕江 13 个':'镇远 13 个')+'）。';
     renderMap(); renderDetail();
   });
   $('#btnTpl').addEventListener('click',()=>{
-    const csv=CSV_HEADER+'\n'+SAMPLE;
+    const csv=CSV_HEADER+'\n'+C.sample;
     const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
     const a=document.createElement('a');
     a.href=URL.createObjectURL(blob);
@@ -1315,13 +1494,162 @@ function bind(){
   });
 }
 
+/* ---------------- 案例配置 ---------------- */
+const CASES={
+  rongjiang:{
+    id:'rongjiang',
+    docTitle:'真实场景 · 榕江 2025·6·24 / 6·28 特大洪水 | 山脊信使',
+    tag:'6·24 / 6·28 洪峰复盘',
+    geo:GEO_RJ,
+    nodes:NODES_RJ, stations:STATIONS_RJ, relays:RELAYS_RJ,
+    water:{min:251.5,start:251.5,peak:256.71,peak2:253.5,peakLabel:'6·24',peak2Label:'6·28',guarantee:251.5,halfBase:4,halfK:2.2,dec:2},
+    titles:{
+      map:'都柳江 榕江段 · 三河汇流实景示意',
+      tl:'2025-06-23 → 06-30 · 两轮洪峰逐时复盘',
+      flow:'48 小时值班链路 · 谁在什么时间做什么'
+    },
+    hero:{
+      badge:'真实场景 · 贵州黔东南 · 都柳江流域',
+      title:'2025·6·24 / 6·28 榕江特大洪水<br><em>实景推演</em>：从两轮洪峰到卫星直连',
+      lede:'以榕江县 2025 年“6·24”“6·28”两轮特大洪水为真实蓝本：都柳江石灰厂水文站 6·24 实测洪峰水位 <b>256.71 m</b>，超保证水位 <b>5.21 m</b>，相应流量 <b>1.14 万 m³/s</b>，被媒体称为“百年一遇”；6·28 预报洪峰 <b>253.50 m</b>、流量 <b>8360 m³/s</b>。当地 6·28 12:30 将防汛应急响应升至Ⅰ级，全城拉响警报，截至 28 日 18 时转移 <b>11992 户 41574 人</b>。在同一套真实河谷格局上，推演“通信中断 → 影响评估 → 中继选点 → 卫星直连 → 资源调度 → 复盘”的完整处置链。',
+      kpis:[
+        {cls:'teal',num:'256.71',unit:'m',label:'6·24 实测洪峰 · 石灰厂站'},
+        {cls:'red',num:'+5.21',unit:'m',label:'超保证水位（251.5 m）'},
+        {num:'1.14',unit:'万 m³/s',label:'6·24 相应洪峰流量'},
+        {cls:'orange',num:'41574',unit:'人',label:'6·28 单日转移（11992 户）'},
+        {sim:true,num:'9400',unit:'人',label:'10 个点位失联（模型）'}
+      ],
+      hTitle:'数据说明：哪些是真的，哪些是推演',
+      p:'本页把两类信息严格分开，避免把推演结果当成灾情事实。<b style="color:#8ef0dd">真实</b>：行政区划与地名、6·24 实测与 6·28 预报洪峰水位/流量、响应级别、转移人数、“七大洪区”撤离与全城警报、村超球场受淹。<b style="color:#ffc9a3">推演</b>：村寨级失联人数、基站退服清单、链路预算数值、中继与卫星直连方案。<b style="color:#9db8cf">示意</b>：地图为示意图，非测绘图；地形由公开海拔区间重建，不代表实测 DEM。',
+      chips:[
+        {ok:true,text:'6·24 256.71 m / 1.14 万 m³/s · 真实'},
+        {ok:true,text:'6·28 转移 41574 人 · 真实'},
+        {ok:true,text:'Ⅰ级响应 / 全城警报 · 真实'},
+        {text:'失联人数 / 退服基站 · 推演'},
+        {text:'中继 / 卫星直连方案 · 推演'}
+      ]
+    },
+    tlReal:TL_RJ_REAL, tlSim:TL_RJ_SIM, flow:FLOW_RJ,
+    sample:SAMPLE_RJ,
+    footnote:'<b>资料来源（公开报道 / 政府网站，2025-06-24 至 2025-07-01）</b><br>'+
+      '新华社、央视新闻、央广网、贵州日报、新京报等对榕江“6·24”“6·28”洪水的报道：石灰厂水文站 6·24 实测洪峰 256.71 m / 1.14 万 m³/s（超保证 5.21 m）；6·28 预报洪峰 253.50 m / 8360 m³/s（超保证 2.0 m）；6·28 12:30 防汛应急响应升至Ⅰ级，全城警报并公布“七大洪区”撤离路线；截至 6·28 18 时转移 11992 户 41574 人，8000 余名干部参与；灾情 6 人遇难、10.3 万人受灾；国家发展改革委追加 1 亿元支持灾后恢复。<br>'+
+      '榕江县人民政府网发布的雨水情、转移安置与响应级别通报（2025-06-24 至 06-30）。<br>'+
+      '<b style="color:#ffc9a3">再次说明</b>：图中村寨失联人数、基站退服清单、链路预算、中继与卫星直连方案均为模型推演结果，用于演示方法，不代表实际灾情统计；地图为示意图，非测绘成果。卫星直连需北斗 / 天通专用终端或支持卫星通信的机型，并非所有手机可用。'
+  },
+  zhenyuan:{
+    id:'zhenyuan',
+    docTitle:'真实场景 · 㵲阳河 2024·6·29 洪灾实景推演 | 山脊信使',
+    tag:'6·29 洪峰复盘',
+    geo:GEO_ZY,
+    nodes:NODES_ZY, stations:STATIONS_ZY, relays:RELAYS_ZY,
+    water:{min:461,start:461,peak:465.5,peakLabel:'6·29',guarantee:461,halfBase:3,halfK:2.6,dec:1},
+    titles:{
+      map:'㵲阳河 镇远—施秉段 · 实景示意',
+      tl:'2024-06-28 → 06-30 · 逐时复盘',
+      flow:'24 小时值班链路 · 谁在什么时间做什么'
+    },
+    hero:{
+      badge:'真实场景 · 贵州黔东南 · 㵲阳河流域',
+      title:'2024·6·29 㵲阳河洪水<br><em>实景推演</em>：从洪峰到信道恢复',
+      lede:'以镇远县“6·29”洪峰为真实蓝本：㵲阳河镇远段洪峰水位 <b>465.5 m</b>，超保证水位 <b>4.5 m</b>，洪峰流量 <b>3235 m³/s</b>，创历史新高；当地 14:00 将防汛Ⅲ级响应上调为Ⅱ级，累计安全转移群众 <b>6000 余人</b>。在同一套真实河谷格局上，推演“通信中断 → 影响评估 → 中继选点 → 卫星直连 → 资源调度 → 复盘”的完整处置链。',
+      kpis:[
+        {cls:'teal',num:'465.5',unit:'m',label:'洪峰水位 · 大菜园（二）站'},
+        {cls:'red',num:'+4.5',unit:'m',label:'超保证水位（461 m）'},
+        {num:'3235',unit:'m³/s',label:'相应洪峰流量'},
+        {cls:'orange',num:'6000',unit:'余人',label:'累计安全转移群众'},
+        {sim:true,num:'5680',unit:'人',label:'5 个村寨失联（模型）'}
+      ],
+      hTitle:'数据说明：哪些是真的，哪些是推演',
+      p:'本页把两类信息严格分开，避免把推演结果当成灾情事实。<b style="color:#8ef0dd">真实</b>：行政区划与地名、县域海拔区间（354–1132 m）、2024-06-29 洪峰水位/流量、响应级别、转移人数、通信受损的定性描述。<b style="color:#ffc9a3">推演</b>：村寨级失联人数、基站退服清单、链路预算数值、中继与卫星直连方案。<b style="color:#9db8cf">示意</b>：地图为示意图，非测绘图；地形由公开海拔区间重建，不代表实测 DEM。',
+      chips:[
+        {ok:true,text:'地名 / 行政区划 · 真实'},
+        {ok:true,text:'洪峰 465.5 m / 3235 m³/s · 真实'},
+        {ok:true,text:'转移 6000 余人 · 真实'},
+        {text:'失联人数 / 退服基站 · 推演'},
+        {text:'中继 / 卫星直连方案 · 推演'}
+      ]
+    },
+    tlReal:TL_ZY_REAL, tlSim:TL_ZY_SIM, flow:FLOW_ZY,
+    sample:SAMPLE_ZY,
+    footnote:'<b>资料来源（公开报道 / 政府网站，2024-06-29 至 2024-07-11）</b><br>'+
+      '中新网《㵲阳河流域镇远段出现洪峰水位已安全转移6000余人暂无伤亡》 '+
+      '<a href="https://www.chinanews.com.cn/sh/2024/06-30/10243104.shtml" target="_blank" rel="noopener">chinanews.com.cn/sh/2024/06-30/10243104.shtml</a><br>'+
+      '镇远县人民政府《自然地理》（县域海拔 354–1132 m、㵲阳河“S”形穿城） '+
+      '<a href="https://www.zygov.gov.cn/zjzy/zrdl/" target="_blank" rel="noopener">zygov.gov.cn/zjzy/zrdl</a><br>'+
+      '中国移动《以“迅”应汛！暴雨中的移动力量》（黔东南机房停电、基站退服、光缆损毁与三级联动抢修） '+
+      '<a href="https://www1.10086.cn/aboutus/news/groupnews/index_detail_50231.html" target="_blank" rel="noopener">10086.cn/aboutus/news/groupnews/index_detail_50231.html</a><br>'+
+      '镇远县行政区划（8 镇 4 乡）、施秉县甘溪乡高碑村等真实地名均据公开资料。<br>'+
+      '<b style="color:#ffc9a3">再次说明</b>：图中村寨失联人数、基站退服清单、链路预算与中继选点均为模型推演结果，用于演示方法，不代表实际灾情统计；地图为示意图，非测绘成果。'
+  }
+};
+let CASE_ID='rongjiang';
+
+function renderHero(){
+  const h=C.hero;
+  $('#heroBadge').innerHTML='<i></i>'+h.badge;
+  $('#heroTitle').innerHTML=h.title;
+  $('#heroLede').innerHTML=h.lede;
+  $('#kpis').innerHTML=h.kpis.map(k=>
+    '<div class="kpi '+(k.cls||'')+'"><b>'+k.num+(k.unit?'<small>'+k.unit+'</small>':'')+'</b>'+
+    '<span>'+k.label+'</span><span class="src '+(k.sim?'sim':'real')+'">'+(k.sim?'推演':'公开报道')+'</span></div>'
+  ).join('');
+  $('#honest').innerHTML=
+    '<div class="h-ico"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17v.01"/></svg></div>'+
+    '<div><h4>'+h.hTitle+'</h4><p>'+h.p+'</p><div class="row">'+
+      h.chips.map(c=>'<span class="chip '+(c.ok?'ok':'warn')+'">'+c.text+'</span>').join('')+
+    '</div></div>';
+}
+
+function setCase(id){
+  CASE_ID=id; C=CASES[id];
+  state.water=C.water.start;
+  state.sel=null; state.plan=[];
+  NODES=C.nodes.map(n=>Object.assign({},n));
+
+  renderHero();
+  $('#mapTitle').textContent=C.titles.map;
+  $('#tlTitle').textContent=C.titles.tl;
+  $('#flowTitle').textContent=C.titles.flow;
+  $('#tagLive').innerHTML='<i></i>'+C.tag;
+  $('#lgRiver').textContent=C.geo.riverName;
+  $('#lgScale').textContent='图宽约 '+Math.round(MAPW*C.geo.kmpp)+' km · 示意比例';
+  $('#map').setAttribute('aria-label',C.geo.riverName+'流域实景示意地图');
+
+  const wl=$('#wl');
+  wl.min=C.water.min; wl.max=C.water.peak; wl.value=C.water.start;
+  wl.setAttribute('aria-label',C.geo.riverName+'水位调节');
+  $('#wlVal').textContent=C.water.start.toFixed(C.water.dec);
+  $('#btnPeak').textContent='跳到 '+C.water.peakLabel+' 洪峰 '+C.water.peak.toFixed(2)+' m';
+  const p2=$('#btnPeak2');
+  if(C.water.peak2){
+    p2.style.display='';
+    p2.textContent='跳到 '+C.water.peak2Label+' 洪峰 '+C.water.peak2.toFixed(2)+' m';
+  }else{
+    p2.style.display='none';
+  }
+
+  $('#ta').value=C.sample;
+  $('#ta').placeholder=CSV_HEADER+'\n'+C.sample.split('\n').slice(0,2).join('\n');
+  $('#impMsg').className='msg'; $('#impMsg').textContent='';
+  $('#impMsg2').className='msg'; $('#impMsg2').textContent='';
+  $('#planBox').style.display='none';
+  $('#btnPlan').textContent='一键生成中继方案';
+  $('#footnote').innerHTML=C.footnote;
+  document.title=C.docTitle;
+
+  $$('.case').forEach(b=>{
+    const on=b.dataset.case===id;
+    b.classList.toggle('on',on);
+    b.setAttribute('aria-selected',on?'true':'false');
+  });
+
+  renderMap(); renderTimeline(); renderFlow(); renderDetail();
+}
+
 /* ---------------- 启动 ---------------- */
 function boot(){
-  renderMap();
-  renderTimeline();
-  renderFlow();
   bind();
-  $('#ta').value=SAMPLE;
+  setCase('rongjiang');
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
 else boot();

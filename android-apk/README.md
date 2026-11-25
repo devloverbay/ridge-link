@@ -51,7 +51,7 @@ android-apk/                     ← 如果单独为它建仓库，仓库根目�
 | Gradle | 8.7 |
 | Kotlin | 1.9.24 |
 | JDK | 17 |
-| 版本 | 1.1（versionCode 2） |
+| 版本 | 1.2（versionCode 3） |
 | 依赖 | 无（不使用 AndroidX / 第三方库） |
 
 ---
