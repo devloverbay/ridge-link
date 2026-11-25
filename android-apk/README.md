@@ -31,6 +31,7 @@ android-apk/                     ← 如果单独为它建仓库，仓库根目�
             ├── scene.html
             ├── proposal.html
             ├── pitch.html
+            ├── offline-mode.js
             ├── manifest.webmanifest
             ├── sw.js
             ├── icon-192.png

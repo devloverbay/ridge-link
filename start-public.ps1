@@ -14,11 +14,16 @@ $urlFile = Join-Path $root 'public-url.txt'
 # 自动判断首页路径：仓库根就是本目录，还是本目录在 /ridge-link/ 下
 $base = if (Test-Path (Join-Path $root 'index.html')) { '' } else { '/ridge-link' }
 
+$script:liveBase = $base
+
 function Test-Local {
-    try {
-        $r = Invoke-WebRequest -Uri "http://localhost:$port$base/index.html" -TimeoutSec 5 -UseBasicParsing
-        return ($r.StatusCode -eq 200)
-    } catch { return $false }
+    foreach ($b in @($base, '/ridge-link', '')) {
+        try {
+            $r = Invoke-WebRequest -Uri "http://localhost:$port$b/index.html" -TimeoutSec 5 -UseBasicParsing
+            if ($r.StatusCode -eq 200) { $script:liveBase = $b; return $true }
+        } catch { }
+    }
+    return $false
 }
 
 function Start-Server {
@@ -36,7 +41,12 @@ function Start-Server {
     return $false
 }
 
-if (-not (Test-Local)) { Start-Server | Out-Null }
+if (-not (Test-Local)) {
+    if (-not (Start-Server)) {
+        Write-Host "[serve] 服务未启动，端口 $port 可能被占用；请先关闭占用进程后重试"
+        exit 1
+    }
+}
 
 if (-not (Test-Path $cf)) {
     Write-Host "[tunnel] 正在下载 cloudflared ..."
@@ -76,8 +86,8 @@ while ($true) {
             Add-Content -Path $log -Value $line
             if (-not $printed -and $line -match 'https://[a-z0-9-]+\.trycloudflare\.com') {
                 $u = $Matches[0]
-                Set-Content -Path $urlFile -Value "$u$base/index.html" -Encoding UTF8
-                Write-Host "[tunnel] PUBLIC URL: $u$base/index.html"
+                Set-Content -Path $urlFile -Value "$u$script:liveBase/index.html" -Encoding UTF8
+                Write-Host "[tunnel] PUBLIC URL: $u$script:liveBase/index.html"
                 Write-Host "[tunnel] (已写入 public-url.txt，手机浏览器直接打开即可)"
                 $printed = $true
             }

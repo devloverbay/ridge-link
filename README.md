@@ -130,7 +130,7 @@ powershell -ExecutionPolicy Bypass -File .\sync-web.ps1
 ridge-link/
 ├── index.html                 # 官网
 ├── demo.html                  # 交互演示 · 指挥台
-├── scene.html                 # 真实场景 · 㵲阳河洪水推演
+├── scene.html                 # 真实场景 · 榕江 2025 两轮洪水（可切换镇远）
 ├── proposal.html              # 计划书
 ├── pitch.html                 # 路演 PPT
 ├── offline-mode.js            # 在线 / 离线状态条

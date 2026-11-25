@@ -8,6 +8,9 @@ $root = $PSScriptRoot
 $web  = Join-Path (Split-Path $root -Parent) ''   # parent folder = ridge-link/
 $dst  = Join-Path $root 'app\src\main\assets\www'
 
+if (-not (Test-Path (Join-Path $web 'index.html'))) {
+    throw "找不到上级目录的 index.html：$web。请确认 android-apk 与五个页面在同一目录。"
+}
 if (-not (Test-Path $dst)) { New-Item -ItemType Directory -Force $dst | Out-Null }
 
 $files = @(

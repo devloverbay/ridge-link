@@ -56,8 +56,8 @@ http
     urlPath = stripPrefix(urlPath);
     if (urlPath === '/' || urlPath === '') urlPath = '/index.html';
 
-    const target = path.join(ROOT, path.normalize(urlPath));
-    if (!target.startsWith(ROOT)) return send(res, 403, 'forbidden');
+    const target = path.resolve(ROOT, '.' + urlPath);
+    if (target !== ROOT && !target.startsWith(ROOT + path.sep)) return send(res, 403, 'forbidden');
 
     fs.stat(target, (err, st) => {
       let file = target;
