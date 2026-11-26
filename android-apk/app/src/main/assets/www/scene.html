@@ -212,6 +212,7 @@
   .pm-dia{width:8px;height:8px;background:#ff8a3d;transform:rotate(45deg);flex:none}
   .pm-hex{width:9px;height:9px;background:#a78bfa;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);flex:none}
   .pm-seat-ico{width:8px;height:8px;border-radius:50%;border:1px solid rgba(142,169,194,.6);flex:none}
+  .pm-hot{width:12px;height:12px;border-radius:50%;background:#ff566a;color:#fff;font-size:9px;font-weight:700;display:grid;place-items:center;font-style:normal;flex:none}
   .pm-tip{margin-left:auto;color:#6f8ba4}
 
   /* ---------- map ---------- */
@@ -426,6 +427,40 @@
   .type-note{font-size:10.5px;line-height:1.9;color:#8ea9c2;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,138,61,.22);background:rgba(255,138,61,.05)}
   .type-note b{color:#ffc9a3}
 
+  /* ---------- risk modal ---------- */
+  .risk-modal{position:fixed;inset:0;z-index:200;display:none}
+  .risk-modal.on{display:block}
+  .risk-bg{position:absolute;inset:0;background:rgba(2,7,12,.72);backdrop-filter:blur(4px)}
+  .risk-card{position:relative;margin:5vh auto;width:min(760px,calc(100vw - 24px));max-height:86vh;overflow:auto;background:#0a1724;border:1px solid var(--line2);border-radius:16px;padding:20px 20px 16px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .risk-x{position:absolute;right:10px;top:8px;width:34px;height:34px;border:0;border-radius:50%;background:rgba(126,183,224,.08);color:#9db8cf;font-size:20px;line-height:1;cursor:pointer}
+  .risk-x:hover{background:rgba(126,183,224,.18);color:#fff}
+  .risk-head{--rc:#4aa8ff;border-left:3px solid var(--rc);padding-left:12px;margin-bottom:14px}
+  .risk-type{display:inline-block;font-size:10px;letter-spacing:.8px;color:var(--rc);border:1px solid var(--rc);border-radius:999px;padding:2px 8px;opacity:.9}
+  .risk-head h3{margin:6px 0 2px;font-size:22px;letter-spacing:.5px}
+  .risk-head p{margin:0;font-size:11px;color:var(--muted)}
+  .risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .risk-grid>div{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(8,20,33,.6)}
+  .risk-grid span{display:block;font-size:9.5px;color:var(--muted);letter-spacing:.4px}
+  .risk-grid b{display:block;font-size:15px;color:#e9f5ff;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+  .risk-grid small{display:block;font-size:10px;line-height:1.6;color:#8ea9c2}
+  .risk-alert{border:1px solid;border-radius:10px;padding:10px 12px;margin-bottom:14px}
+  .risk-alert b{font-size:11.5px;letter-spacing:.3px}
+  .risk-alert p{margin:5px 0;font-size:11.5px;line-height:1.8;color:#cfe3f3}
+  .risk-alert small{display:block;font-size:9.5px;line-height:1.7;color:#7f9cb5}
+  .risk-sub{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:10.5px;letter-spacing:1px;color:#95b4cd;margin:14px 0 7px}
+  .risk-sub span{font-size:9px;letter-spacing:0;color:#6f8ba4}
+  .risk-table-wrap{max-height:270px;overflow:auto;border:1px solid var(--line);border-radius:9px}
+  .risk-table{width:100%;border-collapse:collapse;font-size:11px}
+  .risk-table th{position:sticky;top:0;background:#0c1c2b;color:#95b4cd;font-weight:600;text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+  .risk-table td{padding:7px 9px;border-bottom:1px solid rgba(126,183,224,.08);color:#c0d5e6;line-height:1.5}
+  .risk-table tr:last-child td{border-bottom:none}
+  .lv{display:inline-block;padding:1px 7px;border-radius:999px;font-size:10px;white-space:nowrap}
+  .lv4{color:#ff8a9a;background:rgba(255,86,106,.14)}
+  .lv3{color:#ffc9a3;background:rgba(255,138,61,.14)}
+  .lv2{color:#a8d4ff;background:rgba(74,168,255,.13)}
+  .lv1{color:#8ef0dd;background:rgba(46,230,197,.1)}
+  .risk-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+
   .footnote{margin:34px 0 40px;padding-top:18px;border-top:1px solid var(--line);font-size:10.5px;line-height:2;color:#93ada4}
   .footnote b{color:#93ada4}
   .footnote a{color:#7fb6e0;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
@@ -455,6 +490,11 @@
     .type-intro{font-size:11.5px}
     .type-rail{padding-left:22px}
     .other-grid{grid-template-columns:1fr}
+    .risk-card{position:absolute;left:0;right:0;bottom:0;margin:0;width:auto;max-height:90vh;border-radius:16px 16px 0 0;padding:16px 14px}
+    .risk-grid{grid-template-columns:1fr}
+    .risk-head h3{font-size:19px}
+    .risk-actions{justify-content:stretch}
+    .risk-actions .btn{flex:1}
     .honest{grid-template-columns:1fr}
     .honest .h-ico{display:none}
     .cases{margin:14px -12px 0;border-radius:0;border-left:0;border-right:0;padding:6px 12px}
@@ -592,20 +632,20 @@
           <text x="70" y="60" font-size="18" fill="#9db8cf" font-weight="700" letter-spacing="2">贵州省</text>
           <text x="70" y="80" font-size="11" fill="#6f8ba4" letter-spacing="1">市州位置与四类灾害点位 · 示意</text>
 
-          <g class="pm-city" data-go="rongjiang" role="button" tabindex="0">
+          <g class="pm-city" data-go="rongjiang" data-risk="rongjiang" role="button" tabindex="0">
             <circle cx="683" cy="408" r="16" fill="rgba(74,168,255,.16)"/>
             <circle cx="683" cy="408" r="8" fill="#4aa8ff" stroke="#061522" stroke-width="2"/>
             <text x="668" y="400" text-anchor="end" font-size="16" fill="#dcefff" font-weight="700">榕江</text>
             <text x="668" y="417" text-anchor="end" font-size="12" fill="#8ecbff">暴雨山洪</text>
           </g>
-          <g class="pm-city" data-go="zhenyuan" role="button" tabindex="0">
+          <g class="pm-city" data-go="zhenyuan" data-risk="zhenyuan" role="button" tabindex="0">
             <circle cx="670" cy="279" r="11" fill="rgba(74,168,255,.12)"/>
             <circle cx="670" cy="279" r="5.5" fill="#4aa8ff" stroke="#061522" stroke-width="1.6"/>
             <text x="655" y="272" text-anchor="end" font-size="14" fill="#cfe3f3" font-weight="700">镇远</text>
             <text x="655" y="288" text-anchor="end" font-size="11" fill="#8ecbff">2024 山洪</text>
           </g>
 
-          <g class="pm-city" data-go="shuicheng" role="button" tabindex="0">
+          <g class="pm-city" data-go="shuicheng" data-risk="shuicheng" role="button" tabindex="0">
             <circle cx="203" cy="332" r="17" fill="rgba(255,86,106,.12)"/>
             <polygon points="203,316 219,344 187,344" fill="#ff566a" stroke="#061522" stroke-width="2"/>
             <polygon points="219,310 226,317 219,324 212,317" fill="#ff8a3d" stroke="#061522" stroke-width="1.2"/>
@@ -613,35 +653,42 @@
             <text x="232" y="343" font-size="12" fill="#ff9c86">滑坡 · 山火</text>
           </g>
 
-          <g class="pm-city" data-go="puan" role="button" tabindex="0">
+          <g class="pm-city" data-go="puan" data-risk="puan" role="button" tabindex="0">
             <circle cx="219" cy="425" r="16" fill="rgba(255,138,61,.14)"/>
             <polygon points="219,409 233,425 219,441 205,425" fill="#ff8a3d" stroke="#061522" stroke-width="2"/>
             <text x="238" y="420" font-size="15" fill="#ffd9b8" font-weight="700">普安</text>
             <text x="238" y="437" font-size="12" fill="#ffc9a3">森林火灾</text>
           </g>
 
-          <g class="pm-city" data-go="guiyang" role="button" tabindex="0">
+          <g class="pm-city" data-go="guiyang" data-risk="guiyang" role="button" tabindex="0">
             <circle cx="437" cy="325" r="18" fill="rgba(167,139,250,.14)"/>
             <polygon points="437,307 452,316 452,334 437,343 422,334 422,316" fill="#a78bfa" stroke="#061522" stroke-width="2"/>
             <text x="420" y="319" text-anchor="end" font-size="16" fill="#e2d9ff" font-weight="700">贵阳</text>
             <text x="420" y="336" text-anchor="end" font-size="12" fill="#cfc0ff">冰雪冻雨</text>
           </g>
-          <g class="pm-city" data-go="other" role="button" tabindex="0">
+          <g class="pm-city" data-go="other" data-risk="dafang" role="button" tabindex="0">
             <polygon points="304,252 317,274 291,274" fill="#ff566a" stroke="#061522" stroke-width="1.6"/>
             <text x="320" y="264" font-size="12.5" fill="#ffd2d7" font-weight="700">大方</text>
             <text x="320" y="280" font-size="11" fill="#ff9c86">2025·5 滑坡</text>
           </g>
-          <g class="pm-city" data-go="other" role="button" tabindex="0">
+          <g class="pm-city" data-go="other" data-risk="guiding" role="button" tabindex="0">
             <circle cx="515" cy="333" r="9" fill="rgba(74,168,255,.16)"/>
             <circle cx="515" cy="333" r="5" fill="#4aa8ff" stroke="#061522" stroke-width="1.6"/>
             <text x="530" y="326" font-size="12.5" fill="#dcefff" font-weight="700">贵定</text>
             <text x="530" y="342" font-size="11" fill="#8ecbff">2026·5 洪灾</text>
           </g>
-          <g class="pm-city" data-go="other" role="button" tabindex="0">
+          <g class="pm-city" data-go="other" data-risk="songtao" role="button" tabindex="0">
             <circle cx="720" cy="160" r="9" fill="rgba(74,168,255,.16)"/>
             <circle cx="720" cy="160" r="5" fill="#4aa8ff" stroke="#061522" stroke-width="1.6"/>
             <text x="706" y="152" text-anchor="end" font-size="12.5" fill="#dcefff" font-weight="700">松桃—德江</text>
             <text x="706" y="168" text-anchor="end" font-size="11" fill="#8ecbff">2026·6 暴雨</text>
+          </g>
+          <g pointer-events="none">
+            <circle cx="699" cy="392" r="6.5" fill="#ff566a" stroke="#061522" stroke-width="1.4"/><text x="699" y="396" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">!</text>
+            <circle cx="185" cy="316" r="6.5" fill="#ff566a" stroke="#061522" stroke-width="1.4"/><text x="185" y="320" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">!</text>
+            <circle cx="531" cy="317" r="6.5" fill="#ff566a" stroke="#061522" stroke-width="1.4"/><text x="531" y="321" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">!</text>
+            <circle cx="320" cy="250" r="6.5" fill="#ff566a" stroke="#061522" stroke-width="1.4"/><text x="320" y="254" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">!</text>
+            <circle cx="235" cy="409" r="6.5" fill="#ff566a" stroke="#061522" stroke-width="1.4"/><text x="235" y="413" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">!</text>
           </g>
         </svg>
       </div>
@@ -651,6 +698,7 @@
         <span><i class="pm-dia"></i>森林火灾</span>
         <span><i class="pm-hex"></i>冰雪冻雨</span>
         <span><i class="pm-seat-ico"></i>市州驻地</span>
+        <span><i class="pm-hot">!</i>高风险预警</span>
         <span class="pm-tip">同一点位多灾种时并列标注 · 示意图</span>
       </div>
     </div>
@@ -1094,6 +1142,14 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
     <b style="color:#a35a12">再次说明</b>：图中村寨失联人数、基站退服清单、链路预算、中继与卫星直连方案均为模型推演结果，用于演示方法，不代表实际灾情统计；地图为示意图，非测绘成果。卫星直连需北斗 / 天通专用终端或支持卫星通信的机型。
   </div>
 </main>
+
+<div id="riskModal" class="risk-modal" aria-hidden="true">
+  <div class="risk-bg" data-close></div>
+  <div class="risk-card" role="dialog" aria-modal="true" aria-labelledby="riskTitle">
+    <button class="risk-x" type="button" data-close aria-label="关闭">×</button>
+    <div id="riskBody"></div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -1887,6 +1943,118 @@ function applyRows(rows,msgEl){
   return true;
 }
 
+/* ---------------- 城市风险速览 ---------------- */
+const RISK_COLOR={flood:'#4aa8ff',slide:'#ff566a',fire:'#ff8a3d',ice:'#a78bfa'};
+const RISK={
+  rongjiang:{name:'榕江',sub:'黔东南州 · 都柳江三河汇流',type:'暴雨山洪',tc:'flood',score:88,
+    last:'2026·6·7 / 8',lastDesc:'特大暴雨，转移 825 户 3290 人，无人员伤亡',
+    freq:'近 2 年 2 次',next:'2027-06-15 前后',window:'6 月中旬—7 月上旬',
+    advice:'提前转移沿江低洼住户，检查应急广播、北斗终端与卫星电话',
+    go:'rongjiang',demo:'flood',
+    towns:[['古州镇','极高','三河汇流、城区低洼','2025·6 洪峰'],['忠诚镇','高','沿江低洼、厂房','2025·6 洪峰'],['寨蒿镇','高','寨蒿河上游、道路塌方','2025·6 暴雨'],['平永镇','高','平永河上游、山洪','2026·6 暴雨'],['计划乡','高','月亮山腹地、山体遮挡','2025·6 暴雨'],['八开镇','中','沿江公路水毁','2025·6 暴雨'],['定威乡','中','唯一通道塌方','2025·6 暴雨'],['乐里镇','低','地势较高、安置点','2025·6 转移']]},
+  zhenyuan:{name:'镇远',sub:'黔东南州 · 㵲阳河',type:'暴雨山洪',tc:'flood',score:72,
+    last:'2024·6·29',lastDesc:'洪峰 465.5 m，超保证 4.5 m，转移 6000 余人',
+    freq:'近 3 年 1 次',next:'2027-06-20 前后',window:'6 月下旬—7 月上旬',
+    advice:'关注上游水库泄洪与古城沿河商铺，提前布设警戒线',
+    go:'zhenyuan',demo:'flood',
+    towns:[['㵲阳镇','高','古城沿河、S 形河道','2024·6 洪峰'],['蕉溪镇','高','河堤漫溢、光缆过河','2024·6 洪峰'],['报京乡','高','山高谷深、道路垮方','2024·6 暴雨'],['金堡镇','中','南部高海拔、进镇道路','2024·6 暴雨'],['青溪镇','中','下游河谷、油机保站','2024·6 洪峰'],['羊坪镇','中','县域东出口、地势低','2024·6 洪峰']]},
+  shuicheng:{name:'水城',sub:'六盘水市 · 水城区',type:'地震滑坡',tc:'slide',score:85,
+    last:'2025·7·1',lastDesc:'化乐镇崩塌，35 户 72 人在崩塌前 15 分钟全部转移',
+    freq:'近 3 年 2 次地质灾害',next:'2027-06-25 前后',window:'6 月—8 月主汛期',
+    advice:'加密坡脚住户巡查，检查自动化监测仪与被动防护网',
+    go:'shuicheng',demo:'quake',
+    towns:[['鸡场镇','极高','陡坡、历史特大滑坡','2019·7 滑坡'],['化乐镇','高','崩塌隐患点、防护网','2025·7 崩塌'],['花戛乡','高','林区、坡地村寨','2024·2 山火'],['杨梅乡','中','山区公路沿线','2024·6 降雨'],['玉舍镇','中','高海拔、林区','2025·7 降雨'],['发耳镇','中','北盘江沿岸','2025·7 降雨']]},
+  puan:{name:'普安',sub:'黔西南州 · 普安县',type:'森林火灾',tc:'fire',score:78,
+    last:'2024·2·19',lastDesc:'花戛乡山火蔓延至龙吟镇，2 名扑救人员牺牲',
+    freq:'近 3 年 1 次',next:'2027-02-20 前后',window:'2 月—4 月高火险期',
+    advice:'严控祭祀与农事用火，前置扑火队与应急通信车',
+    go:'puan',demo:'fire',
+    towns:[['龙吟镇','极高','跨县火线、林农交错','2024·2 山火'],['江西坡镇','高','林区、坡地','2024·2 火险'],['青山镇','中','林农交界','2024·2 火险'],['新店镇','中','山坡林地','2024·2 火险'],['罗汉镇','中','林区道路','2024·2 火险'],['兴中镇','中','高火险林区','2024·2 火险']]},
+  guiyang:{name:'贵阳',sub:'贵阳市 · 黔中地区',type:'冰雪冻雨',tc:'ice',score:70,
+    last:'2026·1·19 / 21',lastDesc:'入冬最强寒潮，贵州电网启动低温雨雪冰冻Ⅳ级响应',
+    freq:'近 3 年 3 次',next:'2027-01-15 前后',window:'1 月—2 月凝冻期',
+    advice:'预置融冰装置与油机，优先保障县城、医院与安置点',
+    go:'guiyang',demo:'ice',
+    towns:[['开阳县','高','高海拔、线路覆冰','2026·1 寒潮'],['息烽县','高','高海拔、林区','2026·1 寒潮'],['云岩区','中','城区、人口密集','2026·1 寒潮'],['南明区','中','城区、交通枢纽','2026·1 寒潮'],['观山湖区','中','城区、配电线路','2026·1 寒潮'],['清镇市','中','城郊、线路覆冰','2026·1 寒潮']]},
+  dafang:{name:'大方',sub:'毕节市 · 大方县',type:'地震滑坡',tc:'slide',score:80,
+    last:'2025·5·22',lastDesc:'长石镇、果瓦乡两起山体滑坡，果瓦乡 8 户 19 人被困',
+    freq:'近 3 年 1 次',next:'2027-05-20 前后',window:'5 月—9 月汛期',
+    advice:'排查坡脚与沟口住户，强降雨时执行“四个一律”避险转移',
+    go:'other',demo:'quake',
+    towns:[['果瓦乡','极高','庆阳村滑坡、沟谷','2025·5 滑坡'],['长石镇','高','坡地村寨','2025·5 滑坡'],['理化乡','中','山区公路','2025·5 降雨'],['黄泥塘镇','中','坡脚住户','2025·5 降雨'],['大方城区','中','人口密集','2025·5 降雨']]},
+  guiding:{name:'贵定',sub:'黔南州 · 贵定县',type:'暴雨山洪',tc:'flood',score:83,
+    last:'2026·5·18 / 19',lastDesc:'特大暴雨，4 人遇难、5 人失联，部分区域通信中断',
+    freq:'近 3 年 1 次',next:'2027-05-18 前后',window:'5 月—6 月主汛期',
+    advice:'提前转移昌明镇沿河住户，前置通信抢修队与卫星终端',
+    go:'other',demo:'flood',
+    towns:[['昌明镇','极高','沿河低洼、道路损毁','2026·5 洪灾'],['沿山镇','高','河谷村寨','2026·5 洪灾'],['盘江镇','高','沿河、旅游区','2026·5 洪灾'],['云雾镇','中','山区、坡地','2026·5 降雨'],['宝山街道','中','城区、人口密集','2026·5 降雨']]},
+  songtao:{name:'松桃—德江',sub:'铜仁市 · 松桃 / 德江',type:'暴雨山洪',tc:'flood',score:76,
+    last:'2026·6·7 / 8',lastDesc:'特大暴雨，德江荆角乡转移 156 人，松桃等地紧急转移，无伤亡',
+    freq:'近 3 年 1 次',next:'2027-06-08 前后',window:'6 月—7 月主汛期',
+    advice:'关注山洪沟与沿河村寨，提前启用应急广播与叫应机制',
+    go:'other',demo:'flood',
+    towns:[['德江荆角乡','极高','山洪沟、沿河村寨','2026·6 暴雨'],['松桃蓼皋街道','高','城区、河道','2026·6 暴雨'],['松桃盘石镇','高','山区、坡地','2026·6 暴雨'],['德江青龙街道','中','城区','2026·6 暴雨'],['德江煎茶镇','中','沿河','2026·6 暴雨'],['松桃大兴街道','中','低洼地带','2026·6 暴雨']]}
+};
+
+function goTarget(go){
+  const showTab=(name)=>{
+    $$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));
+    $$('.sec').forEach(s=>s.classList.toggle('on',s.id==='sec-'+name));
+  };
+  const jump=(t)=>{
+    if(!t) return;
+    const html=document.documentElement;
+    html.style.scrollBehavior='auto';
+    window.scrollTo(0,t.getBoundingClientRect().top+window.scrollY-70);
+    setTimeout(()=>{html.style.scrollBehavior='';},60);
+  };
+  if(go==='rongjiang'||go==='zhenyuan'){
+    if(go!==CASE_ID) setCase(go);
+    showTab('map');
+    jump(document.querySelector('#sec-map'));
+  }else{
+    showTab('cases');
+    jump(document.getElementById('case-'+go));
+  }
+}
+
+function closeRisk(){
+  const m=$('#riskModal');
+  m.classList.remove('on'); m.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+function openRisk(key){
+  const r=RISK[key]; if(!r) return;
+  const color=RISK_COLOR[r.tc]||'#2ee6c5';
+  const warn=r.score>=80?['红色预警','#ff566a']:r.score>=65?['橙色关注','#ff8a3d']:['常态','#2ee6c5'];
+  const rows=r.towns.map(t=>
+    '<tr><td>'+esc(t[0])+'</td><td><span class="lv '+(t[1]==='极高'?'lv4':t[1]==='高'?'lv3':t[1]==='中'?'lv2':'lv1')+'">'+t[1]+'</span></td><td>'+esc(t[2])+'</td><td>'+esc(t[3])+'</td></tr>'
+  ).join('');
+  $('#riskBody').innerHTML=
+    '<div class="risk-head" style="--rc:'+color+'">'+
+      '<span class="risk-type">'+r.type+' · 当地最严重</span>'+
+      '<h3 id="riskTitle">'+r.name+'</h3><p>'+r.sub+'</p>'+
+    '</div>'+
+    '<div class="risk-grid">'+
+      '<div><span>最近一次灾害</span><b>'+r.last+'</b><small>'+r.lastDesc+'</small></div>'+
+      '<div><span>发生频率</span><b>'+r.freq+'</b><small>按公开报道可核实事件统计</small></div>'+
+      '<div><span>下次高风险窗口</span><b>'+r.next+'</b><small>'+r.window+'</small></div>'+
+    '</div>'+
+    '<div class="risk-alert" style="border-color:'+warn[1]+';background:'+warn[1]+'14">'+
+      '<b style="color:'+warn[1]+'">'+warn[0]+' · 风险分 '+r.score+'/100</b>'+
+      '<p>模型推算：'+r.next+' 进入高风险窗口。'+r.advice+'。</p>'+
+      '<small>推算依据：历史频次 + 季节窗口 + 地形/河谷/火险/覆冰条件；不是气象预报，仅用于演练与辅助决策。</small>'+
+    '</div>'+
+    '<div class="risk-sub">乡镇级风险 <span>重点乡镇，可按同一模型继续扩展</span></div>'+
+    '<div class="risk-table-wrap"><table class="risk-table"><thead><tr><th>乡镇 / 区县</th><th>等级</th><th>主要风险</th><th>最近事件</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+    '<div class="risk-actions"><button class="btn primary sm" data-act="go">查看完整案例</button><a class="btn ghost sm" href="demo.html?scene='+r.demo+'">进入推演</a></div>';
+  const m=$('#riskModal');
+  m.classList.add('on'); m.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  const goBtn=$('#riskBody [data-act="go"]');
+  if(goBtn) goBtn.addEventListener('click',()=>{ closeRisk(); goTarget(r.go); });
+}
+
 /* ---------------- 事件绑定 ---------------- */
 function bind(){
   /* 案例切换 */
@@ -1894,35 +2062,19 @@ function bind(){
     b.addEventListener('click',()=>{ if(b.dataset.case!==CASE_ID) setCase(b.dataset.case); });
   });
 
-  /* 全省总览：点击城市跳转 */
+  /* 全省总览：点击城市打开风险速览 */
   $$('#provinceMap .pm-city').forEach(el=>{
-    const go=el.dataset.go;
-    const act=()=>{
-      const showTab=(name)=>{
-        $$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));
-        $$('.sec').forEach(s=>s.classList.toggle('on',s.id==='sec-'+name));
-      };
-      const jump=(t)=>{
-        if(!t) return;
-        const html=document.documentElement;
-        html.style.scrollBehavior='auto';
-        window.scrollTo(0,t.getBoundingClientRect().top+window.scrollY-70);
-        setTimeout(()=>{html.style.scrollBehavior='';},60);
-      };
-      if(go==='rongjiang'||go==='zhenyuan'){
-        if(go!==CASE_ID) setCase(go);
-        showTab('map');
-        jump(document.querySelector('#sec-map'));
-      }else{
-        showTab('cases');
-        jump(document.getElementById('case-'+go));
-      }
-    };
+    const key=el.dataset.risk;
+    if(!key) return;
+    const act=()=>openRisk(key);
     el.addEventListener('click',act);
     el.addEventListener('keydown',e=>{
       if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); }
     });
   });
+
+  $$('#riskModal [data-close]').forEach(el=>el.addEventListener('click',closeRisk));
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeRisk(); });
 
   /* tabs */
   $$('.tab').forEach(t=>{

@@ -80,6 +80,10 @@
 
 未发生重大事件的年份或类型不虚构；地图为本地相对位置示意，不是测绘成果。
 
+### 城市风险速览
+
+点击总览地图上的任一城市，会弹出精简速览：**当地最严重灾种、最近一次灾害、发生频率、下次高风险窗口、风险分与预警等级**，下方直接列出重点乡镇 / 区县的风险等级、主要风险和最近事件。风险分与日期为「历史频次 + 季节窗口 + 地形/河谷/火险/覆冰」的模型推算，页面明确标注“不是气象预报，仅用于演练与辅助决策”。
+
 ---
 
 ## 怎么跑
@@ -139,7 +143,7 @@ powershell -ExecutionPolicy Bypass -File .\start-public.ps1
 
 - 包名 `com.ridgelink.app`，minSdk 21，targetSdk 34
 - 无 AndroidX、无第三方依赖，Kotlin 单 Activity
-- **直接下载（Gitee）：** [`download/RidgeLink-1.8.apk?v=1.8`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.8.apk?v=1.8)（约 0.9 MB）
+- **直接下载（Gitee）：** [`download/RidgeLink-1.9.apk?v=1.9`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.9.apk?v=1.9)（约 0.9 MB）
 - 安装后**完全离线**：页面、地形计算、链路预算都在手机本地运行，不需要电脑、不需要公网；首次安装需在系统设置中允许「安装未知来源应用」。
 - 云端打包教程（备用）：见 [`android-apk/云打包教程.md`](android-apk/云打包教程.md)
 
