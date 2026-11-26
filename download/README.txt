@@ -1,8 +1,8 @@
 RidgeLink 山脊信使 Android APK
-版本：1.3（versionCode 4）
+版本：1.4（versionCode 5）
 包名：com.ridgelink.app
 大小：1.19 MB
-SHA-256：FD96EADDCC577E114218AE11F62358E0F4A4BAAEDC65DF704D54C1367F843F63
+SHA-256：80302A2B3A343C5FE022EE3DE5F840FDBF74006C37BA16D5513D1B4C54E05711
 
 安装：把 APK 传到手机，点击安装；首次需允许「安装未知来源应用」。
 说明：安装后完全离线运行，不需要电脑、不需要网络。

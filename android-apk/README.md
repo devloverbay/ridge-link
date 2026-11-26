@@ -1,4 +1,4 @@
-# 山脊信使 RidgeLink — Android APK 工程
+﻿# 山脊信使 RidgeLink — Android APK 工程
 
 把 `ridge-link` 的静态网页打包成原生 Android App（WebView 容器），**完全离线**运行。
 
@@ -52,7 +52,7 @@ android-apk/                     ← 如果单独为它建仓库，仓库根目�
 | Gradle | 8.7 |
 | Kotlin | 1.9.24 |
 | JDK | 17 |
-| 版本 | 1.3（versionCode 4） |
+| 版本 | 1.4（versionCode 5） |
 | 依赖 | 无（不使用 AndroidX / 第三方库） |
 
 ---

@@ -777,9 +777,9 @@ const RELAY_POINTS=[
 ];
 const SCENARIOS={
  flood:{
-  key:'flood',name:'暴雨山洪',icon:'rain',level:'Ⅱ级',lost:3,
-  code:'FLOOD-0721',base:'2026-07-21 03:40',weatherPen:10,
-  desc:'都柳江流域（参照 2025·6·24 / 6·28 榕江两轮洪水设定） 6 小时面雨量 186mm，上游水库泄洪，S203 省道 3 处塌方，河谷 5 个村寨通信中断。',
+  key:'flood',name:'暴雨山洪',city:'榕江',icon:'rain',level:'Ⅱ级',lost:3,
+  code:'FLOOD-0624',base:'2025-06-24 14:15',weatherPen:10,
+  desc:'榕江 2025·6·24 / 6·28：都柳江两轮特大洪水，6·24 实测洪峰 256.71 m、超保证 5.21 m，6·28 单日转移 41574 人；县城三河汇流，低洼片区与村超球场受淹。',
   stationDown:['BS-01','BS-02','BS-04'],
   roadsBlocked:[{road:0,seg:3,label:'S203 K12+400 塌方'},{road:2,seg:2,label:'乡道 Y017 桥面冲毁'}],
   details:{
@@ -792,9 +792,9 @@ const SCENARIOS={
   resources:{drone:1,satellite:2,pdt:6,generator:2,team:2,beidou:10,hf:1}
  },
  quake:{
-  key:'quake',name:'地震滑坡',icon:'quake',level:'Ⅲ级',lost:6,
-  code:'EQK-0722',base:'2026-07-22 07:05',weatherPen:6,
-  desc:'主峰群群震滑动，4 处滑坡体掩埋基站与光缆，余震不断，通信中断范围快速扩大。',
+  key:'quake',name:'地震滑坡',city:'水城',icon:'quake',level:'Ⅰ级',lost:6,
+  code:'EQK-0723',base:'2019-07-23 21:20',weatherPen:6,
+  desc:'水城 2019·7·23：鸡场镇坪地村特大山体滑坡，滑坡体约 200 万方、21 栋房屋被埋，43 人遇难、9 人失踪；现场 10kV 线路停电、道路中断，通信保障压力集中。',
   stationDown:['BS-03','BS-06','BS-02'],
   roadsBlocked:[{road:0,seg:1,label:'L208 山路裂缝滑坡'},{road:1,seg:4,label:'乡道 Y033 垮方'}],
   details:{
@@ -806,9 +806,9 @@ const SCENARIOS={
   resources:{drone:2,satellite:1,pdt:8,generator:3,team:3,beidou:10,hf:1}
  },
  fire:{
-  key:'fire',name:'森林火灾',icon:'fire',level:'Ⅱ级',lost:2,
-  code:'FIR-0723',base:'2026-07-23 14:20',weatherPen:8,
-  desc:'林区山火蔓延至 3 处村庄周界，强风助燃，光纤架空缆受阻，火场信号遮挡。',
+  key:'fire',name:'森林火灾',city:'水城—普安',icon:'fire',level:'Ⅲ级',lost:2,
+  code:'FIR-0219',base:'2024-02-19 18:10',weatherPen:8,
+  desc:'水城—普安 2024·2·19：花戛乡山火蔓延至普安县龙吟镇，2 名扑救人员牺牲，贵州启动森林火灾Ⅲ级应急响应；火场信号遮挡、前线与指挥部联络困难。',
   stationDown:['BS-04','BS-06'],
   roadsBlocked:[{road:1,seg:5,label:'防火线突破，乡道封闭'}],
   details:{
@@ -819,9 +819,9 @@ const SCENARIOS={
   resources:{drone:1,satellite:1,pdt:10,generator:1,team:2,beidou:8,hf:1}
  },
  ice:{
-  key:'ice',name:'冰雪冻雨',icon:'ice',level:'Ⅰ级',lost:4,
-  code:'ICE-0724',base:'2026-07-24 21:50',weatherPen:15,
-  desc:'雨雪冰冻致线路覆冰断电，抢修窗口极短，独居老人群体通信中断。',
+  key:'ice',name:'冰雪冻雨',city:'贵阳',icon:'ice',level:'Ⅰ级',lost:4,
+  code:'ICE-0125',base:'2008-01-25 06:00',weatherPen:15,
+  desc:'贵阳 2008·1：历史罕见凝冻，全省 87 个县市中有 76 个出现大面积凝冻，贵州电网一度解列为四个孤立电网、部分县供电中断；通信与交通同时受压。',
   stationDown:['BS-05','BS-01','BS-03'],
   roadsBlocked:[{road:0,seg:1,label:'覆冰断线 Y011'},{road:3,seg:2,label:'桥梁积雪'}],
   details:{
@@ -1060,17 +1060,17 @@ function renderScenarioCards(){
     const b=document.createElement('button');
     b.type='button';
     b.className='scn'+(k===state.scenarioKey?' active':'');
-    b.innerHTML='<svg class="s-ico" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M7 14a4 4 0 0 1 .6-7.9A5.5 5.5 0 0 1 18 8a3.2 3.2 0 0 1-.4 6z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg><b>'+sc.name+'</b><span>'+sc.code+'</span>';
+    b.innerHTML='<svg class="s-ico" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M7 14a4 4 0 0 1 .6-7.9A5.5 5.5 0 0 1 18 8a3.2 3.2 0 0 1-.4 6z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg><b>'+sc.name+'</b><span>'+sc.city+' · '+sc.code+'</span>';
     b.addEventListener('click',()=>{loadScenario(k);});
     g.appendChild(b);
   }
 }
 function renderScenarioInfo(sc){
-  $('#evtTitle').textContent=sc.name+' · '+sc.level;
+  $('#evtTitle').textContent=sc.name+' · '+(sc.city?sc.city+' · ':'')+sc.level;
   $('#evtDesc').textContent=sc.desc;
   const aff=affectedIds(sc);
   const popAff=aff.all.reduce((s,id)=>s+VILLAGES[id].pop,0);
-  $('#evtMeta').innerHTML='<i>天气：降雨/火险/冻雨 · 事件：'+sc.code+'　　受影响人口：'+popAff.toLocaleString('zh-CN')+' 人';
+  $('#evtMeta').innerHTML='<i>真实案例：'+sc.city+'（'+sc.code+'）· 通信/资源参数为推演</i>　受影响人口：'+popAff.toLocaleString('zh-CN')+' 人';
   $('#affCount').textContent=aff.down.length+' 个失联 / '+aff.weak.length+' 个弱覆盖';
 }
 function renderVillageList(rows){
@@ -1496,7 +1496,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     URL.revokeObjectURL(a.href);
   });
   document.getElementById('fastChk').addEventListener('change',()=>{state.fast=document.getElementById('fastChk').checked;});
-  loadScenario('flood');
+  const qs=new URLSearchParams(location.search);
+  const qk=qs.get('scene')||location.hash.replace('#','');
+  loadScenario(SCENARIOS[qk]?qk:'flood');
 });
 })();
 </script>
