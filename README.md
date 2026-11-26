@@ -104,6 +104,9 @@ powershell -ExecutionPolicy Bypass -File .\start-public.ps1
 3. 打开一次让缓存写完，之后**飞行模式也能进**。
 
 > 微信内置浏览器不支持安装，请用系统浏览器打开。
+>
+> 成功打开一次后，5 个页面已写入手机本地缓存；**即使电脑关机、公网隧道失效，已安装的 PWA 仍可离线打开**（清除浏览器数据或换手机后需重新打开一次）。
+> 需要「换手机也能装、完全不依赖浏览器缓存」时，使用下方的 Android APK。
 
 ---
 
@@ -113,7 +116,9 @@ powershell -ExecutionPolicy Bypass -File .\start-public.ps1
 
 - 包名 `com.ridgelink.app`，minSdk 21，targetSdk 34
 - 无 AndroidX、无第三方依赖，Kotlin 单 Activity
-- 云端打包教程：见 [`android-apk/云打包教程.md`](android-apk/云打包教程.md)
+- **直接下载（Gitee）：** [`download/RidgeLink-1.2.apk`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.2.apk)（约 0.9 MB）
+- 安装后**完全离线**：页面、地形计算、链路预算都在手机本地运行，不需要电脑、不需要公网；首次安装需在系统设置中允许「安装未知来源应用」。
+- 云端打包教程（备用）：见 [`android-apk/云打包教程.md`](android-apk/云打包教程.md)
 
 改了网页后必须同步进 APK，否则 App 里还是旧页面：
 

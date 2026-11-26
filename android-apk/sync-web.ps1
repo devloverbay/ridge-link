@@ -34,4 +34,4 @@ foreach ($f in $files) {
 
 Write-Host ""
 Write-Host ("Done: {0} files -> {1}" -f $count, $dst)
-Write-Host "Next: Commit + Push in GitHub Desktop; the cloud workflow will rebuild the APK."
+Write-Host "Next: Commit + Push to Gitee; rebuild APK locally (gradle assembleDebug)."
