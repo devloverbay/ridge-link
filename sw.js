@@ -1,19 +1,17 @@
 /* 山脊信使 RidgeLink · 离线缓存 Service Worker
- * 目的：手机「添加到主屏幕」后，断网也能打开官网 / 演示 / 真实场景 / 计划�?/ 路演�?
- * 策略�?
+ * 目的：手机「添加到主屏幕」后，断网也能打开官网 / 演示 / 真实场景。
+ * 策略：
  *   - 页面导航：先联网取最新，失败时回退缓存（离线可用）
  *   - 静态资源：缓存优先
- * 更新页面后，�?CACHE 版本�?+1 即可让所有客户端换新缓存�?
+ * 更新页面后，把 CACHE 版本号 +1 即可让所有客户端换新缓存。
  */
-const CACHE = 'ridgelink-v11';
+const CACHE = 'ridgelink-v12';
 
 const CORE = [
   './',
   './index.html',
   './demo.html',
   './scene.html',
-  './proposal.html',
-  './pitch.html',
   './offline-mode.js',
   './manifest.webmanifest',
   './icon-192.png',

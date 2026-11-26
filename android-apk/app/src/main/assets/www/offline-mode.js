@@ -23,7 +23,6 @@
     'transition:opacity .25s,transform .25s}',
     '#nmToast.show{opacity:1;transform:translateX(-50%) translateY(0)}',
     '@media(max-width:760px){#nmToast{bottom:calc(80px + env(safe-area-inset-bottom))}}',
-    '@media(max-width:760px){html[data-page="pitch"] .top-right .clock{display:none}}',
     '@media(max-width:720px){html[data-page="scene"] .top-right > .tag{display:none}}',
     /* 低端手机性能：关闭大面积模糊与光晕，减少滚动掉帧 */
     '@media(max-width:720px){.glow{display:none!important}.top,.tabs,.cases,.legend{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}',

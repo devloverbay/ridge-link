@@ -34,15 +34,13 @@
 
 ---
 
-## 五个页面
+## 三个页面
 
 | 页面 | 文件 | 内容 |
 |---|---|---|
-| 官网 | `index.html` | 项目定位、痛点、方案、技术路线、团队 |
-| 交互演示 | `demo.html` | 多智能体流水线指挥台，可切换灾情等级、看链路预算与调度结果 |
-| 真实场景 | `scene.html` | 2025·6·24 / 6·28 榕江两轮特大洪水实景推演（可切换镇远案例，4 个 Tab） |
-| 计划书 | `proposal.html` | 完整商业计划书 |
-| 路演 | `pitch.html` | 11 页路演 PPT，键盘 / 滑动翻页 |
+| 官网 | `index.html` | 项目定位、痛点、方案、技术路线、四类真实案例、团队 |
+| 交互演示 | `demo.html` | 多智能体流水线指挥台，可切换四类灾情、看链路预算与调度结果 |
+| 真实场景 | `scene.html` | 榕江 / 镇远洪水双案例 + 四类灾害真实案例（5 个 Tab） |
 
 ### 真实场景页做了什么
 
@@ -116,7 +114,7 @@ powershell -ExecutionPolicy Bypass -File .\start-public.ps1
 
 | 层级 | 实现 |
 |---|---|
-| 应用离线 | PWA（`manifest.webmanifest` + `sw.js`）缓存 5 个页面与图标；Android APK 直接读本地 `assets` |
+| 应用离线 | PWA（`manifest.webmanifest` + `sw.js`）缓存 3 个页面与图标；Android APK 直接读本地 `assets` |
 | 智能体离线 | 规则引擎 + 预案库全部前端运行，断网不影响推演 |
 | 对外通信 | 北斗短报文（140 B 单包）、卫星便携站、PDT、短波 —— 演示中体现为链路降级策略 |
 
@@ -130,7 +128,7 @@ powershell -ExecutionPolicy Bypass -File .\start-public.ps1
 
 > 微信内置浏览器不支持安装，请用系统浏览器打开。
 >
-> 成功打开一次后，5 个页面已写入手机本地缓存；**即使电脑关机、公网隧道失效，已安装的 PWA 仍可离线打开**（清除浏览器数据或换手机后需重新打开一次）。
+> 成功打开一次后，3 个页面已写入手机本地缓存；**即使电脑关机、公网隧道失效，已安装的 PWA 仍可离线打开**（清除浏览器数据或换手机后需重新打开一次）。
 > 需要「换手机也能装、完全不依赖浏览器缓存」时，使用下方的 Android APK。
 
 ---
@@ -141,7 +139,7 @@ powershell -ExecutionPolicy Bypass -File .\start-public.ps1
 
 - 包名 `com.ridgelink.app`，minSdk 21，targetSdk 34
 - 无 AndroidX、无第三方依赖，Kotlin 单 Activity
-- **直接下载（Gitee）：** [`download/RidgeLink-1.5.apk?v=1.5`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.5.apk?v=1.5)（约 0.9 MB）
+- **直接下载（Gitee）：** [`download/RidgeLink-1.6.apk?v=1.6`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.6.apk?v=1.6)（约 0.9 MB）
 - 安装后**完全离线**：页面、地形计算、链路预算都在手机本地运行，不需要电脑、不需要公网；首次安装需在系统设置中允许「安装未知来源应用」。
 - 云端打包教程（备用）：见 [`android-apk/云打包教程.md`](android-apk/云打包教程.md)
 
@@ -161,8 +159,6 @@ ridge-link/
 ├── index.html                 # 官网
 ├── demo.html                  # 交互演示 · 指挥台
 ├── scene.html                 # 真实场景 · 榕江 2025 两轮洪水（可切换镇远）
-├── proposal.html              # 计划书
-├── pitch.html                 # 路演 PPT
 ├── offline-mode.js            # 在线 / 离线状态条
 ├── sw.js                      # Service Worker 离线缓存
 ├── manifest.webmanifest       # PWA 清单

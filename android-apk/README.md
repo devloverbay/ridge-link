@@ -29,8 +29,6 @@ android-apk/                     ← 如果单独为它建仓库，仓库根目�
             ├── index.html
             ├── demo.html
             ├── scene.html
-            ├── proposal.html
-            ├── pitch.html
             ├── offline-mode.js
             ├── manifest.webmanifest
             ├── sw.js
@@ -52,7 +50,7 @@ android-apk/                     ← 如果单独为它建仓库，仓库根目�
 | Gradle | 8.7 |
 | Kotlin | 1.9.24 |
 | JDK | 17 |
-| 版本 | 1.5（versionCode 6） |
+| 版本 | 1.6（versionCode 7） |
 | 依赖 | 无（不使用 AndroidX / 第三方库） |
 
 ---
@@ -92,7 +90,7 @@ gradle assembleDebug
 
 ## 手机适配与离线
 
-- 五个页面都做了手机端单列布局：顶部导航可横向滑动、标签页 / 目录横向滚动、地图可左右滑动、路演页支持左右滑动翻页。
+- 三个页面都做了手机端单列布局：顶部导航可横向滑动、标签页 / 目录横向滚动、地图可左右滑动。
 - 网页版（公网 / 局域网）支持 PWA：`manifest.webmanifest` + `sw.js` + 图标，Android Chrome / iOS Safari 可「添加到主屏幕」，首次打开后断网仍能进入。
 - APK 本身就是本地 `file://` 资源，不依赖网络；Service Worker 在 `file://` 下会自动跳过注册，不影响使用。
 - 改动页面后务必跑一次 `sync-web.ps1`，否则 APK 里仍是旧页面。
