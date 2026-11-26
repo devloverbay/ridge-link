@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -196,6 +196,22 @@
   .ph h3{margin:0;font-size:12.5px;letter-spacing:1.6px;color:#c6d8d2;font-weight:700}
   .ph .r{font-size:11px;color:var(--muted);letter-spacing:.6px}
   .ph .r.ok{color:var(--teal)}
+
+  /* ---------- province overview ---------- */
+  .province-scroll-tip{display:none;font-size:10px;color:var(--muted);padding:7px 16px 0;letter-spacing:.4px}
+  .province-wrap{overflow-x:auto;overscroll-behavior-x:contain;background:radial-gradient(ellipse at 50% 40%,#0b2035 0%,#061220 78%)}
+  #provinceMap{display:block;width:100%;min-width:760px;height:auto;touch-action:manipulation}
+  .pm-city{cursor:pointer;transition:opacity .18s}
+  .pm-city:hover{opacity:.82}
+  .pm-city:focus{outline:none}
+  .pm-city:focus-visible{outline:2px solid rgba(46,230,197,.6);outline-offset:2px}
+  .pm-legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px 16px;padding:9px 16px 12px;font-size:10.5px;color:var(--muted);letter-spacing:.3px}
+  .pm-legend span{display:inline-flex;align-items:center;gap:6px}
+  .pm-dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .pm-tri{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:9px solid #ff566a;flex:none}
+  .pm-dia{width:8px;height:8px;background:#ff8a3d;transform:rotate(45deg);flex:none}
+  .pm-hex{width:9px;height:9px;background:#a78bfa;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);flex:none}
+  .pm-tip{margin-left:auto;color:#6f8ba4}
 
   /* ---------- map ---------- */
   .map-grid{display:grid;grid-template-columns:minmax(0,1fr) 350px}
@@ -441,6 +457,7 @@
     .tab{min-width:118px;padding:10px 11px;font-size:11.5px;min-height:44px}
     .nav a{padding:9px 12px;min-height:36px;display:inline-flex;align-items:center}
     .map-hint{display:block}
+    .province-scroll-tip{display:block}
     .legend{font-size:9px;padding:6px 8px;gap:4px 8px;left:8px;bottom:8px;max-width:calc(100% - 16px)}
     input[type=range]{height:34px;padding:14px 0}
     input[type=range]::-webkit-slider-thumb{width:24px;height:24px}
@@ -540,6 +557,80 @@
 
   <!-- ================= 01 MAP ================= -->
   <section class="sec on" id="sec-map">
+    <div class="panel" style="margin-bottom:14px">
+      <div class="ph">
+        <h3>贵州四类灾害 · 一图总览</h3>
+        <div class="r">点击城市查看对应真实案例</div>
+      </div>
+      <div class="province-scroll-tip">← 左右滑动查看全图 →</div>
+      <div class="province-wrap">
+        <svg id="provinceMap" viewBox="0 0 840 560" role="img" aria-label="贵州四类灾害城市分布示意地图">
+          <path d="M69,100 L173,146 L264,89 L381,112 L511,66 L641,100 L745,112 L797,146 L784,227 L823,284 L771,353 L732,411 L680,468 L615,514 L524,537 L420,549 L329,526 L251,549 L173,514 L134,445 L95,376 L69,307 L43,227 Z"
+                fill="rgba(11,30,42,.62)" stroke="rgba(126,183,224,.35)" stroke-width="1.6"/>
+          <g stroke="rgba(126,183,224,.14)" stroke-width="1" stroke-dasharray="4 6" fill="none">
+            <path d="M69,250 C200,240 300,270 420,250 C560,226 680,250 800,240"/>
+            <path d="M250,90 C260,200 250,330 270,530"/>
+            <path d="M470,70 C460,200 470,360 450,545"/>
+            <path d="M650,90 C630,220 640,380 620,510"/>
+            <path d="M100,360 C220,350 340,390 470,375 C600,360 720,390 790,360"/>
+          </g>
+          <g font-size="13" fill="rgba(142,169,194,.55)" text-anchor="middle" letter-spacing="1">
+            <text x="476" y="206">遵义</text>
+            <text x="263" y="244">毕节</text>
+            <text x="349" y="390">安顺</text>
+            <text x="552" y="390">黔南</text>
+            <text x="770" y="206">铜仁</text>
+            <text x="608" y="350">黔东南</text>
+            <text x="212" y="502">黔西南</text>
+          </g>
+          <text x="70" y="60" font-size="18" fill="#9db8cf" font-weight="700" letter-spacing="2">贵州省</text>
+          <text x="70" y="80" font-size="11" fill="#6f8ba4" letter-spacing="1">市州位置与四类灾害点位 · 示意</text>
+
+          <g class="pm-city" data-go="rongjiang" role="button" tabindex="0">
+            <circle cx="683" cy="408" r="16" fill="rgba(74,168,255,.16)"/>
+            <circle cx="683" cy="408" r="8" fill="#4aa8ff" stroke="#061522" stroke-width="2"/>
+            <text x="668" y="400" text-anchor="end" font-size="16" fill="#dcefff" font-weight="700">榕江</text>
+            <text x="668" y="417" text-anchor="end" font-size="12" fill="#8ecbff">暴雨山洪</text>
+          </g>
+          <g class="pm-city" data-go="zhenyuan" role="button" tabindex="0">
+            <circle cx="670" cy="279" r="11" fill="rgba(74,168,255,.12)"/>
+            <circle cx="670" cy="279" r="5.5" fill="#4aa8ff" stroke="#061522" stroke-width="1.6"/>
+            <text x="655" y="272" text-anchor="end" font-size="14" fill="#cfe3f3" font-weight="700">镇远</text>
+            <text x="655" y="288" text-anchor="end" font-size="11" fill="#8ecbff">2024 山洪</text>
+          </g>
+
+          <g class="pm-city" data-go="shuicheng" role="button" tabindex="0">
+            <circle cx="203" cy="332" r="17" fill="rgba(255,86,106,.12)"/>
+            <polygon points="203,316 219,344 187,344" fill="#ff566a" stroke="#061522" stroke-width="2"/>
+            <polygon points="219,310 226,317 219,324 212,317" fill="#ff8a3d" stroke="#061522" stroke-width="1.2"/>
+            <text x="232" y="326" font-size="16" fill="#ffd2d7" font-weight="700">水城</text>
+            <text x="232" y="343" font-size="12" fill="#ff9c86">滑坡 · 山火</text>
+          </g>
+
+          <g class="pm-city" data-go="puan" role="button" tabindex="0">
+            <circle cx="219" cy="425" r="16" fill="rgba(255,138,61,.14)"/>
+            <polygon points="219,409 233,425 219,441 205,425" fill="#ff8a3d" stroke="#061522" stroke-width="2"/>
+            <text x="238" y="420" font-size="15" fill="#ffd9b8" font-weight="700">普安</text>
+            <text x="238" y="437" font-size="12" fill="#ffc9a3">森林火灾</text>
+          </g>
+
+          <g class="pm-city" data-go="guiyang" role="button" tabindex="0">
+            <circle cx="437" cy="325" r="18" fill="rgba(167,139,250,.14)"/>
+            <polygon points="437,307 452,316 452,334 437,343 422,334 422,316" fill="#a78bfa" stroke="#061522" stroke-width="2"/>
+            <text x="458" y="319" font-size="16" fill="#e2d9ff" font-weight="700">贵阳</text>
+            <text x="458" y="336" font-size="12" fill="#cfc0ff">冰雪冻雨</text>
+          </g>
+        </svg>
+      </div>
+      <div class="pm-legend">
+        <span><i class="pm-dot" style="background:#4aa8ff"></i>暴雨山洪</span>
+        <span><i class="pm-tri"></i>地震滑坡</span>
+        <span><i class="pm-dia"></i>森林火灾</span>
+        <span><i class="pm-hex"></i>冰雪冻雨</span>
+        <span class="pm-tip">同一点位多灾种时并列标注 · 示意图</span>
+      </div>
+    </div>
+
     <div class="panel">
       <div class="ph">
         <h3 id="mapTitle">都柳江 榕江段 · 三河汇流实景示意</h3>
@@ -715,7 +806,7 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
       </div>
       <div class="year-note">三年灾情均取自公开报道；同一类型在不同年份可能发生在不同县域，未发生的年份不虚构事件。</div>
 
-      <article class="type-case">
+      <article class="type-case" id="case-rongjiang">
         <div class="type-head">
           <span class="type-tag">01 暴雨山洪</span>
           <h3>榕江 2025·6·24 / 6·28 两轮特大洪水</h3>
@@ -777,7 +868,7 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
         <div class="type-src">来源：新华社、央视新闻、央广网、贵州日报、新京报（2025-06-24 至 06-30）；榕江县人民政府网雨水情与转移安置通报。</div>
       </article>
 
-      <article class="type-case">
+      <article class="type-case" id="case-shuicheng">
         <div class="type-head">
           <span class="type-tag">02 地震滑坡</span>
           <h3>水城 2019·7·23 鸡场镇特大山体滑坡</h3>
@@ -838,7 +929,7 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
         <div class="type-src">来源：新华社、央视新闻、人民网、新京报（2019-07-23 至 07-29）；贵州省能源局《水城“7·23”受损线路全部恢复送电》。</div>
       </article>
 
-      <article class="type-case">
+      <article class="type-case" id="case-puan">
         <div class="type-head">
           <span class="type-tag">03 森林火灾</span>
           <h3>水城—普安 2024·2·19 跨县山火</h3>
@@ -895,7 +986,7 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
         <div class="type-src">来源：央视新闻、中国新闻网、普安县应急指挥部办公室（2024-02-19 至 02-23）。</div>
       </article>
 
-      <article class="type-case">
+      <article class="type-case" id="case-guiyang">
         <div class="type-head">
           <span class="type-tag">04 冰雪冻雨</span>
           <h3>贵阳 2008·1 历史罕见凝冻</h3>
@@ -1761,6 +1852,36 @@ function bind(){
   /* 案例切换 */
   $$('.case').forEach(b=>{
     b.addEventListener('click',()=>{ if(b.dataset.case!==CASE_ID) setCase(b.dataset.case); });
+  });
+
+  /* 全省总览：点击城市跳转 */
+  $$('#provinceMap .pm-city').forEach(el=>{
+    const go=el.dataset.go;
+    const act=()=>{
+      const showTab=(name)=>{
+        $$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));
+        $$('.sec').forEach(s=>s.classList.toggle('on',s.id==='sec-'+name));
+      };
+      const jump=(t)=>{
+        if(!t) return;
+        const html=document.documentElement;
+        html.style.scrollBehavior='auto';
+        window.scrollTo(0,t.getBoundingClientRect().top+window.scrollY-70);
+        setTimeout(()=>{html.style.scrollBehavior='';},60);
+      };
+      if(go==='rongjiang'||go==='zhenyuan'){
+        if(go!==CASE_ID) setCase(go);
+        showTab('map');
+        jump(document.querySelector('#sec-map'));
+      }else{
+        showTab('cases');
+        jump(document.getElementById('case-'+go));
+      }
+    };
+    el.addEventListener('click',act);
+    el.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); }
+    });
   });
 
   /* tabs */
