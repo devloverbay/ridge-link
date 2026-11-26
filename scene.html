@@ -370,6 +370,31 @@
   }
   .step-b .out b{color:var(--teal)}
 
+  /* ---------- four disaster types ---------- */
+  .type-intro{font-size:12.5px;line-height:1.9;color:#9db8cf;margin:0 0 18px;max-width:980px}
+  .type-case{border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;margin-bottom:16px;background:linear-gradient(165deg,rgba(16,36,56,.45),rgba(8,20,33,.35))}
+  .type-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 12px;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+  .type-head h3{margin:0;font-size:17px;letter-spacing:.3px}
+  .type-tag{font-size:10px;letter-spacing:1.2px;color:var(--teal);border:1px solid rgba(46,230,197,.35);background:rgba(46,230,197,.08);border-radius:999px;padding:3px 9px;white-space:nowrap}
+  .type-city{font-size:10.5px;color:var(--muted);letter-spacing:.4px}
+  .type-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+  .type-kpis .kpi{padding:11px 12px}
+  .type-kpis .kpi b{font-size:19px}
+  .type-cols{display:grid;grid-template-columns:1.12fr .88fr;gap:20px;align-items:start}
+  .type-col h4{font-size:10.5px;letter-spacing:1.2px;color:#95b4cd;margin:0 0 10px;display:flex;align-items:center;gap:7px}
+  .type-col h4:before{content:'';width:3px;height:11px;border-radius:2px;background:var(--teal)}
+  .type-rail{padding-left:24px}
+  .type-rail .ev{padding-bottom:13px}
+  .type-rail .ev p{font-size:11px}
+  .type-p{font-size:11.5px;line-height:1.85;color:#a9c3d9;margin:0 0 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+  .type-ol{margin:0 0 12px;padding-left:17px;font-size:11.5px;line-height:1.9;color:#a9c3d9}
+  .type-ol li{margin-bottom:3px}
+  .type-link{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--teal);border-bottom:1px solid rgba(46,230,197,.35);padding-bottom:2px;letter-spacing:.4px}
+  .type-src{margin-top:14px;padding-top:10px;border-top:1px dashed rgba(126,183,224,.16);font-size:10px;line-height:1.8;color:#6f8ba4}
+  .type-note{font-size:10.5px;line-height:1.9;color:#8ea9c2;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,138,61,.22);background:rgba(255,138,61,.05)}
+  .type-note b{color:#ffc9a3}
+
   .footnote{margin:34px 0 40px;padding-top:18px;border-top:1px solid var(--line);font-size:10.5px;line-height:2;color:#93ada4}
   .footnote b{color:#93ada4}
   .footnote a{color:#7fb6e0;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
@@ -382,6 +407,7 @@
     .tl-wrap{grid-template-columns:1fr}
     .imp-grid{grid-template-columns:1fr}
     .kpis{grid-template-columns:repeat(3,1fr)}
+    .type-cols{grid-template-columns:1fr}
   }
   @media(max-width:720px){
     .hero{padding:24px 0 6px}
@@ -390,6 +416,12 @@
     .kpis{grid-template-columns:1fr 1fr;gap:8px}
     .kpi b{font-size:19px}
     .kpi:last-child{grid-column:1/-1}
+    .type-kpis{grid-template-columns:1fr 1fr;gap:7px}
+    .type-kpis .kpi:last-child{grid-column:1/-1}
+    .type-case{padding:14px 12px 12px}
+    .type-head h3{font-size:15px}
+    .type-intro{font-size:11.5px}
+    .type-rail{padding-left:22px}
     .honest{grid-template-columns:1fr}
     .honest .h-ico{display:none}
     .cases{margin:14px -12px 0;border-radius:0;border-left:0;border-right:0;padding:6px 12px}
@@ -494,6 +526,7 @@
     <button class="tab" data-tab="time"><span class="n">02</span>时间线复盘</button>
     <button class="tab" data-tab="data"><span class="n">03</span>数据导入</button>
     <button class="tab" data-tab="flow"><span class="n">04</span>业务链路</button>
+    <button class="tab" data-tab="cases"><span class="n">05</span>四类灾害</button>
   </div>
 
   <!-- ================= 01 MAP ================= -->
@@ -637,6 +670,171 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
       </div>
       <div class="flow-head" id="flowHead"></div>
       <div class="steps" id="steps"></div>
+    </div>
+  </section>
+
+  <!-- ================= 05 FOUR TYPES ================= -->
+  <section class="sec" id="sec-cases">
+    <div class="panel" style="padding:18px">
+      <div class="ph" style="padding:0 0 14px;border-bottom:none">
+        <h3>贵州四类典型灾害 · 真实城市与事件</h3>
+        <div class="r">真实事件 / 推演边界逐条标注</div>
+      </div>
+      <p class="type-intro">四类灾害分别落在贵州四个真实城市（县域）：榕江、水城、普安、贵阳。每一节先给公开报道中的真实灾情与时间线，再给通信影响与 RidgeLink 的处置思路；凡公开报道未披露的基站、链路数字，一律标为“推演”。</p>
+
+      <article class="type-case">
+        <div class="type-head">
+          <span class="type-tag">01 暴雨山洪</span>
+          <h3>榕江 2025·6·24 / 6·28 两轮特大洪水</h3>
+          <span class="type-city">黔东南州榕江县 · 都柳江—寨蒿河—平永河三河汇流</span>
+        </div>
+        <div class="type-kpis">
+          <div class="kpi teal"><b>256.71<small>m</small></b><span>6·24 实测洪峰 · 超保证 5.21 m</span><span class="src real">公开报道</span></div>
+          <div class="kpi"><b>1.14<small>万 m³/s</small></b><span>6·24 相应洪峰流量</span><span class="src real">公开报道</span></div>
+          <div class="kpi orange"><b>41574<small>人</small></b><span>6·28 单日转移（11992 户）</span><span class="src real">公开报道</span></div>
+        </div>
+        <div class="type-cols">
+          <div class="type-col">
+            <h4>真实时间线</h4>
+            <div class="rail type-rail">
+              <div class="ev"><div class="t">06-23 起</div><b>都柳江流域持续强降雨</b><p>干支流面雨量快速累积，上游来水增大。</p></div>
+              <div class="ev key"><div class="t">06-24 14:15</div><b>首轮洪峰 256.71 m</b><p>超保证水位 5.21 m，流量 1.14 万 m³/s；县城低洼片区与村超球场受淹。</p></div>
+              <div class="ev key"><div class="t">06-28 12:30</div><b>防汛Ⅰ级响应 · 全城警报</b><p>公布“七大洪区”撤离路线，干部逐户组织转移。</p></div>
+              <div class="ev"><div class="t">06-28 18:00</div><b>转移 11992 户 41574 人</b><p>8000 余名干部参与；6·30 公开报道灾情为 6 人遇难、10.3 万人受灾。</p></div>
+            </div>
+          </div>
+          <div class="type-col">
+            <h4>通信影响与处置</h4>
+            <p class="type-p">三河汇流、城区低洼带进水，沿江基站与过河光缆面临受淹风险；全城警报与分片撤离要求指挥链路不能断。</p>
+            <div class="chips"><span class="chip">三河汇流</span><span class="chip">全城警报</span><span class="chip">分片撤离</span><span class="chip warn">基站退服清单 · 推演</span></div>
+            <h4>RidgeLink 打法</h4>
+            <ol class="type-ol">
+              <li>水位—淹没范围联动，先标出沿江低洼基站与村寨。</li>
+              <li>失联点位聚类后，按人口与道路阻断排序。</li>
+              <li>地面中继优先，无视距点位直接转北斗 / 天通卫星直连。</li>
+              <li>转移路线与通信抢修任务同图排程。</li>
+            </ol>
+            <a class="type-link" href="demo.html?scene=flood">进入暴雨山洪推演 →</a>
+          </div>
+        </div>
+        <div class="type-src">来源：新华社、央视新闻、央广网、贵州日报、新京报（2025-06-24 至 06-30）；榕江县人民政府网雨水情与转移安置通报。</div>
+      </article>
+
+      <article class="type-case">
+        <div class="type-head">
+          <span class="type-tag">02 地震滑坡</span>
+          <h3>水城 2019·7·23 鸡场镇特大山体滑坡</h3>
+          <span class="type-city">六盘水市水城区鸡场镇坪地村 · 山区陡坡</span>
+        </div>
+        <div class="type-kpis">
+          <div class="kpi red"><b>43<small>人</small></b><span>遇难，另有 9 人失踪</span><span class="src real">公开报道</span></div>
+          <div class="kpi"><b>200<small>万方</small></b><span>滑坡体量，21 栋房屋被埋</span><span class="src real">公开报道</span></div>
+          <div class="kpi orange"><b>1600<small>人</small></b><span>受灾，700 余人紧急转移</span><span class="src real">公开报道</span></div>
+        </div>
+        <div class="type-cols">
+          <div class="type-col">
+            <h4>真实时间线</h4>
+            <div class="rail type-rail">
+              <div class="ev key"><div class="t">07-23 21:20</div><b>特大山体滑坡</b><p>约 200 多万方土石从 500 多米高处冲下，21 栋房屋被埋；贵州启动地质灾害Ⅰ级应急响应。</p></div>
+              <div class="ev"><div class="t">07-23 23:05</div><b>第一名生还者获救</b><p>现场电力中断，救援队用移动照明灯展开连夜搜救。</p></div>
+              <div class="ev"><div class="t">07-28 23:30</div><b>42 人遇难、9 人失联</b><p>累计搜救出 53 人（11 人生还）；最终公开报道为 43 人遇难、9 人失踪。</p></div>
+              <div class="ev"><div class="t">07-29</div><b>受损线路全部恢复送电</b><p>10kV 鸡场Ⅰ、Ⅱ回线恢复，电力抢修与搜救同步推进。</p></div>
+            </div>
+          </div>
+          <div class="type-col">
+            <h4>通信影响与处置</h4>
+            <p class="type-p">公开报道确认现场电力中断、10kV 鸡场Ⅰ、Ⅱ回线停电、道路受阻；基站退服与光缆断点的精确数字未公开，页内相关链路参数为推演。</p>
+            <div class="chips"><span class="chip">陡坡滑坡</span><span class="chip">电力中断</span><span class="chip">道路受阻</span><span class="chip warn">基站/光缆数字 · 推演</span></div>
+            <h4>RidgeLink 打法</h4>
+            <ol class="type-ol">
+              <li>以滑坡体、埋压房屋和救援作业面为核心建立“现场一张图”。</li>
+              <li>优先恢复现场指挥与搜救面覆盖，再恢复安置点公众通信。</li>
+              <li>道路不通时用卫星便携站 / 北斗短报文回传人员与需求。</li>
+              <li>对二次滑坡风险区设置通信警戒线，随救援范围动态调整。</li>
+            </ol>
+            <a class="type-link" href="demo.html?scene=quake">进入地震滑坡推演 →</a>
+          </div>
+        </div>
+        <div class="type-src">来源：新华社、央视新闻、人民网、新京报（2019-07-23 至 07-29）；贵州省能源局《水城“7·23”受损线路全部恢复送电》。</div>
+      </article>
+
+      <article class="type-case">
+        <div class="type-head">
+          <span class="type-tag">03 森林火灾</span>
+          <h3>水城—普安 2024·2·19 跨县山火</h3>
+          <span class="type-city">六盘水市水城区花戛乡 → 黔西南州普安县龙吟镇</span>
+        </div>
+        <div class="type-kpis">
+          <div class="kpi red"><b>2<small>名</small></b><span>扑救人员不幸牺牲</span><span class="src real">公开报道</span></div>
+          <div class="kpi orange"><b>Ⅲ<small>级</small></b><span>贵州启动森林火灾应急响应</span><span class="src real">公开报道</span></div>
+          <div class="kpi"><b>2<small>县区</small></b><span>火势从水城蔓延至普安龙吟</span><span class="src real">公开报道</span></div>
+        </div>
+        <div class="type-cols">
+          <div class="type-col">
+            <h4>真实时间线</h4>
+            <div class="rail type-rail">
+              <div class="ev key"><div class="t">02-19 18:00</div><b>花戛乡花水村山火</b><p>火势在强风作用下快速蔓延，越过县界进入普安县龙吟镇吟塘村、北盘江村。</p></div>
+              <div class="ev"><div class="t">02-20</div><b>龙吟镇 2 名扑救人员牺牲</b><p>红旗社区救火过程中，邓璞、项姚兴不幸牺牲。</p></div>
+              <div class="ev key"><div class="t">02-21</div><b>Ⅲ级响应 · 明火扑灭</b><p>贵州启动森林火灾Ⅲ级应急响应；龙吟镇明火扑灭，转入余火处理。</p></div>
+              <div class="ev"><div class="t">02-23</div><b>见义勇为确认</b><p>普安县委政法委拟确认两名牺牲人员为见义勇为人员。</p></div>
+            </div>
+          </div>
+          <div class="type-col">
+            <h4>通信影响与处置</h4>
+            <p class="type-p">山高林密、火线跨县，火场与前线指挥部之间易受地形遮挡；公开报道未给出基站退服数字，火场通信受限与链路参数为推演。</p>
+            <div class="chips"><span class="chip">跨县火线</span><span class="chip">地形遮挡</span><span class="chip">前线指挥</span><span class="chip warn">火场链路 · 推演</span></div>
+            <h4>RidgeLink 打法</h4>
+            <ol class="type-ol">
+              <li>把火线、风向、道路和取水点叠到同一张图，标出前线指挥点。</li>
+              <li>用无人机中继 / 卫星链路绕开火场遮挡，保障前线与指挥部。</li>
+              <li>按火线推进方向动态调整通信车与中继点，避免被火线切断。</li>
+              <li>为扑救队伍配置北斗短报文，失联时回传位置与人员状态。</li>
+            </ol>
+            <a class="type-link" href="demo.html?scene=fire">进入森林火灾推演 →</a>
+          </div>
+        </div>
+        <div class="type-src">来源：央视新闻、中国新闻网、普安县应急指挥部办公室（2024-02-19 至 02-23）。</div>
+      </article>
+
+      <article class="type-case">
+        <div class="type-head">
+          <span class="type-tag">04 冰雪冻雨</span>
+          <h3>贵阳 2008·1 历史罕见凝冻</h3>
+          <span class="type-city">贵阳市 · 贵州全省 87 个县市</span>
+        </div>
+        <div class="type-kpis">
+          <div class="kpi teal"><b>76<small>个</small></b><span>县市出现大面积凝冻（全省 87 个）</span><span class="src real">公开报道</span></div>
+          <div class="kpi red"><b>4<small>个</small></b><span>贵州电网一度解列为孤立电网</span><span class="src real">公开报道</span></div>
+          <div class="kpi orange"><b>30–60<small>mm</small></b><span>电线结冰直径，部分线路更严重</span><span class="src real">公开报道</span></div>
+        </div>
+        <div class="type-cols">
+          <div class="type-col">
+            <h4>真实时间线</h4>
+            <div class="rail type-rail">
+              <div class="ev"><div class="t">01-10 起</div><b>持续低温雨雪冰冻</b><p>贵州出现有气象记录以来罕见的持续凝冻，道路结冰、交通受阻。</p></div>
+              <div class="ev key"><div class="t">01-18</div><b>贵州电网解列为四个孤立电网</b><p>部分县（市）供电中断，电力与通信保障压力骤增。</p></div>
+              <div class="ev"><div class="t">01-25 → 02-02</div><b>第四轮冰冻过程</b><p>线路覆冰继续加重，抢修窗口短，县城与乡镇保供优先级难判断。</p></div>
+              <div class="ev"><div class="t">春节前后</div><b>抢修与保供攻坚</b><p>电网抢修、油机发电与道路除冰同步推进，优先恢复县城和重要用户。</p></div>
+            </div>
+          </div>
+          <div class="type-col">
+            <h4>通信影响与处置</h4>
+            <p class="type-p">大面积停电会直接导致基站后备电源耗尽、传输节点退服；公开报道确认部分县供电中断，具体基站退服数量未公开，页内链路参数为推演。</p>
+            <div class="chips"><span class="chip">线路覆冰</span><span class="chip">大面积停电</span><span class="chip">道路结冰</span><span class="chip warn">基站退服数字 · 推演</span></div>
+            <h4>RidgeLink 打法</h4>
+            <ol class="type-ol">
+              <li>按“县城—安置点—乡镇—村寨”排出保供与通信恢复优先级。</li>
+              <li>油机、卫星便携站与短波按道路结冰情况分配，避免堵在路上。</li>
+              <li>对断电基站计算备电剩余时长，提前预置油机与电池。</li>
+              <li>用北斗短报文保障独居老人、偏远村寨的失联排查。</li>
+            </ol>
+            <a class="type-link" href="demo.html?scene=ice">进入冰雪冻雨推演 →</a>
+          </div>
+        </div>
+        <div class="type-src">来源：国家发展改革委、中国民航局、国家能源局贵州监管办（2008-01 至 2008-02）公开信息。</div>
+      </article>
+
+      <div class="type-note"><b>口径说明</b>：每节 KPI 与时间线均为公开报道；通信受损、基站退服、链路预算与资源调度为模型推演，不代表官方灾情统计。</div>
     </div>
   </section>
 
