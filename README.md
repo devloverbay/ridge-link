@@ -116,7 +116,7 @@ powershell -ExecutionPolicy Bypass -File .\start-public.ps1
 
 - 包名 `com.ridgelink.app`，minSdk 21，targetSdk 34
 - 无 AndroidX、无第三方依赖，Kotlin 单 Activity
-- **直接下载（Gitee）：** [`download/RidgeLink-1.2.apk`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.2.apk)（约 0.9 MB）
+- **直接下载（Gitee）：** [`download/RidgeLink-1.3.apk`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.3.apk)（约 0.9 MB）
 - 安装后**完全离线**：页面、地形计算、链路预算都在手机本地运行，不需要电脑、不需要公网；首次安装需在系统设置中允许「安装未知来源应用」。
 - 云端打包教程（备用）：见 [`android-apk/云打包教程.md`](android-apk/云打包教程.md)
 
