@@ -211,6 +211,7 @@
   .pm-tri{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:9px solid #ff566a;flex:none}
   .pm-dia{width:8px;height:8px;background:#ff8a3d;transform:rotate(45deg);flex:none}
   .pm-hex{width:9px;height:9px;background:#a78bfa;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);flex:none}
+  .pm-seat-ico{width:8px;height:8px;border-radius:50%;border:1px solid rgba(142,169,194,.6);flex:none}
   .pm-tip{margin-left:auto;color:#6f8ba4}
 
   /* ---------- map ---------- */
@@ -418,6 +419,10 @@
   .type-ol li{margin-bottom:3px}
   .type-link{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--teal);border-bottom:1px solid rgba(46,230,197,.35);padding-bottom:2px;letter-spacing:.4px}
   .type-src{margin-top:14px;padding-top:10px;border-top:1px dashed rgba(126,183,224,.16);font-size:10px;line-height:1.8;color:#6f8ba4}
+  .other-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .other-grid>div{padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(8,20,33,.5)}
+  .other-grid b{display:block;font-size:11.5px;color:#cfe3f3;margin-bottom:5px}
+  .other-grid p{margin:0;font-size:11px;line-height:1.75;color:#a9c3d9}
   .type-note{font-size:10.5px;line-height:1.9;color:#8ea9c2;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,138,61,.22);background:rgba(255,138,61,.05)}
   .type-note b{color:#ffc9a3}
 
@@ -449,6 +454,7 @@
     .type-head h3{font-size:15px}
     .type-intro{font-size:11.5px}
     .type-rail{padding-left:22px}
+    .other-grid{grid-template-columns:1fr}
     .honest{grid-template-columns:1fr}
     .honest .h-ico{display:none}
     .cases{margin:14px -12px 0;border-radius:0;border-left:0;border-right:0;padding:6px 12px}
@@ -574,14 +580,14 @@
             <path d="M650,90 C630,220 640,380 620,510"/>
             <path d="M100,360 C220,350 340,390 470,375 C600,360 720,390 790,360"/>
           </g>
-          <g font-size="13" fill="rgba(142,169,194,.55)" text-anchor="middle" letter-spacing="1">
-            <text x="476" y="206">遵义</text>
-            <text x="263" y="244">毕节</text>
-            <text x="349" y="390">安顺</text>
-            <text x="552" y="390">黔南</text>
-            <text x="770" y="206">铜仁</text>
-            <text x="608" y="350">黔东南</text>
-            <text x="212" y="502">黔西南</text>
+          <g font-size="12.5" fill="rgba(142,169,194,.62)" text-anchor="middle" letter-spacing="1">
+            <g class="pm-seat"><circle cx="476" cy="201" r="3.4" fill="none" stroke="rgba(142,169,194,.45)"/><text x="476" y="220">遵义</text></g>
+            <g class="pm-seat"><circle cx="263" cy="250" r="3.4" fill="none" stroke="rgba(142,169,194,.45)"/><text x="263" y="269">毕节</text></g>
+            <g class="pm-seat"><circle cx="349" cy="371" r="3.4" fill="none" stroke="rgba(142,169,194,.45)"/><text x="349" y="390">安顺</text></g>
+            <g class="pm-seat"><circle cx="552" cy="370" r="3.4" fill="none" stroke="rgba(142,169,194,.45)"/><text x="552" y="389">黔南 · 都匀</text></g>
+            <g class="pm-seat"><circle cx="770" cy="202" r="3.4" fill="none" stroke="rgba(142,169,194,.45)"/><text x="770" y="221">铜仁</text></g>
+            <g class="pm-seat"><circle cx="608" cy="333" r="3.4" fill="none" stroke="rgba(142,169,194,.45)"/><text x="608" y="352">黔东南 · 凯里</text></g>
+            <g class="pm-seat"><circle cx="212" cy="484" r="3.4" fill="none" stroke="rgba(142,169,194,.45)"/><text x="212" y="503">黔西南 · 兴义</text></g>
           </g>
           <text x="70" y="60" font-size="18" fill="#9db8cf" font-weight="700" letter-spacing="2">贵州省</text>
           <text x="70" y="80" font-size="11" fill="#6f8ba4" letter-spacing="1">市州位置与四类灾害点位 · 示意</text>
@@ -617,8 +623,25 @@
           <g class="pm-city" data-go="guiyang" role="button" tabindex="0">
             <circle cx="437" cy="325" r="18" fill="rgba(167,139,250,.14)"/>
             <polygon points="437,307 452,316 452,334 437,343 422,334 422,316" fill="#a78bfa" stroke="#061522" stroke-width="2"/>
-            <text x="458" y="319" font-size="16" fill="#e2d9ff" font-weight="700">贵阳</text>
-            <text x="458" y="336" font-size="12" fill="#cfc0ff">冰雪冻雨</text>
+            <text x="420" y="319" text-anchor="end" font-size="16" fill="#e2d9ff" font-weight="700">贵阳</text>
+            <text x="420" y="336" text-anchor="end" font-size="12" fill="#cfc0ff">冰雪冻雨</text>
+          </g>
+          <g class="pm-city" data-go="other" role="button" tabindex="0">
+            <polygon points="304,252 317,274 291,274" fill="#ff566a" stroke="#061522" stroke-width="1.6"/>
+            <text x="320" y="264" font-size="12.5" fill="#ffd2d7" font-weight="700">大方</text>
+            <text x="320" y="280" font-size="11" fill="#ff9c86">2025·5 滑坡</text>
+          </g>
+          <g class="pm-city" data-go="other" role="button" tabindex="0">
+            <circle cx="515" cy="333" r="9" fill="rgba(74,168,255,.16)"/>
+            <circle cx="515" cy="333" r="5" fill="#4aa8ff" stroke="#061522" stroke-width="1.6"/>
+            <text x="530" y="326" font-size="12.5" fill="#dcefff" font-weight="700">贵定</text>
+            <text x="530" y="342" font-size="11" fill="#8ecbff">2026·5 洪灾</text>
+          </g>
+          <g class="pm-city" data-go="other" role="button" tabindex="0">
+            <circle cx="720" cy="160" r="9" fill="rgba(74,168,255,.16)"/>
+            <circle cx="720" cy="160" r="5" fill="#4aa8ff" stroke="#061522" stroke-width="1.6"/>
+            <text x="706" y="152" text-anchor="end" font-size="12.5" fill="#dcefff" font-weight="700">松桃—德江</text>
+            <text x="706" y="168" text-anchor="end" font-size="11" fill="#8ecbff">2026·6 暴雨</text>
           </g>
         </svg>
       </div>
@@ -627,6 +650,7 @@
         <span><i class="pm-tri"></i>地震滑坡</span>
         <span><i class="pm-dia"></i>森林火灾</span>
         <span><i class="pm-hex"></i>冰雪冻雨</span>
+        <span><i class="pm-seat-ico"></i>市州驻地</span>
         <span class="pm-tip">同一点位多灾种时并列标注 · 示意图</span>
       </div>
     </div>
@@ -799,6 +823,7 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
         <div class="year-col">
           <div class="year-h">2026</div>
           <div class="year-ev"><b>01</b><span>入冬最强寒潮，贵州电网再次启动低温雨雪冰冻Ⅳ级响应。</span></div>
+          <div class="year-ev"><b>05</b><span>贵定“5·18 / 19”特大暴雨：4 人遇难、5 人失联，部分区域通信中断。</span></div>
           <div class="year-ev"><b>06</b><span>贵州特大暴雨：榕江转移 825 户 3290 人、从江连夜转移 3759 人，无人员伤亡。</span></div>
           <div class="year-ev"><b>防火期</b><span>2025—2026 防火期全省仅 1 起森林火灾、8 起火情，无重特大火灾。</span></div>
           <div class="year-ev"><b>11</b><span>西北部威宁、赫章等高海拔地区凝冻，电网启动Ⅳ级响应。</span></div>
@@ -1042,6 +1067,21 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
           </div>
         </div>
         <div class="type-src">来源：国家发展改革委、中国民航局、国家能源局贵州监管办（2008-01 至 2008-02）公开信息。</div>
+      </article>
+
+      <article class="type-case" id="case-other">
+        <div class="type-head">
+          <span class="type-tag">其他市州</span>
+          <h3>遵义 · 毕节 · 安顺 · 铜仁 · 黔南 · 黔西南</h3>
+          <span class="type-city">同一张省级地图上的其余市州与真实案例</span>
+        </div>
+        <div class="other-grid">
+          <div><b>毕节 · 大方 2025·5·22</b><p>长石镇、果瓦乡两起山体滑坡；果瓦乡庆阳村 8 户 19 人被困，消防、武警等跨区域增援。</p></div>
+          <div><b>黔南 · 贵定 2026·5·18 / 19</b><p>突发特大暴雨，洪涝与塌方致 4 人遇难、5 人失联，部分区域房屋被淹、道路损毁、通信中断。</p></div>
+          <div><b>铜仁 · 松桃—德江 2026·6·7 / 8</b><p>特大暴雨，德江荆角乡转移 156 人，松桃等地紧急转移群众，未造成人员伤亡。</p></div>
+          <div><b>遵义 / 安顺 / 黔西南</b><p>2024 年春节森林火情期间，遵义、毕节、六盘水、贵阳均有山火；安顺在 2026 年寒潮与凝冻过程中开展防冰保电；黔西南普安见 2024 山火案例。</p></div>
+        </div>
+        <div class="type-src">来源：新华社、央视新闻、中国新闻网（2024-02 至 2026-06）。</div>
       </article>
 
       <div class="type-note"><b>口径说明</b>：每节 KPI 与时间线均为公开报道；通信受损、基站退服、链路预算与资源调度为模型推演，不代表官方灾情统计。</div>
