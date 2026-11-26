@@ -1,4 +1,4 @@
-﻿# 山脊信使 RidgeLink · 山区应急通信辅助智能体
+# 山脊信使 RidgeLink · 山区应急通信辅助智能体
 
 > 2026 大学生创新创业大赛 · 职教赛道 · 创意组
 > 贵州电子科技职业学院 · 现代通信技术
@@ -70,6 +70,18 @@
 
 推演入口：`demo.html?scene=flood|quake|fire|ice`；其中通信受损、失联人数、资源数量为模型推演，灾情事实均标注为公开报道。
 
+### 2024–2026 三年灾情
+
+「四类灾害」Tab 顶部已加入三年灾情总览，并在每个案例中嵌入当地示意地图（非测绘）：
+
+| 年份 | 已接入的真实事件 |
+|---|---|
+| 2024 | 贵州首场寒潮 / 水城—普安“2·19”山火 / 镇远“6·29”㵲阳河洪水 |
+| 2025 | 67 县降雪与电网Ⅳ级响应 / 大方“5·22”两处滑坡 / 榕江“6·24·6·28”洪水 / 水城化乐“7·1”崩塌（72 人提前撤离） |
+| 2026 | 入冬最强寒潮 / 贵州“6·7·6·8”特大暴雨（榕江转移 3290 人）/ 2025—2026 防火期仅 1 起森林火灾 / 11 月西北部凝冻 |
+
+未发生重大事件的年份或类型不虚构；地图为本地相对位置示意，不是测绘成果。
+
 ---
 
 ## 怎么跑
@@ -129,7 +141,7 @@ powershell -ExecutionPolicy Bypass -File .\start-public.ps1
 
 - 包名 `com.ridgelink.app`，minSdk 21，targetSdk 34
 - 无 AndroidX、无第三方依赖，Kotlin 单 Activity
-- **直接下载（Gitee）：** [`download/RidgeLink-1.4.apk?v=1.4.1`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.4.apk?v=1.4.1)（约 0.9 MB）
+- **直接下载（Gitee）：** [`download/RidgeLink-1.5.apk?v=1.5`](https://gitee.com/lxylxyone/ridge-link/raw/master/download/RidgeLink-1.5.apk?v=1.5)（约 0.9 MB）
 - 安装后**完全离线**：页面、地形计算、链路预算都在手机本地运行，不需要电脑、不需要公网；首次安装需在系统设置中允许「安装未知来源应用」。
 - 云端打包教程（备用）：见 [`android-apk/云打包教程.md`](android-apk/云打包教程.md)
 

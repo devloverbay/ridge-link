@@ -372,6 +372,16 @@
 
   /* ---------- four disaster types ---------- */
   .type-intro{font-size:12.5px;line-height:1.9;color:#9db8cf;margin:0 0 18px;max-width:980px}
+  .year-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 8px}
+  .year-col{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:rgba(8,20,33,.45)}
+  .year-h{font-size:18px;font-weight:800;color:var(--teal);letter-spacing:1px;margin-bottom:9px}
+  .year-ev{display:flex;gap:8px;font-size:11px;line-height:1.7;color:#a9c3d9;padding:5px 0;border-top:1px dashed rgba(126,183,224,.1)}
+  .year-ev:first-of-type{border-top:none}
+  .year-ev b{flex:none;color:#95b4cd;font-size:10px;font-weight:700;min-width:38px}
+  .year-note{font-size:10px;line-height:1.8;color:#6f8ba4;margin:0 0 18px}
+  .type-map{margin:0 0 16px;border:1px solid var(--line);border-radius:11px;overflow:hidden;background:rgba(4,12,20,.5);position:relative}
+  .type-map svg{display:block;width:100%;height:auto}
+  .type-map .map-cap{position:absolute;right:8px;bottom:6px;font-size:9px;color:#6f8ba4;letter-spacing:.4px}
   .type-case{border:1px solid var(--line);border-radius:14px;padding:18px 18px 14px;margin-bottom:16px;background:linear-gradient(165deg,rgba(16,36,56,.45),rgba(8,20,33,.35))}
   .type-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 12px;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--line)}
   .type-head h3{margin:0;font-size:17px;letter-spacing:.3px}
@@ -408,6 +418,7 @@
     .imp-grid{grid-template-columns:1fr}
     .kpis{grid-template-columns:repeat(3,1fr)}
     .type-cols{grid-template-columns:1fr}
+    .year-strip{grid-template-columns:1fr}
   }
   @media(max-width:720px){
     .hero{padding:24px 0 6px}
@@ -682,6 +693,30 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
       </div>
       <p class="type-intro">四类灾害分别落在贵州四个真实城市（县域）：榕江、水城、普安、贵阳。每一节先给公开报道中的真实灾情与时间线，再给通信影响与 RidgeLink 的处置思路；凡公开报道未披露的基站、链路数字，一律标为“推演”。</p>
 
+      <div class="year-strip">
+        <div class="year-col">
+          <div class="year-h">2024</div>
+          <div class="year-ev"><b>01</b><span>贵州首场寒潮，输电线路覆冰，南网启动融冰保供。</span></div>
+          <div class="year-ev"><b>02</b><span>水城—普安“2·19”山火；全省春节以来森林火情 221 起，2 名扑救人员牺牲。</span></div>
+          <div class="year-ev"><b>06</b><span>镇远“6·29”㵲阳河洪水：洪峰 465.5 m，超保证 4.5 m，转移 6000 余人。</span></div>
+        </div>
+        <div class="year-col">
+          <div class="year-h">2025</div>
+          <div class="year-ev"><b>01</b><span>67 个县域降雪，贵州电网启动低温雨雪冰冻Ⅳ级响应。</span></div>
+          <div class="year-ev"><b>05</b><span>大方县“5·22”两起山体滑坡，多方救援力量跨区域增援。</span></div>
+          <div class="year-ev"><b>06</b><span>榕江“6·24 / 6·28”两轮特大洪水：256.71 m、41574 人转移。</span></div>
+          <div class="year-ev"><b>07</b><span>水城化乐“7·1”山体崩塌，35 户 72 人在崩塌前 15 分钟全部转移。</span></div>
+        </div>
+        <div class="year-col">
+          <div class="year-h">2026</div>
+          <div class="year-ev"><b>01</b><span>入冬最强寒潮，贵州电网再次启动低温雨雪冰冻Ⅳ级响应。</span></div>
+          <div class="year-ev"><b>06</b><span>贵州特大暴雨：榕江转移 825 户 3290 人、从江连夜转移 3759 人，无人员伤亡。</span></div>
+          <div class="year-ev"><b>防火期</b><span>2025—2026 防火期全省仅 1 起森林火灾、8 起火情，无重特大火灾。</span></div>
+          <div class="year-ev"><b>11</b><span>西北部威宁、赫章等高海拔地区凝冻，电网启动Ⅳ级响应。</span></div>
+        </div>
+      </div>
+      <div class="year-note">三年灾情均取自公开报道；同一类型在不同年份可能发生在不同县域，未发生的年份不虚构事件。</div>
+
       <article class="type-case">
         <div class="type-head">
           <span class="type-tag">01 暴雨山洪</span>
@@ -692,6 +727,30 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
           <div class="kpi teal"><b>256.71<small>m</small></b><span>6·24 实测洪峰 · 超保证 5.21 m</span><span class="src real">公开报道</span></div>
           <div class="kpi"><b>1.14<small>万 m³/s</small></b><span>6·24 相应洪峰流量</span><span class="src real">公开报道</span></div>
           <div class="kpi orange"><b>41574<small>人</small></b><span>6·28 单日转移（11992 户）</span><span class="src real">公开报道</span></div>
+        </div>
+        <div class="type-map">
+          <svg viewBox="0 0 560 220" role="img" aria-label="榕江县本地示意地图">
+            <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
+            <path d="M18,120 C90,100 150,150 220,138 C300,124 360,150 430,136 C480,126 520,132 546,128" fill="none" stroke="#2f7fc4" stroke-width="4" opacity=".75"/>
+            <path d="M300,8 C296,50 302,90 300,138" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".65"/>
+            <path d="M72,24 C120,60 180,100 248,134" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".6"/>
+            <path d="M352,214 C344,180 334,156 326,138" fill="none" stroke="#2f7fc4" stroke-width="2.4" opacity=".5"/>
+            <text x="208" y="168" font-size="9" fill="#7abef0">都柳江</text>
+            <text x="306" y="34" font-size="9" fill="#7abef0">寨蒿河</text>
+            <text x="112" y="58" font-size="9" fill="#7abef0">平永河</text>
+            <g fill="#2ee6c5"><circle cx="310" cy="138" r="4"/><circle cx="405" cy="144" r="3.4"/><circle cx="300" cy="64" r="3.4"/><circle cx="162" cy="84" r="3.4"/><circle cx="104" cy="160" r="3.4"/><circle cx="224" cy="192" r="3.4"/><circle cx="452" cy="76" r="3.4"/></g>
+            <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
+              <text x="310" y="154">古州</text><text x="405" y="160">忠诚</text><text x="300" y="52">寨蒿</text>
+              <text x="162" y="72">平永</text><text x="104" y="176">八开</text><text x="224" y="208">计划</text><text x="452" y="64">栽麻</text>
+            </g>
+            <g>
+              <circle cx="310" cy="138" r="10" fill="none" stroke="#ff566a" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <text x="330" y="120" font-size="9" fill="#ff8a9a">2025·6 两轮洪峰</text>
+              <circle cx="162" cy="84" r="9" fill="none" stroke="#ff8a3d" stroke-width="1.3" stroke-dasharray="2 3"/>
+              <text x="178" y="106" font-size="9" fill="#ffc9a3">2026·6 强降雨</text>
+            </g>
+            <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
+          </svg>
         </div>
         <div class="type-cols">
           <div class="type-col">
@@ -731,6 +790,29 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
           <div class="kpi"><b>200<small>万方</small></b><span>滑坡体量，21 栋房屋被埋</span><span class="src real">公开报道</span></div>
           <div class="kpi orange"><b>1600<small>人</small></b><span>受灾，700 余人紧急转移</span><span class="src real">公开报道</span></div>
         </div>
+        <div class="type-map">
+          <svg viewBox="0 0 560 220" role="img" aria-label="水城区本地示意地图">
+            <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
+            <path d="M20,70 C110,64 190,92 270,86 C350,80 430,96 540,90" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".7"/>
+            <path d="M40,190 C130,176 220,184 310,166 C400,148 470,156 540,146" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".55"/>
+            <text x="34" y="62" font-size="9" fill="#8fa9bb">G356 / 山间公路</text>
+            <text x="34" y="206" font-size="9" fill="#7abef0">北盘江支流</text>
+            <g fill="#2ee6c5"><circle cx="280" cy="86" r="4"/><circle cx="250" cy="126" r="3.4"/><circle cx="120" cy="192" r="3.4"/><circle cx="360" cy="150" r="3.4"/><circle cx="430" cy="122" r="3.4"/><circle cx="190" cy="160" r="3.4"/></g>
+            <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
+              <text x="280" y="74">水城城区</text><text x="250" y="142">玉舍</text><text x="120" y="208">鸡场</text>
+              <text x="360" y="166">化乐</text><text x="430" y="138">花戛</text><text x="190" y="176">杨梅</text>
+            </g>
+            <g>
+              <circle cx="120" cy="192" r="10" fill="none" stroke="#ff566a" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <text x="134" y="186" font-size="9" fill="#ff8a9a">2019·7·23 滑坡</text>
+              <circle cx="360" cy="150" r="10" fill="none" stroke="#2ee6c5" stroke-width="1.4" stroke-dasharray="2 3"/>
+              <text x="374" y="144" font-size="9" fill="#8ef0dd">2025·7·1 崩塌 / 72 人撤离</text>
+              <circle cx="430" cy="122" r="9" fill="none" stroke="#ff8a3d" stroke-width="1.3" stroke-dasharray="2 3"/>
+              <text x="444" y="116" font-size="9" fill="#ffc9a3">2024·2·19 山火起点</text>
+            </g>
+            <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
+          </svg>
+        </div>
         <div class="type-cols">
           <div class="type-col">
             <h4>真实时间线</h4>
@@ -769,6 +851,25 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
           <div class="kpi orange"><b>Ⅲ<small>级</small></b><span>贵州启动森林火灾应急响应</span><span class="src real">公开报道</span></div>
           <div class="kpi"><b>2<small>县区</small></b><span>火势从水城蔓延至普安龙吟</span><span class="src real">公开报道</span></div>
         </div>
+        <div class="type-map">
+          <svg viewBox="0 0 560 220" role="img" aria-label="普安县龙吟镇本地示意地图">
+            <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
+            <path d="M40,150 C120,120 190,150 260,124 C330,98 400,110 530,86" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".7"/>
+            <path d="M60,190 C150,180 220,188 300,166 C380,144 450,150 540,136" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".5"/>
+            <text x="40" y="142" font-size="9" fill="#8fa9bb">水城—普安 县界山路</text>
+            <text x="42" y="206" font-size="9" fill="#7abef0">北盘江</text>
+            <g fill="#2ee6c5"><circle cx="140" cy="132" r="3.6"/><circle cx="300" cy="112" r="4"/><circle cx="350" cy="140" r="3.4"/><circle cx="390" cy="166" r="3.4"/><circle cx="240" cy="70" r="3.4"/></g>
+            <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
+              <text x="140" y="120">花戛（水城）</text><text x="300" y="100">龙吟</text><text x="350" y="156">吟塘</text><text x="390" y="182">北盘江</text><text x="240" y="58">普安县城</text>
+            </g>
+            <path d="M140,132 C190,120 240,118 292,114" fill="none" stroke="#ff8a3d" stroke-width="2.2" stroke-dasharray="5 3"/>
+            <polygon points="292,114 282,110 284,120" fill="#ff8a3d"/>
+            <text x="176" y="110" font-size="9" fill="#ffc9a3">2024·2·19 火势蔓延</text>
+            <circle cx="300" cy="112" r="10" fill="none" stroke="#ff566a" stroke-width="1.4" stroke-dasharray="3 3"/>
+            <text x="314" y="136" font-size="9" fill="#ff8a9a">2 名扑救人员牺牲</text>
+            <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
+          </svg>
+        </div>
         <div class="type-cols">
           <div class="type-col">
             <h4>真实时间线</h4>
@@ -806,6 +907,26 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
           <div class="kpi teal"><b>76<small>个</small></b><span>县市出现大面积凝冻（全省 87 个）</span><span class="src real">公开报道</span></div>
           <div class="kpi red"><b>4<small>个</small></b><span>贵州电网一度解列为孤立电网</span><span class="src real">公开报道</span></div>
           <div class="kpi orange"><b>30–60<small>mm</small></b><span>电线结冰直径，部分线路更严重</span><span class="src real">公开报道</span></div>
+        </div>
+        <div class="type-map">
+          <svg viewBox="0 0 560 220" role="img" aria-label="贵阳市本地示意地图">
+            <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
+            <path d="M20,120 C100,110 160,130 230,120 C300,110 380,128 540,116" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".6"/>
+            <circle cx="300" cy="120" r="26" fill="none" stroke="rgba(46,230,197,.35)" stroke-width="1.2" stroke-dasharray="3 4"/>
+            <g fill="#2ee6c5"><circle cx="286" cy="116" r="4"/><circle cx="318" cy="124" r="3.6"/><circle cx="240" cy="100" r="3.4"/><circle cx="360" cy="86" r="3.4"/><circle cx="420" cy="70" r="3.4"/><circle cx="150" cy="80" r="3.4"/></g>
+            <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
+              <text x="286" y="104">云岩</text><text x="322" y="142">南明</text><text x="240" y="88">观山湖</text>
+              <text x="360" y="74">开阳</text><text x="420" y="58">息烽</text><text x="150" y="68">清镇</text>
+            </g>
+            <g>
+              <circle cx="360" cy="86" r="10" fill="none" stroke="#4aa8ff" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <text x="374" y="82" font-size="9" fill="#a8d4ff">2024·1 凝冻 / 融冰</text>
+              <circle cx="420" cy="70" r="10" fill="none" stroke="#a78bfa" stroke-width="1.4" stroke-dasharray="2 3"/>
+              <text x="434" y="66" font-size="9" fill="#cfc0ff">2026·1 最强寒潮</text>
+              <text x="150" y="98" font-size="9" fill="#8fa9bb">2008·1 历史凝冻</text>
+            </g>
+            <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
+          </svg>
         </div>
         <div class="type-cols">
           <div class="type-col">
