@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<title>真实场景 · 榕江 2025·6·24 / 6·28 特大洪水实景推演 | 山脊信使</title>
+<title>真实场景 · 贵州四类灾害 2021—2026 复盘 | 山脊信使</title>
 <style>
     :root{
     --bg:#ffffff;
@@ -129,38 +129,35 @@
   .honest{
     border-radius:13px;border:1px solid rgba(191,106,16,.28);
     background:linear-gradient(160deg,rgba(191,106,16,.09),rgba(20,34,30,0.76));
-    padding:15px 17px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
+    padding:0 17px 15px;
   }
+  .honest>summary{display:flex;align-items:center;gap:12px;min-height:52px;cursor:pointer;list-style:none}
+  .honest>summary::-webkit-details-marker{display:none}
+  .honest>summary:after{
+    content:'展开';margin-left:auto;flex:none;font-size:10px;letter-spacing:.4px;color:#a35a12;
+    border:1px solid rgba(191,106,16,.32);border-radius:999px;padding:3px 10px;
+  }
+  .honest[open]>summary:after{content:'收起'}
   .honest .h-ico{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(191,106,16,.15);flex:none}
   .honest .h-ico svg{width:16px;height:16px;stroke:var(--orange);fill:none;stroke-width:2;stroke-linecap:round}
-  .honest h4{margin:0 0 7px;font-size:12.5px;letter-spacing:1px;color:#a35a12}
+  .honest h4{margin:0;font-size:12.5px;letter-spacing:1px;color:#a35a12}
+  .honest .hs{font-size:10px;color:var(--muted);letter-spacing:.4px;white-space:nowrap}
+  .honest-body{padding-top:2px}
   .honest p{margin:0;font-size:12px;line-height:1.8;color:#c6d8d2}
   .honest .row{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
   .chip{font-size:10.5px;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--muted);background:rgba(20,34,30,0.7)}
   .chip.ok{color:#07756d;border-color:rgba(11,143,132,.32);background:rgba(11,143,132,.11)}
   .chip.warn{color:#a35a12;border-color:rgba(191,106,16,.3);background:rgba(191,106,16,.1)}
 
-  /* ---------- case switch ---------- */
-  .cases{
-    display:flex;gap:8px;margin:20px 0 0;padding:6px;border-radius:14px;
-    border:1px solid var(--line);background:rgba(20,34,30,0.82);backdrop-filter:blur(12px);
-    overflow-x:auto;scrollbar-width:none;
+  /* ---------- tools nav ---------- */
+  .tool-nav{display:flex;gap:6px;margin:0 0 12px;flex-wrap:wrap}
+  .tool-nav a{
+    display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 12px;border-radius:8px;
+    border:1px solid var(--line);background:rgba(20,34,30,.6);font-size:11px;color:#cfe3f3;letter-spacing:.4px;
   }
-  .cases::-webkit-scrollbar{display:none}
-  .case{
-    flex:1;min-width:236px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;
-    padding:11px 14px;border-radius:10px;border:1px solid transparent;background:transparent;
-    color:var(--muted);cursor:pointer;text-align:left;
-    transition:background .18s,color .18s,border-color .18s;
-  }
-  .case:hover{background:rgba(15,64,92,.08);color:var(--text)}
-  .case b{font-size:12.5px;letter-spacing:.6px;font-weight:700;display:flex;align-items:center;gap:7px}
-  .case span{font-size:10px;letter-spacing:.5px;opacity:.8;line-height:1.5}
-  .case.on{background:rgba(11,143,132,.13);border-color:rgba(11,143,132,.35);color:var(--teal)}
-  .case.on b i{opacity:1;box-shadow:0 0 10px currentColor}
-  .case-hint{margin:10px 2px 0;font-size:11px;line-height:1.9;color:var(--muted);letter-spacing:.3px}
-  .case-hint a{color:var(--teal);border-bottom:1px solid rgba(11,143,132,.3)}
-  .case-hint i{font-style:normal;margin:0 8px;opacity:.45}
+  .tool-nav a:hover{border-color:rgba(46,230,197,.35);color:var(--teal)}
+  .tool-nav b{font-size:9px;color:var(--teal);font-variant-numeric:tabular-nums}
+  .tool-nav a i{font-style:normal;color:var(--muted);font-size:10px}
 
   /* ---------- tabs ---------- */
   .tabs{
@@ -182,6 +179,7 @@
 
   .sec{padding:22px 0 6px;display:none}
   .sec.on{display:block;animation:fade .3s ease}
+  .type-case,.sub-case,#drop,#tlTitle,#flowTitle,#case-flood,#case-slide,#case-fire,#case-ice{scroll-margin-top:76px}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
   .panel{
@@ -390,8 +388,15 @@
 
   /* ---------- four disaster types ---------- */
   .type-intro{font-size:12.5px;line-height:1.9;color:#9db8cf;margin:0 0 18px;max-width:980px}
-  .year-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 8px}
+  .year-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 13px}
   .year-col{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:rgba(8,20,33,.45)}
+  .year-fold{margin:0 0 8px;border:1px solid var(--line);border-radius:12px;background:rgba(8,20,33,.3)}
+  .year-fold>summary{display:flex;align-items:center;gap:9px;min-height:46px;padding:0 13px;cursor:pointer;list-style:none;font-size:11px;color:#a9c3d9;letter-spacing:.4px}
+  .year-fold>summary::-webkit-details-marker{display:none}
+  .year-fold>summary b{font-size:12.5px;color:var(--teal);letter-spacing:1px;font-variant-numeric:tabular-nums}
+  .year-fold>summary:after{content:'展开';margin-left:auto;flex:none;font-size:10px;color:var(--muted);border:1px solid var(--line2);border-radius:999px;padding:2px 9px}
+  .year-fold[open]>summary:after{content:'收起'}
+  .year-fold[open]>summary{border-bottom:1px solid var(--line)}
   .year-h{font-size:18px;font-weight:800;color:var(--teal);letter-spacing:1px;margin-bottom:9px}
   .year-ev{display:flex;gap:8px;font-size:11px;line-height:1.7;color:#a9c3d9;padding:5px 0;border-top:1px dashed rgba(126,183,224,.1)}
   .year-ev:first-of-type{border-top:none}
@@ -420,6 +425,32 @@
   .type-ol li{margin-bottom:3px}
   .type-link{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--teal);border-bottom:1px solid rgba(46,230,197,.35);padding-bottom:2px;letter-spacing:.4px}
   .type-src{margin-top:14px;padding-top:10px;border-top:1px dashed rgba(126,183,224,.16);font-size:10px;line-height:1.8;color:#6f8ba4}
+  .case-index{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 16px}
+  .case-index a{display:flex;align-items:center;gap:7px;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:rgba(8,20,33,.5);font-size:11px;color:#cfe3f3;line-height:1.4}
+  .case-index a:hover{border-color:rgba(46,230,197,.35);color:var(--teal)}
+  .case-index b{font-size:9px;color:var(--teal);font-variant-numeric:tabular-nums}
+  .case-lead{margin:0 0 12px;font-size:11.5px;line-height:1.8;color:#a9c3d9}
+  .case-lead b{color:#e9f5ff}
+  .case-fold{margin:2px 0 0;border-top:1px dashed rgba(126,183,224,.16);padding-top:10px}
+  .case-fold>summary{display:flex;align-items:center;gap:8px;min-height:38px;cursor:pointer;font-size:11px;letter-spacing:.4px;color:var(--teal);list-style:none}
+  .case-fold>summary::-webkit-details-marker{display:none}
+  .case-fold>summary:before{content:'+';display:grid;place-items:center;width:18px;height:18px;border-radius:6px;border:1px solid rgba(46,230,197,.3);font-size:13px;line-height:1;flex:none}
+  .case-fold[open]>summary:before{content:'−'}
+  .case-fold[open]>summary{margin-bottom:12px}
+  .sub-cases{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(126,183,224,.16)}
+  .sub-cases>h4{font-size:10.5px;letter-spacing:1px;color:#95b4cd;margin:0 0 9px}
+  .sub-case{padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(8,20,33,.5);margin-bottom:8px}
+  .sub-case:last-child{margin-bottom:0}
+  .sub-case h5{margin:0 0 5px;font-size:11.5px;color:#dcefff;display:flex;flex-wrap:wrap;align-items:baseline;gap:7px}
+  .sub-case h5 span{font-size:9.5px;color:#8ecbff;font-weight:400}
+  .sub-case p{margin:0;font-size:11px;line-height:1.75;color:#a9c3d9}
+  .sub-case .link-btn{margin-top:7px}
+  .link-btn{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:0 10px;border-radius:7px;border:1px solid rgba(46,230,197,.28);background:rgba(46,230,197,.07);color:var(--teal);font-size:10.5px;cursor:pointer}
+  .link-btn:hover{background:rgba(46,230,197,.14)}
+  .map-switch{display:inline-flex;padding:2px;border:1px solid var(--line);border-radius:8px;background:rgba(8,20,33,.5);gap:2px}
+  .ms{border:0;background:transparent;color:var(--muted);font-size:10.5px;padding:5px 10px;border-radius:6px;cursor:pointer;min-height:30px}
+  .ms.on{background:rgba(46,230,197,.14);color:var(--teal);font-weight:700}
+  .ph-right{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap}
   .other-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .other-grid>div{padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(8,20,33,.5)}
   .other-grid b{display:block;font-size:11.5px;color:#cfe3f3;margin-bottom:5px}
@@ -482,28 +513,35 @@
     .lede{font-size:13px;line-height:1.8}
     .kpis{grid-template-columns:1fr 1fr;gap:8px}
     .kpi b{font-size:19px}
-    .kpi:last-child{grid-column:1/-1}
     .type-kpis{grid-template-columns:1fr 1fr;gap:7px}
     .type-kpis .kpi:last-child{grid-column:1/-1}
     .type-case{padding:14px 12px 12px}
     .type-head h3{font-size:15px}
     .type-intro{font-size:11.5px}
     .type-rail{padding-left:22px}
-    .other-grid{grid-template-columns:1fr}
+    .case-index{grid-template-columns:1fr 1fr}
+    .case-index a{padding:8px 9px;font-size:10.5px}
+    .sub-case{padding:10px}
     .risk-card{position:absolute;left:0;right:0;bottom:0;margin:0;width:auto;max-height:90vh;border-radius:16px 16px 0 0;padding:16px 14px}
-    .risk-grid{grid-template-columns:1fr}
+    .risk-grid{grid-template-columns:1fr 1fr;gap:7px}
+    .risk-grid>div{padding:9px 10px}
+    .risk-grid>div:nth-child(3){grid-column:1/-1}
+    .risk-grid b{font-size:14px}
+    .risk-table-wrap{max-height:none}
+    .risk-table{font-size:10.5px}
+    .risk-table th,.risk-table td{padding:6px 7px}
     .risk-head h3{font-size:19px}
     .risk-actions{justify-content:stretch}
     .risk-actions .btn{flex:1}
     .honest{grid-template-columns:1fr}
     .honest .h-ico{display:none}
-    .cases{margin:14px -12px 0;border-radius:0;border-left:0;border-right:0;padding:6px 12px}
-    .case{min-width:196px;min-height:56px;padding:9px 12px}
-    .tabs{top:58px;padding:6px;margin:14px -12px 0;border-radius:0;border-left:0;border-right:0}
-    .tab{min-width:118px;padding:10px 11px;font-size:11.5px;min-height:44px}
-    .nav a{padding:9px 12px;min-height:36px;display:inline-flex;align-items:center}
+    .tabs{top:54px;padding:6px;margin:14px -12px 0;border-radius:0;border-left:0;border-right:0;overflow:visible}
+    .tab{min-width:0;flex:1;padding:10px 4px;font-size:11px;gap:4px;min-height:44px}
+    .tab .n{font-size:9px}
+    .nav a{padding:9px 10px;min-height:36px;display:inline-flex;align-items:center}
     .map-hint{display:block}
     .province-scroll-tip{display:block}
+    #provinceMap{min-width:680px}
     .legend{font-size:9px;padding:6px 8px;gap:4px 8px;left:8px;bottom:8px;max-width:calc(100% - 16px)}
     input[type=range]{height:34px;padding:14px 0}
     input[type=range]::-webkit-slider-thumb{width:24px;height:24px}
@@ -518,18 +556,26 @@
     .step-h .sla{display:none}
     .step-h{flex-wrap:wrap;gap:6px}
     .map-canvas{min-height:auto}
-    .map-scroll svg{min-width:660px}
+    .map-scroll svg{min-width:600px}
+    .ph{flex-wrap:wrap;gap:8px}
+    .ph-right{width:100%;justify-content:space-between}
+    .ms{min-height:36px;padding:6px 12px}
+    .case-fold>summary{min-height:44px}
   }
   @media(max-width:480px){
     .wrap{padding:0 12px}
     .hero h1{font-size:23px}
+    .lede{font-size:12.5px}
     .kpi{padding:11px 12px}
     .kpi b{font-size:17px}
     .top{padding:0 12px;gap:10px}
     .brand-t b{font-size:12px;letter-spacing:1px}
-    .nav a{padding:6px 9px;font-size:11px}
+    .nav a{padding:6px 8px;font-size:10.5px}
+    .tag{display:none}
     .step-h .tt{width:auto}
     .kv{grid-template-columns:1fr}
+    .type-kpis .kpi b{font-size:17px}
+    .case-index{grid-template-columns:1fr 1fr;gap:6px}
   }
   @media(max-height:560px) and (orientation:landscape){
     .hero{padding:14px 0 0}
@@ -538,7 +584,7 @@
     .lede{font-size:12px}
   }
   /* ---------- 浅色主题补充 ---------- */
-  .kpi,.ag,.kv div,.case,.drop{box-shadow:0 1px 2px rgba(15,64,92,.04)}
+  .kpi,.ag,.kv div,.drop{box-shadow:0 1px 2px rgba(15,64,92,.04)}
   .legend,.map-hint{box-shadow:0 6px 20px -12px rgba(15,64,92,.25)}
     /* ---------- 品牌图标 ---------- */
   .brand-mark,.top .brand-mark{background:#13211d;border:1px solid rgba(206,236,226,.16);overflow:hidden;padding:0}
@@ -567,38 +613,38 @@
 <main class="wrap">
   <!-- ================= HERO ================= -->
   <section class="hero">
-    <div class="badge" id="heroBadge"></div>
-    <h1 id="heroTitle"></h1>
-    <p class="lede" id="heroLede"></p>
-    <div class="kpis" id="kpis"></div>
-    <div class="honest" id="honest"></div>
+    <div class="badge"><i></i>真实场景 · 贵州 · 2021—2026 公开报道</div>
+    <h1>贵州四类灾害<br><em>一张图看懂</em>：从灾情到通信处置</h1>
+    <p class="lede">暴雨山洪、地震滑坡、森林火灾、冰雪冻雨四类灾害落在同一张省级地图：先看哪里最严重、最近一次发生在什么时候，再展开时间线、通信影响与 RidgeLink 处置打法。真实数字标注来源，推演与示意单独标注。</p>
+    <div class="kpis">
+      <div class="kpi teal"><b>256.71<small>m</small></b><span>榕江 6·24 实测洪峰 · 超保证 5.21 m</span><span class="src real">公开报道</span></div>
+      <div class="kpi orange"><b>41574<small>人</small></b><span>榕江 6·28 单日转移（11992 户）</span><span class="src real">公开报道</span></div>
+      <div class="kpi"><b>72<small>人</small></b><span>水城 2025·7 崩塌前 15 分钟全部转移</span><span class="src real">公开报道</span></div>
+      <div class="kpi red"><b>19<small>人</small></b><span>大方 2025·5 滑坡死亡失踪（7 死 12 失）</span><span class="src real">公开报道</span></div>
+    </div>
+    <details class="honest" id="honestBox">
+      <summary>
+        <span class="h-ico"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17v.01"/></svg></span>
+        <h4>数据说明：哪些是真的，哪些是推演</h4>
+        <span class="hs">真实 / 推演 / 示意</span>
+      </summary>
+      <div class="honest-body">
+        <p>本页把两类信息严格分开，避免把推演结果当成灾情事实。<b style="color:#07756d">真实</b>：行政区划与地名、公开报道中的洪峰水位/流量、响应级别、转移与伤亡人数、通信受损的定性描述。<b style="color:#a35a12">推演</b>：村寨级失联人数、基站退服清单、链路预算数值、中继与卫星直连方案。<b style="color:#93ada4">示意</b>：地图为示意图，非测绘图。</p>
+        <div class="row">
+          <span class="chip ok">公开报道 · 真实</span>
+          <span class="chip ok">2021—2026 · 最近五年</span>
+          <span class="chip warn">失联人数 / 退服基站 · 推演</span>
+          <span class="chip warn">中继 / 卫星方案 · 推演</span>
+        </div>
+      </div>
+    </details>
   </section>
-
-  <!-- ================= CASE SWITCH ================= -->
-  <div class="cases" role="tablist" aria-label="真实案例切换">
-    <button class="case on" data-case="rongjiang" role="tab" aria-selected="true">
-      <b>榕江 · 2025·6·24 / 6·28</b>
-      <span>都柳江两轮特大洪水 · 超保证 5.21 m · 单日转移 4.16 万人</span>
-    </button>
-    <button class="case" data-case="zhenyuan" role="tab" aria-selected="false">
-      <b>镇远 · 2024·6·29</b>
-      <span>㵲阳河洪水 · 洪峰 465.5 m · 转移 6000 余人</span>
-    </button>
-  </div>
-
-  <p class="case-hint">其他灾害真实案例：
-    <a href="demo.html?scene=quake">地震滑坡 · 水城 2019</a><i>/</i>
-    <a href="demo.html?scene=fire">森林火灾 · 水城—普安 2024</a><i>/</i>
-    <a href="demo.html?scene=ice">冰雪冻雨 · 贵阳 2008</a>
-  </p>
 
   <!-- ================= TABS ================= -->
   <div class="tabs" role="tablist">
     <button class="tab on" data-tab="map"><span class="n">01</span>实景地图</button>
-    <button class="tab" data-tab="time"><span class="n">02</span>时间线复盘</button>
-    <button class="tab" data-tab="data"><span class="n">03</span>数据导入</button>
-    <button class="tab" data-tab="flow"><span class="n">04</span>业务链路</button>
-    <button class="tab" data-tab="cases"><span class="n">05</span>四类灾害</button>
+    <button class="tab" data-tab="cases"><span class="n">02</span>灾情案例</button>
+    <button class="tab" data-tab="tools"><span class="n">03</span>复盘工具</button>
   </div>
 
   <!-- ================= 01 MAP ================= -->
@@ -706,7 +752,13 @@
     <div class="panel">
       <div class="ph">
         <h3 id="mapTitle">都柳江 榕江段 · 三河汇流实景示意</h3>
-        <div class="r" id="mapMeta">水位 251.50 m · 保证水位基准</div>
+        <div class="ph-right">
+          <div class="map-switch" role="group" aria-label="切换详细地图">
+            <button class="ms on" type="button" data-map-case="rongjiang">榕江</button>
+            <button class="ms" type="button" data-map-case="zhenyuan">镇远</button>
+          </div>
+          <div class="r" id="mapMeta">水位 251.50 m · 保证水位基准</div>
+        </div>
       </div>
       <div class="map-grid">
         <div class="map-canvas">
@@ -797,7 +849,24 @@
     </div>
   </section>
 
-  <!-- ================= 03 DATA ================= -->
+  <!-- ================= 03a FLOW ================= -->
+  <section class="sec" id="sec-flow">
+    <nav class="tool-nav" aria-label="复盘工具快捷跳转">
+      <a href="#tlTitle"><b>01</b>时间线复盘</a>
+      <a href="#flowTitle"><b>02</b>处置链路</a>
+      <a href="#drop"><b>03</b>导入村寨数据</a>
+    </nav>
+    <div class="panel" style="padding:18px">
+      <div class="ph" style="padding:0 0 14px;border-bottom:none">
+        <h3 id="flowTitle">48 小时值班链路 · 谁在什么时间做什么</h3>
+        <div class="r">点开每一步查看输出与时限</div>
+      </div>
+      <div class="flow-head" id="flowHead"></div>
+      <div class="steps" id="steps"></div>
+    </div>
+  </section>
+
+  <!-- ================= 03b DATA ================= -->
   <section class="sec" id="sec-data">
     <div class="imp-grid">
       <div class="panel" style="padding:18px">
@@ -833,28 +902,25 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
     </div>
   </section>
 
-  <!-- ================= 04 FLOW ================= -->
-  <section class="sec" id="sec-flow">
-    <div class="panel" style="padding:18px">
-      <div class="ph" style="padding:0 0 14px;border-bottom:none">
-        <h3 id="flowTitle">48 小时值班链路 · 谁在什么时间做什么</h3>
-        <div class="r">点开每一步查看输出与时限</div>
-      </div>
-      <div class="flow-head" id="flowHead"></div>
-      <div class="steps" id="steps"></div>
-    </div>
-  </section>
-
-  <!-- ================= 05 FOUR TYPES ================= -->
+  <!-- ================= 02 CASES ================= -->
   <section class="sec" id="sec-cases">
     <div class="panel" style="padding:18px">
       <div class="ph" style="padding:0 0 14px;border-bottom:none">
-        <h3>贵州四类典型灾害 · 真实城市与事件</h3>
-        <div class="r">真实事件 / 推演边界逐条标注</div>
+        <h3>2021—2026 · 贵州四类灾害案例</h3>
+        <div class="r">只收录最近五年公开报道 · 一个入口看全</div>
       </div>
-      <p class="type-intro">四类灾害分别落在贵州四个真实城市（县域）：榕江、水城、普安、贵阳。每一节先给公开报道中的真实灾情与时间线，再给通信影响与 RidgeLink 的处置思路；凡公开报道未披露的基站、链路数字，一律标为“推演”。</p>
+      <p class="type-intro">四类灾害各选一个真实县域作为主案例，同类型近年案例收在同一张卡片里；点开“详情”再看时间线、通信影响与 RidgeLink 打法。2019 水城“7·23”、2008 凝冻仅作为历史背景，不进入本次案例主列表。</p>
 
-      <div class="year-strip">
+      <div class="case-index">
+        <a href="#case-flood"><b>01</b>暴雨山洪 · 榕江</a>
+        <a href="#case-slide"><b>02</b>地震滑坡 · 大方 / 水城</a>
+        <a href="#case-fire"><b>03</b>森林火灾 · 普安</a>
+        <a href="#case-ice"><b>04</b>冰雪冻雨 · 贵州</a>
+      </div>
+
+      <details class="year-fold" id="yearFold" open>
+        <summary><b>2024 — 2026</b><span>三年灾情速览 · 按年份</span></summary>
+        <div class="year-strip">
         <div class="year-col">
           <div class="year-h">2024</div>
           <div class="year-ev"><b>01</b><span>贵州首场寒潮，输电线路覆冰，南网启动融冰保供。</span></div>
@@ -864,24 +930,25 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
         <div class="year-col">
           <div class="year-h">2025</div>
           <div class="year-ev"><b>01</b><span>67 个县域降雪，贵州电网启动低温雨雪冰冻Ⅳ级响应。</span></div>
-          <div class="year-ev"><b>05</b><span>大方县“5·22”两起山体滑坡，多方救援力量跨区域增援。</span></div>
+          <div class="year-ev"><b>05</b><span>大方县“5·22”两起山体滑坡：19 人死亡失踪，约 200 万方。</span></div>
           <div class="year-ev"><b>06</b><span>榕江“6·24 / 6·28”两轮特大洪水：256.71 m、41574 人转移。</span></div>
           <div class="year-ev"><b>07</b><span>水城化乐“7·1”山体崩塌，35 户 72 人在崩塌前 15 分钟全部转移。</span></div>
         </div>
         <div class="year-col">
           <div class="year-h">2026</div>
-          <div class="year-ev"><b>01</b><span>入冬最强寒潮，贵州电网再次启动低温雨雪冰冻Ⅳ级响应。</span></div>
+          <div class="year-ev"><b>01</b><span>入冬最强寒潮，国家、贵州气象与贵州电网启动低温雨雪冰冻四级响应。</span></div>
           <div class="year-ev"><b>05</b><span>贵定“5·18 / 19”特大暴雨：4 人遇难、5 人失联，部分区域通信中断。</span></div>
           <div class="year-ev"><b>06</b><span>贵州特大暴雨：榕江转移 825 户 3290 人、从江连夜转移 3759 人，无人员伤亡。</span></div>
           <div class="year-ev"><b>防火期</b><span>2025—2026 防火期全省仅 1 起森林火灾、8 起火情，无重特大火灾。</span></div>
           <div class="year-ev"><b>11</b><span>西北部威宁、赫章等高海拔地区凝冻，电网启动Ⅳ级响应。</span></div>
         </div>
-      </div>
+        </div>
+      </details>
       <div class="year-note">三年灾情均取自公开报道；同一类型在不同年份可能发生在不同县域，未发生的年份不虚构事件。</div>
 
-      <article class="type-case" id="case-rongjiang">
+      <article class="type-case" id="case-flood">
         <div class="type-head">
-          <span class="type-tag">01 暴雨山洪</span>
+          <span class="type-tag">01 暴雨山洪 · 当地最严重</span>
           <h3>榕江 2025·6·24 / 6·28 两轮特大洪水</h3>
           <span class="type-city">黔东南州榕江县 · 都柳江—寨蒿河—平永河三河汇流</span>
         </div>
@@ -890,121 +957,150 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
           <div class="kpi"><b>1.14<small>万 m³/s</small></b><span>6·24 相应洪峰流量</span><span class="src real">公开报道</span></div>
           <div class="kpi orange"><b>41574<small>人</small></b><span>6·28 单日转移（11992 户）</span><span class="src real">公开报道</span></div>
         </div>
-        <div class="type-map">
-          <svg viewBox="0 0 560 220" role="img" aria-label="榕江县本地示意地图">
-            <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
-            <path d="M18,120 C90,100 150,150 220,138 C300,124 360,150 430,136 C480,126 520,132 546,128" fill="none" stroke="#2f7fc4" stroke-width="4" opacity=".75"/>
-            <path d="M300,8 C296,50 302,90 300,138" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".65"/>
-            <path d="M72,24 C120,60 180,100 248,134" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".6"/>
-            <path d="M352,214 C344,180 334,156 326,138" fill="none" stroke="#2f7fc4" stroke-width="2.4" opacity=".5"/>
-            <text x="208" y="168" font-size="9" fill="#7abef0">都柳江</text>
-            <text x="306" y="34" font-size="9" fill="#7abef0">寨蒿河</text>
-            <text x="112" y="58" font-size="9" fill="#7abef0">平永河</text>
-            <g fill="#2ee6c5"><circle cx="310" cy="138" r="4"/><circle cx="405" cy="144" r="3.4"/><circle cx="300" cy="64" r="3.4"/><circle cx="162" cy="84" r="3.4"/><circle cx="104" cy="160" r="3.4"/><circle cx="224" cy="192" r="3.4"/><circle cx="452" cy="76" r="3.4"/></g>
-            <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
-              <text x="310" y="154">古州</text><text x="405" y="160">忠诚</text><text x="300" y="52">寨蒿</text>
-              <text x="162" y="72">平永</text><text x="104" y="176">八开</text><text x="224" y="208">计划</text><text x="452" y="64">栽麻</text>
-            </g>
-            <g>
-              <circle cx="310" cy="138" r="10" fill="none" stroke="#ff566a" stroke-width="1.4" stroke-dasharray="3 3"/>
-              <text x="330" y="120" font-size="9" fill="#ff8a9a">2025·6 两轮洪峰</text>
-              <circle cx="162" cy="84" r="9" fill="none" stroke="#ff8a3d" stroke-width="1.3" stroke-dasharray="2 3"/>
-              <text x="178" y="106" font-size="9" fill="#ffc9a3">2026·6 强降雨</text>
-            </g>
-            <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
-          </svg>
-        </div>
-        <div class="type-cols">
-          <div class="type-col">
-            <h4>真实时间线</h4>
-            <div class="rail type-rail">
-              <div class="ev"><div class="t">06-23 起</div><b>都柳江流域持续强降雨</b><p>干支流面雨量快速累积，上游来水增大。</p></div>
-              <div class="ev key"><div class="t">06-24 14:15</div><b>首轮洪峰 256.71 m</b><p>超保证水位 5.21 m，流量 1.14 万 m³/s；县城低洼片区与村超球场受淹。</p></div>
-              <div class="ev key"><div class="t">06-28 12:30</div><b>防汛Ⅰ级响应 · 全城警报</b><p>公布“七大洪区”撤离路线，干部逐户组织转移。</p></div>
-              <div class="ev"><div class="t">06-28 18:00</div><b>转移 11992 户 41574 人</b><p>8000 余名干部参与；6·30 公开报道灾情为 6 人遇难、10.3 万人受灾。</p></div>
+        <p class="case-lead">最近一次：<b>2026·6·7 / 8 特大暴雨</b>，转移 825 户 3290 人，无人员伤亡；近五年最严重的是 <b>2025·6 两轮洪峰</b>，县城低洼片区与村超球场受淹。</p>
+        <div class="chips"><span class="chip">三河汇流</span><span class="chip">全城警报</span><span class="chip">分片撤离</span><span class="chip warn">基站退服清单 · 推演</span></div>
+        <details class="case-fold" data-autopen>
+          <summary>展开详情：时间线 · 通信影响 · 处置打法 · 本地示意图</summary>
+          <div class="type-map">
+            <svg viewBox="0 0 560 220" role="img" aria-label="榕江县本地示意地图">
+              <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
+              <path d="M18,120 C90,100 150,150 220,138 C300,124 360,150 430,136 C480,126 520,132 546,128" fill="none" stroke="#2f7fc4" stroke-width="4" opacity=".75"/>
+              <path d="M300,8 C296,50 302,90 300,138" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".65"/>
+              <path d="M72,24 C120,60 180,100 248,134" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".6"/>
+              <path d="M352,214 C344,180 334,156 326,138" fill="none" stroke="#2f7fc4" stroke-width="2.4" opacity=".5"/>
+              <text x="208" y="168" font-size="9" fill="#7abef0">都柳江</text>
+              <text x="306" y="34" font-size="9" fill="#7abef0">寨蒿河</text>
+              <text x="112" y="58" font-size="9" fill="#7abef0">平永河</text>
+              <g fill="#2ee6c5"><circle cx="310" cy="138" r="4"/><circle cx="405" cy="144" r="3.4"/><circle cx="300" cy="64" r="3.4"/><circle cx="162" cy="84" r="3.4"/><circle cx="104" cy="160" r="3.4"/><circle cx="224" cy="192" r="3.4"/><circle cx="452" cy="76" r="3.4"/></g>
+              <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
+                <text x="310" y="154">古州</text><text x="405" y="160">忠诚</text><text x="300" y="52">寨蒿</text>
+                <text x="162" y="72">平永</text><text x="104" y="176">八开</text><text x="224" y="208">计划</text><text x="452" y="64">栽麻</text>
+              </g>
+              <g>
+                <circle cx="310" cy="138" r="10" fill="none" stroke="#ff566a" stroke-width="1.4" stroke-dasharray="3 3"/>
+                <text x="330" y="120" font-size="9" fill="#ff8a9a">2025·6 两轮洪峰</text>
+                <circle cx="162" cy="84" r="9" fill="none" stroke="#ff8a3d" stroke-width="1.3" stroke-dasharray="2 3"/>
+                <text x="178" y="106" font-size="9" fill="#ffc9a3">2026·6 强降雨</text>
+              </g>
+              <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
+            </svg>
+          </div>
+          <div class="type-cols">
+            <div class="type-col">
+              <h4>真实时间线</h4>
+              <div class="rail type-rail">
+                <div class="ev"><div class="t">06-23 起</div><b>都柳江流域持续强降雨</b><p>干支流面雨量快速累积，上游来水增大。</p></div>
+                <div class="ev key"><div class="t">06-24 14:15</div><b>首轮洪峰 256.71 m</b><p>超保证水位 5.21 m，流量 1.14 万 m³/s；县城低洼片区与村超球场受淹。</p></div>
+                <div class="ev key"><div class="t">06-28 12:30</div><b>防汛Ⅰ级响应 · 全城警报</b><p>公布“七大洪区”撤离路线，干部逐户组织转移。</p></div>
+                <div class="ev"><div class="t">06-28 18:00</div><b>转移 11992 户 41574 人</b><p>8000 余名干部参与；6·30 公开报道灾情为 6 人遇难、10.3 万人受灾。</p></div>
+              </div>
+            </div>
+            <div class="type-col">
+              <h4>通信影响与处置</h4>
+              <p class="type-p">三河汇流、城区低洼带进水，沿江基站与过河光缆面临受淹风险；全城警报与分片撤离要求指挥链路不能断。</p>
+              <div class="chips"><span class="chip">三河汇流</span><span class="chip">全城警报</span><span class="chip">分片撤离</span><span class="chip warn">基站退服清单 · 推演</span></div>
+              <h4>RidgeLink 打法</h4>
+              <ol class="type-ol">
+                <li>水位—淹没范围联动，先标出沿江低洼基站与村寨。</li>
+                <li>失联点位聚类后，按人口与道路阻断排序。</li>
+                <li>地面中继优先，无视距点位直接转北斗 / 天通卫星直连。</li>
+                <li>转移路线与通信抢修任务同图排程。</li>
+              </ol>
+              <a class="type-link" href="demo.html?scene=flood">进入暴雨山洪推演 →</a>
             </div>
           </div>
-          <div class="type-col">
-            <h4>通信影响与处置</h4>
-            <p class="type-p">三河汇流、城区低洼带进水，沿江基站与过河光缆面临受淹风险；全城警报与分片撤离要求指挥链路不能断。</p>
-            <div class="chips"><span class="chip">三河汇流</span><span class="chip">全城警报</span><span class="chip">分片撤离</span><span class="chip warn">基站退服清单 · 推演</span></div>
-            <h4>RidgeLink 打法</h4>
-            <ol class="type-ol">
-              <li>水位—淹没范围联动，先标出沿江低洼基站与村寨。</li>
-              <li>失联点位聚类后，按人口与道路阻断排序。</li>
-              <li>地面中继优先，无视距点位直接转北斗 / 天通卫星直连。</li>
-              <li>转移路线与通信抢修任务同图排程。</li>
-            </ol>
-            <a class="type-link" href="demo.html?scene=flood">进入暴雨山洪推演 →</a>
+        </details>
+        <div class="sub-cases">
+          <h4>同类型近年案例</h4>
+          <div class="sub-case" id="sub-zhenyuan">
+            <h5>镇远 2024·6·29 <span>㵲阳河洪水</span></h5>
+            <p>洪峰 465.5 m，超保证 4.5 m，流量 3235 m³/s，累计安全转移 6000 余人；古城沿河商铺与过河光缆受威胁。</p>
+            <button class="link-btn" type="button" data-map-case="zhenyuan">查看镇远实景复盘 →</button>
+          </div>
+          <div class="sub-case" id="sub-guiding">
+            <h5>贵定 2026·5·18 / 19 <span>特大暴雨</span></h5>
+            <p>突发强降雨引发洪涝与塌方，4 人遇难、5 人失联，部分区域房屋被淹、道路损毁、通信中断。</p>
+          </div>
+          <div class="sub-case" id="sub-songtao">
+            <h5>松桃—德江 2026·6·7 / 8 <span>特大暴雨</span></h5>
+            <p>德江荆角乡转移 156 人，松桃等地紧急转移群众；公开报道未造成人员伤亡。</p>
           </div>
         </div>
-        <div class="type-src">来源：新华社、央视新闻、央广网、贵州日报、新京报（2025-06-24 至 06-30）；榕江县人民政府网雨水情与转移安置通报。</div>
+        <div class="type-src">来源：新华社、央视新闻、央广网、贵州日报、新京报（2025-06-24 至 06-30）；榕江县人民政府网雨水情与转移安置通报；贵定、松桃—德江据新华社、央视新闻（2026-05 至 06）。</div>
       </article>
 
-      <article class="type-case" id="case-shuicheng">
+      <article class="type-case" id="case-slide">
         <div class="type-head">
-          <span class="type-tag">02 地震滑坡</span>
-          <h3>水城 2019·7·23 鸡场镇特大山体滑坡</h3>
-          <span class="type-city">六盘水市水城区鸡场镇坪地村 · 山区陡坡 · 降雨诱发特大型滑坡</span>
+          <span class="type-tag">02 地震滑坡 · 当地最严重</span>
+          <h3>大方 2025·5·22 大型滑坡 / 水城 2025·7·1 崩塌成功避险</h3>
+          <span class="type-city">毕节市大方县果瓦乡 · 六盘水市水城区化乐镇</span>
         </div>
         <div class="type-kpis">
-          <div class="kpi red"><b>43<small>人</small></b><span>遇难，另有 9 人失踪</span><span class="src real">公开报道</span></div>
-          <div class="kpi"><b>200<small>万方</small></b><span>滑坡体量，21 栋房屋被埋</span><span class="src real">公开报道</span></div>
-          <div class="kpi orange"><b>1600<small>人</small></b><span>受灾，700 余人紧急转移</span><span class="src real">公开报道</span></div>
+          <div class="kpi red"><b>19<small>人</small></b><span>大方 5·22 死亡失踪（7 死 12 失）</span><span class="src real">公开报道</span></div>
+          <div class="kpi"><b>200<small>万方</small></b><span>大方 5·22 滑坡体量</span><span class="src real">公开报道</span></div>
+          <div class="kpi orange"><b>Ⅱ<small>级</small></b><span>贵州省级地质灾害 / 救助响应</span><span class="src real">公开报道</span></div>
         </div>
-        <div class="type-map">
-          <svg viewBox="0 0 560 220" role="img" aria-label="水城区本地示意地图">
-            <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
-            <path d="M20,70 C110,64 190,92 270,86 C350,80 430,96 540,90" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".7"/>
-            <path d="M40,190 C130,176 220,184 310,166 C400,148 470,156 540,146" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".55"/>
-            <text x="34" y="62" font-size="9" fill="#8fa9bb">G356 / 山间公路</text>
-            <text x="34" y="206" font-size="9" fill="#7abef0">北盘江支流</text>
-            <g fill="#2ee6c5"><circle cx="280" cy="86" r="4"/><circle cx="250" cy="126" r="3.4"/><circle cx="120" cy="192" r="3.4"/><circle cx="360" cy="150" r="3.4"/><circle cx="430" cy="122" r="3.4"/><circle cx="190" cy="160" r="3.4"/></g>
-            <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
-              <text x="280" y="74">水城城区</text><text x="250" y="142">玉舍</text><text x="120" y="208">鸡场</text>
-              <text x="360" y="166">化乐</text><text x="430" y="138">花戛</text><text x="190" y="176">杨梅</text>
-            </g>
-            <g>
-              <circle cx="120" cy="192" r="10" fill="none" stroke="#ff566a" stroke-width="1.4" stroke-dasharray="3 3"/>
-              <text x="134" y="186" font-size="9" fill="#ff8a9a">2019·7·23 滑坡</text>
-              <circle cx="360" cy="150" r="10" fill="none" stroke="#2ee6c5" stroke-width="1.4" stroke-dasharray="2 3"/>
-              <text x="374" y="144" font-size="9" fill="#8ef0dd">2025·7·1 崩塌 / 72 人撤离</text>
-              <circle cx="430" cy="122" r="9" fill="none" stroke="#ff8a3d" stroke-width="1.3" stroke-dasharray="2 3"/>
-              <text x="444" y="116" font-size="9" fill="#ffc9a3">2024·2·19 山火起点</text>
-            </g>
-            <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
-          </svg>
-        </div>
-        <div class="type-cols">
-          <div class="type-col">
-            <h4>真实时间线</h4>
-            <div class="rail type-rail">
-              <div class="ev key"><div class="t">07-23 21:20</div><b>特大山体滑坡</b><p>约 200 多万方土石从 500 多米高处冲下，21 栋房屋被埋；贵州启动地质灾害Ⅰ级应急响应。</p></div>
-              <div class="ev"><div class="t">07-23 23:05</div><b>第一名生还者获救</b><p>现场电力中断，救援队用移动照明灯展开连夜搜救。</p></div>
-              <div class="ev"><div class="t">07-28 23:30</div><b>42 人遇难、9 人失联</b><p>累计搜救出 53 人（11 人生还）；最终公开报道为 43 人遇难、9 人失踪。</p></div>
-              <div class="ev"><div class="t">07-29</div><b>受损线路全部恢复送电</b><p>10kV 鸡场Ⅰ、Ⅱ回线恢复，电力抢修与搜救同步推进。</p></div>
+        <p class="case-lead">最近一次：<b>2025·7·1 水城化乐崩塌</b>，35 户 72 人在崩塌前 15 分钟全部转移，无人员伤亡；近五年最严重的是 <b>大方 5·22</b>，19 人死亡失踪。</p>
+        <div class="chips"><span class="chip">陡坡滑坡</span><span class="chip">极端降雨</span><span class="chip">道路中断</span><span class="chip warn">基站 / 光缆数字 · 推演</span></div>
+        <details class="case-fold">
+          <summary>展开详情：时间线 · 通信影响 · 处置打法 · 本地示意图</summary>
+          <div class="type-map">
+            <svg viewBox="0 0 560 220" role="img" aria-label="大方—水城滑坡崩塌示意地图">
+              <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
+              <path d="M20,150 C110,132 200,146 280,128 C360,110 450,124 540,104" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".7"/>
+              <path d="M30,196 C130,184 230,192 330,174 C420,158 480,166 546,154" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".5"/>
+              <text x="34" y="142" font-size="9" fill="#8fa9bb">毕节—六盘水 山区公路</text>
+              <text x="34" y="210" font-size="9" fill="#7abef0">三岔河 / 北盘江水系</text>
+              <circle cx="180" cy="96" r="14" fill="rgba(255,86,106,.14)"/>
+              <polygon points="180,82 194,108 166,108" fill="#ff566a" stroke="#061522" stroke-width="1.6"/>
+              <text x="202" y="90" font-size="12" fill="#ffd2d7" font-weight="700">大方 · 果瓦</text>
+              <text x="202" y="106" font-size="9.5" fill="#ff9c86">2025·5·22 滑坡 19 人</text>
+              <circle cx="388" cy="132" r="14" fill="rgba(46,230,197,.14)"/>
+              <circle cx="388" cy="132" r="6" fill="#2ee6c5" stroke="#061522" stroke-width="1.6"/>
+              <text x="410" y="126" font-size="12" fill="#d7fff7" font-weight="700">水城 · 化乐</text>
+              <text x="410" y="142" font-size="9.5" fill="#8ef0dd">2025·7·1 崩塌 · 72 人撤离</text>
+              <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
+            </svg>
+          </div>
+          <div class="type-cols">
+            <div class="type-col">
+              <h4>真实时间线（大方 5·22）</h4>
+              <div class="rail type-rail">
+                <div class="ev"><div class="t">05-21 夜间</div><b>极端强降雨</b><p>光明站 24 小时降雨 222.3 mm，1 小时最大 98.9 mm，均超当地历史极值。</p></div>
+                <div class="ev key"><div class="t">05-22 03:00</div><b>长石镇滑坡 · 2 人遇难</b><p>一处非地灾点民房被冲毁，2 名被困人员找到后确认遇难。</p></div>
+                <div class="ev key"><div class="t">05-22 07:50</div><b>果瓦乡庆阳村大型滑坡</b><p>8 户 19 人被困，滑坡体约 200 万方，通村路狭窄、交通中断。</p></div>
+                <div class="ev"><div class="t">05-22 14:30</div><b>省级地灾Ⅱ级响应</b><p>国家地灾四级、国家Ⅳ级救灾响应；消防、武警、安能等力量集结，无人机空运物资。</p></div>
+                <div class="ev"><div class="t">最终</div><b>19 人死亡失踪</b><p>7 人死亡、12 人失踪；调查认定极端降雨是触发因素，灾害点不在台账隐患点内。</p></div>
+              </div>
+            </div>
+            <div class="type-col">
+              <h4>通信影响与处置</h4>
+              <p class="type-p">滑坡埋压房屋、道路多处塌方，救援设备与通信指挥车进场困难；公开报道确认电力、通信、消防等力量现场保障，基站退服与光缆断点精确数字未公开，页内链路参数为推演。</p>
+              <div class="chips"><span class="chip">道路中断</span><span class="chip">无人机运输</span><span class="chip">前线指挥</span><span class="chip warn">现场链路 · 推演</span></div>
+              <h4>RidgeLink 打法</h4>
+              <ol class="type-ol">
+                <li>以滑坡体、埋压房屋和救援作业面为核心建立“现场一张图”。</li>
+                <li>优先恢复现场指挥与搜救面覆盖，再恢复安置点公众通信。</li>
+                <li>道路不通时用卫星便携站 / 北斗短报文回传人员与需求。</li>
+                <li>对二次滑坡风险区设置通信警戒线，随救援范围动态调整。</li>
+              </ol>
+              <a class="type-link" href="demo.html?scene=quake">进入地震滑坡推演 →</a>
             </div>
           </div>
-          <div class="type-col">
-            <h4>通信影响与处置</h4>
-            <p class="type-p">该案例为持续强降雨诱发的特大型山体滑坡，并非地震事件；贵州山区地震与滑坡风险叠加，现场通信保障逻辑相通。公开报道确认现场电力中断、10kV 鸡场Ⅰ、Ⅱ回线停电、道路受阻；基站退服与光缆断点的精确数字未公开，页内相关链路参数为推演。</p>
-            <div class="chips"><span class="chip">陡坡滑坡</span><span class="chip">电力中断</span><span class="chip">道路受阻</span><span class="chip warn">基站/光缆数字 · 推演</span></div>
-            <h4>RidgeLink 打法</h4>
-            <ol class="type-ol">
-              <li>以滑坡体、埋压房屋和救援作业面为核心建立“现场一张图”。</li>
-              <li>优先恢复现场指挥与搜救面覆盖，再恢复安置点公众通信。</li>
-              <li>道路不通时用卫星便携站 / 北斗短报文回传人员与需求。</li>
-              <li>对二次滑坡风险区设置通信警戒线，随救援范围动态调整。</li>
-            </ol>
-            <a class="type-link" href="demo.html?scene=quake">进入地震滑坡推演 →</a>
+        </details>
+        <div class="sub-cases">
+          <h4>同类型近年案例</h4>
+          <div class="sub-case" id="sub-shuicheng">
+            <h5>水城 2025·7·1 <span>化乐镇崩塌 · 成功避险</span></h5>
+            <p>自动化监测仪 11:05 报警，35 户 72 人 15 分钟内全部转移，11:35 山体崩塌；约 0.98 万方堆积体被被动防护网拦截，无人员伤亡、无房屋受损。</p>
           </div>
         </div>
-        <div class="type-src">来源：新华社、央视新闻、人民网、新京报（2019-07-23 至 07-29）；贵州省能源局《水城“7·23”受损线路全部恢复送电》。</div>
+        <div class="type-src">来源：贵州省自然资源厅《大方县“5·22”滑坡灾害调查评估报告》（2025-10-30）；新华社、人民网、新京报（2025-05-22 至 05-23）；水城 7·1 新华社、贵州日报、央视新闻（2025-07-02 至 07-04）。</div>
       </article>
 
-      <article class="type-case" id="case-puan">
+      <article class="type-case" id="case-fire">
         <div class="type-head">
-          <span class="type-tag">03 森林火灾</span>
+          <span class="type-tag">03 森林火灾 · 当地最严重</span>
           <h3>水城—普安 2024·2·19 跨县山火</h3>
           <span class="type-city">六盘水市水城区花戛乡 → 黔西南州普安县龙吟镇</span>
         </div>
@@ -1013,126 +1109,132 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
           <div class="kpi orange"><b>Ⅲ<small>级</small></b><span>贵州启动森林火灾应急响应</span><span class="src real">公开报道</span></div>
           <div class="kpi"><b>2<small>县区</small></b><span>火势从水城蔓延至普安龙吟</span><span class="src real">公开报道</span></div>
         </div>
-        <div class="type-map">
-          <svg viewBox="0 0 560 220" role="img" aria-label="普安县龙吟镇本地示意地图">
-            <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
-            <path d="M40,150 C120,120 190,150 260,124 C330,98 400,110 530,86" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".7"/>
-            <path d="M60,190 C150,180 220,188 300,166 C380,144 450,150 540,136" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".5"/>
-            <text x="40" y="142" font-size="9" fill="#8fa9bb">水城—普安 县界山路</text>
-            <text x="42" y="206" font-size="9" fill="#7abef0">北盘江</text>
-            <g fill="#2ee6c5"><circle cx="140" cy="132" r="3.6"/><circle cx="300" cy="112" r="4"/><circle cx="350" cy="140" r="3.4"/><circle cx="390" cy="166" r="3.4"/><circle cx="240" cy="70" r="3.4"/></g>
-            <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
-              <text x="140" y="120">花戛（水城）</text><text x="300" y="100">龙吟</text><text x="350" y="156">吟塘</text><text x="390" y="182">北盘江</text><text x="240" y="58">普安县城</text>
-            </g>
-            <path d="M140,132 C190,120 240,118 292,114" fill="none" stroke="#ff8a3d" stroke-width="2.2" stroke-dasharray="5 3"/>
-            <polygon points="292,114 282,110 284,120" fill="#ff8a3d"/>
-            <text x="176" y="110" font-size="9" fill="#ffc9a3">2024·2·19 火势蔓延</text>
-            <circle cx="300" cy="112" r="10" fill="none" stroke="#ff566a" stroke-width="1.4" stroke-dasharray="3 3"/>
-            <text x="314" y="136" font-size="9" fill="#ff8a9a">2 名扑救人员牺牲</text>
-            <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
-          </svg>
-        </div>
-        <div class="type-cols">
-          <div class="type-col">
-            <h4>真实时间线</h4>
-            <div class="rail type-rail">
-              <div class="ev key"><div class="t">02-19 18:00</div><b>花戛乡花水村山火</b><p>火势在强风作用下快速蔓延，越过县界进入普安县龙吟镇吟塘村、北盘江村。</p></div>
-              <div class="ev"><div class="t">02-20</div><b>龙吟镇 2 名扑救人员牺牲</b><p>红旗社区救火过程中，邓璞、项姚兴不幸牺牲。</p></div>
-              <div class="ev key"><div class="t">02-21</div><b>Ⅲ级响应 · 明火扑灭</b><p>贵州启动森林火灾Ⅲ级应急响应；龙吟镇明火扑灭，转入余火处理。</p></div>
-              <div class="ev"><div class="t">02-23</div><b>见义勇为确认</b><p>普安县委政法委拟确认两名牺牲人员为见义勇为人员。</p></div>
+        <p class="case-lead">最近一次：<b>2024·2·19</b>；近五年 1 次跨县山火。2025—2026 防火期全省仅 1 起森林火灾、8 起火情，无重特大火灾。</p>
+        <div class="chips"><span class="chip">跨县火线</span><span class="chip">地形遮挡</span><span class="chip">前线指挥</span><span class="chip warn">火场链路 · 推演</span></div>
+        <details class="case-fold">
+          <summary>展开详情：时间线 · 通信影响 · 处置打法 · 本地示意图</summary>
+          <div class="type-map">
+            <svg viewBox="0 0 560 220" role="img" aria-label="普安县龙吟镇本地示意地图">
+              <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
+              <path d="M40,150 C120,120 190,150 260,124 C330,98 400,110 530,86" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".7"/>
+              <path d="M60,190 C150,180 220,188 300,166 C380,144 450,150 540,136" fill="none" stroke="#2f7fc4" stroke-width="3" opacity=".5"/>
+              <text x="40" y="142" font-size="9" fill="#8fa9bb">水城—普安 县界山路</text>
+              <text x="42" y="206" font-size="9" fill="#7abef0">北盘江</text>
+              <g fill="#2ee6c5"><circle cx="140" cy="132" r="3.6"/><circle cx="300" cy="112" r="4"/><circle cx="350" cy="140" r="3.4"/><circle cx="390" cy="166" r="3.4"/><circle cx="240" cy="70" r="3.4"/></g>
+              <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
+                <text x="140" y="120">花戛（水城）</text><text x="300" y="100">龙吟</text><text x="350" y="156">吟塘</text><text x="390" y="182">北盘江</text><text x="240" y="58">普安县城</text>
+              </g>
+              <path d="M140,132 C190,120 240,118 292,114" fill="none" stroke="#ff8a3d" stroke-width="2.2" stroke-dasharray="5 3"/>
+              <polygon points="292,114 282,110 284,120" fill="#ff8a3d"/>
+              <text x="176" y="110" font-size="9" fill="#ffc9a3">2024·2·19 火势蔓延</text>
+              <circle cx="300" cy="112" r="10" fill="none" stroke="#ff566a" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <text x="314" y="136" font-size="9" fill="#ff8a9a">2 名扑救人员牺牲</text>
+              <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
+            </svg>
+          </div>
+          <div class="type-cols">
+            <div class="type-col">
+              <h4>真实时间线</h4>
+              <div class="rail type-rail">
+                <div class="ev key"><div class="t">02-19 18:00</div><b>花戛乡花水村山火</b><p>火势在强风作用下快速蔓延，越过县界进入普安县龙吟镇吟塘村、北盘江村。</p></div>
+                <div class="ev"><div class="t">02-20</div><b>龙吟镇 2 名扑救人员牺牲</b><p>红旗社区救火过程中，邓璞、项姚兴不幸牺牲。</p></div>
+                <div class="ev key"><div class="t">02-21</div><b>Ⅲ级响应 · 明火扑灭</b><p>贵州启动森林火灾Ⅲ级应急响应；龙吟镇明火扑灭，转入余火处理。</p></div>
+                <div class="ev"><div class="t">02-23</div><b>见义勇为确认</b><p>普安县委政法委拟确认两名牺牲人员为见义勇为人员。</p></div>
+              </div>
+            </div>
+            <div class="type-col">
+              <h4>通信影响与处置</h4>
+              <p class="type-p">山高林密、火线跨县，火场与前线指挥部之间易受地形遮挡；公开报道未给出基站退服数字，火场通信受限与链路参数为推演。</p>
+              <div class="chips"><span class="chip">跨县火线</span><span class="chip">地形遮挡</span><span class="chip">前线指挥</span><span class="chip warn">火场链路 · 推演</span></div>
+              <h4>RidgeLink 打法</h4>
+              <ol class="type-ol">
+                <li>把火线、风向、道路和取水点叠到同一张图，标出前线指挥点。</li>
+                <li>用无人机中继 / 卫星链路绕开火场遮挡，保障前线与指挥部。</li>
+                <li>按火线推进方向动态调整通信车与中继点，避免被火线切断。</li>
+                <li>为扑救队伍配置北斗短报文，失联时回传位置与人员状态。</li>
+              </ol>
+              <a class="type-link" href="demo.html?scene=fire">进入森林火灾推演 →</a>
             </div>
           </div>
-          <div class="type-col">
-            <h4>通信影响与处置</h4>
-            <p class="type-p">山高林密、火线跨县，火场与前线指挥部之间易受地形遮挡；公开报道未给出基站退服数字，火场通信受限与链路参数为推演。</p>
-            <div class="chips"><span class="chip">跨县火线</span><span class="chip">地形遮挡</span><span class="chip">前线指挥</span><span class="chip warn">火场链路 · 推演</span></div>
-            <h4>RidgeLink 打法</h4>
-            <ol class="type-ol">
-              <li>把火线、风向、道路和取水点叠到同一张图，标出前线指挥点。</li>
-              <li>用无人机中继 / 卫星链路绕开火场遮挡，保障前线与指挥部。</li>
-              <li>按火线推进方向动态调整通信车与中继点，避免被火线切断。</li>
-              <li>为扑救队伍配置北斗短报文，失联时回传位置与人员状态。</li>
-            </ol>
-            <a class="type-link" href="demo.html?scene=fire">进入森林火灾推演 →</a>
-          </div>
-        </div>
-        <div class="type-src">来源：央视新闻、中国新闻网、普安县应急指挥部办公室（2024-02-19 至 02-23）。</div>
+        </details>
+        <div class="type-src">来源：央视新闻、中国新闻网、普安县应急指挥部办公室（2024-02-19 至 02-23）；2025—2026 防火期数据据贵州省林业局公开通报。</div>
       </article>
 
-      <article class="type-case" id="case-guiyang">
+      <article class="type-case" id="case-ice">
         <div class="type-head">
-          <span class="type-tag">04 冰雪冻雨</span>
-          <h3>贵阳 2008·1 历史罕见凝冻</h3>
-          <span class="type-city">贵阳市 · 贵州全省 87 个县市</span>
+          <span class="type-tag">04 冰雪冻雨 · 当地最严重</span>
+          <h3>贵州 2026·1 入冬最强寒潮 / 2025·1 凝冻</h3>
+          <span class="type-city">贵阳市 · 黔中及高海拔地区（威宁、赫章等）</span>
         </div>
         <div class="type-kpis">
-          <div class="kpi teal"><b>76<small>个</small></b><span>县市出现大面积凝冻（全省 87 个）</span><span class="src real">公开报道</span></div>
-          <div class="kpi red"><b>4<small>个</small></b><span>贵州电网一度解列为孤立电网</span><span class="src real">公开报道</span></div>
-          <div class="kpi orange"><b>30–60<small>mm</small></b><span>电线结冰直径，部分线路更严重</span><span class="src real">公开报道</span></div>
+          <div class="kpi red"><b>四级</b><span>国家低温雨雪冰冻灾害应急响应</span><span class="src real">公开报道</span></div>
+          <div class="kpi"><b>67<small>个</small></b><span>县域出现降雪（2025·1）</span><span class="src real">公开报道</span></div>
+          <div class="kpi orange"><b>71<small>条</small></b><span>35kV 及以上线路覆冰（2025·1）</span><span class="src real">公开报道</span></div>
         </div>
-        <div class="type-map">
-          <svg viewBox="0 0 560 220" role="img" aria-label="贵阳市本地示意地图">
-            <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
-            <path d="M20,120 C100,110 160,130 230,120 C300,110 380,128 540,116" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".6"/>
-            <circle cx="300" cy="120" r="26" fill="none" stroke="rgba(46,230,197,.35)" stroke-width="1.2" stroke-dasharray="3 4"/>
-            <g fill="#2ee6c5"><circle cx="286" cy="116" r="4"/><circle cx="318" cy="124" r="3.6"/><circle cx="240" cy="100" r="3.4"/><circle cx="360" cy="86" r="3.4"/><circle cx="420" cy="70" r="3.4"/><circle cx="150" cy="80" r="3.4"/></g>
-            <g font-size="9.5" fill="#cfe3f3" text-anchor="middle">
-              <text x="286" y="104">云岩</text><text x="322" y="142">南明</text><text x="240" y="88">观山湖</text>
-              <text x="360" y="74">开阳</text><text x="420" y="58">息烽</text><text x="150" y="68">清镇</text>
-            </g>
-            <g>
-              <circle cx="360" cy="86" r="10" fill="none" stroke="#4aa8ff" stroke-width="1.4" stroke-dasharray="3 3"/>
-              <text x="374" y="82" font-size="9" fill="#a8d4ff">2024·1 凝冻 / 融冰</text>
-              <circle cx="420" cy="70" r="10" fill="none" stroke="#a78bfa" stroke-width="1.4" stroke-dasharray="2 3"/>
-              <text x="434" y="66" font-size="9" fill="#cfc0ff">2026·1 最强寒潮</text>
-              <text x="150" y="98" font-size="9" fill="#8fa9bb">2008·1 历史凝冻</text>
-            </g>
-            <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
-          </svg>
-        </div>
-        <div class="type-cols">
-          <div class="type-col">
-            <h4>真实时间线</h4>
-            <div class="rail type-rail">
-              <div class="ev"><div class="t">01-10 起</div><b>持续低温雨雪冰冻</b><p>贵州出现有气象记录以来罕见的持续凝冻，道路结冰、交通受阻。</p></div>
-              <div class="ev key"><div class="t">01-18</div><b>贵州电网解列为四个孤立电网</b><p>部分县（市）供电中断，电力与通信保障压力骤增。</p></div>
-              <div class="ev"><div class="t">01-25 → 02-02</div><b>第四轮冰冻过程</b><p>线路覆冰继续加重，抢修窗口短，县城与乡镇保供优先级难判断。</p></div>
-              <div class="ev"><div class="t">春节前后</div><b>抢修与保供攻坚</b><p>电网抢修、油机发电与道路除冰同步推进，优先恢复县城和重要用户。</p></div>
+        <p class="case-lead">最近一次：<b>2026·1·19—21 入冬最强寒潮</b>，国家、贵州气象、贵州电网均启动低温雨雪冰冻四级响应；近三年每个冬季都有凝冻过程。</p>
+        <div class="chips"><span class="chip">线路覆冰</span><span class="chip">道路结冰</span><span class="chip">大面积停电风险</span><span class="chip warn">基站备电 · 推演</span></div>
+        <details class="case-fold">
+          <summary>展开详情：时间线 · 通信影响 · 处置打法 · 本地示意图</summary>
+          <div class="type-map">
+            <svg viewBox="0 0 560 220" role="img" aria-label="贵州凝冻与贵阳示意地图">
+              <rect width="560" height="220" fill="rgba(4,12,20,.35)"/>
+              <path d="M30,130 C110,116 180,140 260,126 C340,112 430,132 540,116" fill="none" stroke="#55707f" stroke-width="2" stroke-dasharray="7 5" opacity=".6"/>
+              <text x="36" y="118" font-size="9" fill="#8fa9bb">沪昆 / 兰海高速</text>
+              <circle cx="300" cy="120" r="28" fill="none" stroke="rgba(167,139,250,.4)" stroke-width="1.2" stroke-dasharray="3 4"/>
+              <g fill="#a78bfa"><circle cx="286" cy="116" r="4"/><circle cx="318" cy="124" r="3.6"/><circle cx="240" cy="100" r="3.4"/><circle cx="360" cy="86" r="3.4"/><circle cx="420" cy="70" r="3.4"/><circle cx="150" cy="80" r="3.4"/></g>
+              <g font-size="9.5" fill="#e2d9ff" text-anchor="middle">
+                <text x="286" y="104">云岩</text><text x="322" y="142">南明</text><text x="240" y="88">观山湖</text>
+                <text x="360" y="74">开阳</text><text x="420" y="58">息烽</text><text x="150" y="68">清镇</text>
+              </g>
+              <g>
+                <circle cx="150" cy="80" r="10" fill="none" stroke="#4aa8ff" stroke-width="1.4" stroke-dasharray="3 3"/>
+                <text x="128" y="58" font-size="9" fill="#a8d4ff">2025·1 67 县降雪</text>
+                <circle cx="420" cy="70" r="10" fill="none" stroke="#a78bfa" stroke-width="1.4" stroke-dasharray="2 3"/>
+                <text x="436" y="66" font-size="9" fill="#cfc0ff">2026·1 最强寒潮</text>
+              </g>
+              <text x="546" y="212" text-anchor="end" font-size="9" fill="#6f8ba4">本地示意图 · 非测绘</text>
+            </svg>
+          </div>
+          <div class="type-cols">
+            <div class="type-col">
+              <h4>真实时间线（2026·1）</h4>
+              <div class="rail type-rail">
+                <div class="ev"><div class="t">01-18 17:00</div><b>寒潮黄色预警</b><p>贵州进入气象灾害四级应急响应；18 时国家防灾减灾救灾委对贵州等四省启动低温雨雪冰冻四级响应。</p></div>
+                <div class="ev key"><div class="t">01-19</div><b>省级与电网四级响应</b><p>贵州气象灾害（寒潮、低温凝冻）四级、贵州电网低温雨雪冰冻四级响应；贵阳等 9 市州降温 8—12℃。</p></div>
+                <div class="ev"><div class="t">01-20</div><b>除冰保畅 · 观冰特巡</b><p>杭瑞高速铜仁段累计除冰 8 轮、撒融雪剂 38.5 吨；贵阳供电局 72 条中重冰区线路在线监测。</p></div>
+                <div class="ev"><div class="t">01-22</div><b>未因低温导致用户停电</b><p>南方电网披露：截至 1 月 22 日 8 时，未出现因低温导致的用户停电。</p></div>
+              </div>
+            </div>
+            <div class="type-col">
+              <h4>通信影响与处置</h4>
+              <p class="type-p">覆冰与凝冻主要威胁输电线路、道路和基站备电；大面积停电会迅速耗尽基站后备电源。公开报道未给出基站退服数字，页内备电时长与链路参数为推演。</p>
+              <div class="chips"><span class="chip">线路覆冰</span><span class="chip">道路结冰</span><span class="chip">基站备电</span><span class="chip warn">退服数字 · 推演</span></div>
+              <h4>RidgeLink 打法</h4>
+              <ol class="type-ol">
+                <li>按“县城—安置点—乡镇—村寨”排出保供与通信恢复优先级。</li>
+                <li>油机、卫星便携站与短波按道路结冰情况分配，避免堵在路上。</li>
+                <li>对断电基站计算备电剩余时长，提前预置油机与电池。</li>
+                <li>用北斗短报文保障独居老人、偏远村寨的失联排查。</li>
+              </ol>
+              <a class="type-link" href="demo.html?scene=ice">进入冰雪冻雨推演 →</a>
             </div>
           </div>
-          <div class="type-col">
-            <h4>通信影响与处置</h4>
-            <p class="type-p">大面积停电会直接导致基站后备电源耗尽、传输节点退服；公开报道确认部分县供电中断，具体基站退服数量未公开，页内链路参数为推演。</p>
-            <div class="chips"><span class="chip">线路覆冰</span><span class="chip">大面积停电</span><span class="chip">道路结冰</span><span class="chip warn">基站退服数字 · 推演</span></div>
-            <h4>RidgeLink 打法</h4>
-            <ol class="type-ol">
-              <li>按“县城—安置点—乡镇—村寨”排出保供与通信恢复优先级。</li>
-              <li>油机、卫星便携站与短波按道路结冰情况分配，避免堵在路上。</li>
-              <li>对断电基站计算备电剩余时长，提前预置油机与电池。</li>
-              <li>用北斗短报文保障独居老人、偏远村寨的失联排查。</li>
-            </ol>
-            <a class="type-link" href="demo.html?scene=ice">进入冰雪冻雨推演 →</a>
+        </details>
+        <div class="sub-cases">
+          <h4>同类型近年案例</h4>
+          <div class="sub-case">
+            <h5>2025·1·7—10 <span>首场大范围凝冻</span></h5>
+            <p>67 个县域降雪、24 个县域积雪，威宁最大积雪 9 cm；35kV 及以上 71 条线路覆冰，贵州电网启动低温雨雪冰冻Ⅳ级响应。</p>
+          </div>
+          <div class="sub-case">
+            <h5>2024·1 <span>首场寒潮</span></h5>
+            <p>输电线路覆冰，南方电网启动融冰保供；具体线路与用户影响以公开报道为准。</p>
           </div>
         </div>
-        <div class="type-src">来源：国家发展改革委、中国民航局、国家能源局贵州监管办（2008-01 至 2008-02）公开信息。</div>
+        <div class="type-src">来源：新华网（2025-01-09）、人民网贵州频道（2025-01-08）、贵州省气象局（2026-01-19）、南方电网报（2026-01-26）、国家防灾减灾救灾委员会（2026-01-21）。</div>
       </article>
 
-      <article class="type-case" id="case-other">
-        <div class="type-head">
-          <span class="type-tag">其他市州</span>
-          <h3>遵义 · 毕节 · 安顺 · 铜仁 · 黔南 · 黔西南</h3>
-          <span class="type-city">同一张省级地图上的其余市州与真实案例</span>
-        </div>
-        <div class="other-grid">
-          <div><b>毕节 · 大方 2025·5·22</b><p>长石镇、果瓦乡两起山体滑坡；果瓦乡庆阳村 8 户 19 人被困，消防、武警等跨区域增援。</p></div>
-          <div><b>黔南 · 贵定 2026·5·18 / 19</b><p>突发特大暴雨，洪涝与塌方致 4 人遇难、5 人失联，部分区域房屋被淹、道路损毁、通信中断。</p></div>
-          <div><b>铜仁 · 松桃—德江 2026·6·7 / 8</b><p>特大暴雨，德江荆角乡转移 156 人，松桃等地紧急转移群众，未造成人员伤亡。</p></div>
-          <div><b>遵义 / 安顺 / 黔西南</b><p>2024 年春节森林火情期间，遵义、毕节、六盘水、贵阳均有山火；安顺在 2026 年寒潮与凝冻过程中开展防冰保电；黔西南普安见 2024 山火案例。</p></div>
-        </div>
-        <div class="type-src">来源：新华社、央视新闻、中国新闻网（2024-02 至 2026-06）。</div>
-      </article>
-
-      <div class="type-note"><b>口径说明</b>：每节 KPI 与时间线均为公开报道；通信受损、基站退服、链路预算与资源调度为模型推演，不代表官方灾情统计。</div>
+      <div class="type-note"><b>口径说明</b>：每节 KPI 与时间线均为公开报道；通信受损、基站退服、链路预算与资源调度为模型推演；地图为本地示意图，非测绘成果。2008 年凝冻仅作为历史背景，不进入本次“最近五年”案例。</div>
     </div>
   </section>
 
@@ -1952,70 +2054,76 @@ const RISK={
     advice:'提前转移沿江低洼住户，检查应急广播、北斗终端与卫星电话',
     go:'rongjiang',demo:'flood',
     towns:[['古州镇','极高','三河汇流、城区低洼','2025·6 洪峰'],['忠诚镇','高','沿江低洼、厂房','2025·6 洪峰'],['寨蒿镇','高','寨蒿河上游、道路塌方','2025·6 暴雨'],['平永镇','高','平永河上游、山洪','2026·6 暴雨'],['计划乡','高','月亮山腹地、山体遮挡','2025·6 暴雨'],['八开镇','中','沿江公路水毁','2025·6 暴雨'],['定威乡','中','唯一通道塌方','2025·6 暴雨'],['乐里镇','低','地势较高、安置点','2025·6 转移']]},
-  zhenyuan:{name:'镇远',sub:'黔东南州 · 㵲阳河',type:'暴雨山洪',tc:'flood',score:72,
+  zhenyuan:{name:'镇远',sub:'黔东南州 · 㵲阳河',type:'暴雨山洪',tc:'flood',score:72,tag:'近年洪水',
     last:'2024·6·29',lastDesc:'洪峰 465.5 m，超保证 4.5 m，转移 6000 余人',
     freq:'近 3 年 1 次',next:'2027-06-20 前后',window:'6 月下旬—7 月上旬',
     advice:'关注上游水库泄洪与古城沿河商铺，提前布设警戒线',
     go:'zhenyuan',demo:'flood',
     towns:[['㵲阳镇','高','古城沿河、S 形河道','2024·6 洪峰'],['蕉溪镇','高','河堤漫溢、光缆过河','2024·6 洪峰'],['报京乡','高','山高谷深、道路垮方','2024·6 暴雨'],['金堡镇','中','南部高海拔、进镇道路','2024·6 暴雨'],['青溪镇','中','下游河谷、油机保站','2024·6 洪峰'],['羊坪镇','中','县域东出口、地势低','2024·6 洪峰']]},
-  shuicheng:{name:'水城',sub:'六盘水市 · 水城区',type:'地震滑坡',tc:'slide',score:85,
-    last:'2025·7·1',lastDesc:'化乐镇崩塌，35 户 72 人在崩塌前 15 分钟全部转移',
+  shuicheng:{name:'水城',sub:'六盘水市 · 水城区',type:'地震滑坡',tc:'slide',score:82,tag:'成功避险',
+    last:'2025·7·1',lastDesc:'化乐镇崩塌，35 户 72 人在崩塌前 15 分钟全部转移，无伤亡',
     freq:'近 3 年 2 次地质灾害',next:'2027-06-25 前后',window:'6 月—8 月主汛期',
     advice:'加密坡脚住户巡查，检查自动化监测仪与被动防护网',
-    go:'shuicheng',demo:'quake',
-    towns:[['鸡场镇','极高','陡坡、历史特大滑坡','2019·7 滑坡'],['化乐镇','高','崩塌隐患点、防护网','2025·7 崩塌'],['花戛乡','高','林区、坡地村寨','2024·2 山火'],['杨梅乡','中','山区公路沿线','2024·6 降雨'],['玉舍镇','中','高海拔、林区','2025·7 降雨'],['发耳镇','中','北盘江沿岸','2025·7 降雨']]},
+    go:'sub-shuicheng',demo:'quake',
+    towns:[['鸡场镇','极高','陡坡、汛期坡脚住户','2025·7 降雨'],['化乐镇','高','崩塌隐患点、防护网','2025·7 崩塌'],['花戛乡','高','林区、坡地村寨','2024·2 山火'],['杨梅乡','中','山区公路沿线','2024·6 降雨'],['玉舍镇','中','高海拔、林区','2025·7 降雨'],['发耳镇','中','北盘江沿岸','2025·7 降雨']]},
   puan:{name:'普安',sub:'黔西南州 · 普安县',type:'森林火灾',tc:'fire',score:78,
     last:'2024·2·19',lastDesc:'花戛乡山火蔓延至龙吟镇，2 名扑救人员牺牲',
     freq:'近 3 年 1 次',next:'2027-02-20 前后',window:'2 月—4 月高火险期',
     advice:'严控祭祀与农事用火，前置扑火队与应急通信车',
-    go:'puan',demo:'fire',
+    go:'case-fire',demo:'fire',
     towns:[['龙吟镇','极高','跨县火线、林农交错','2024·2 山火'],['江西坡镇','高','林区、坡地','2024·2 火险'],['青山镇','中','林农交界','2024·2 火险'],['新店镇','中','山坡林地','2024·2 火险'],['罗汉镇','中','林区道路','2024·2 火险'],['兴中镇','中','高火险林区','2024·2 火险']]},
-  guiyang:{name:'贵阳',sub:'贵阳市 · 黔中地区',type:'冰雪冻雨',tc:'ice',score:70,
-    last:'2026·1·19 / 21',lastDesc:'入冬最强寒潮，贵州电网启动低温雨雪冰冻Ⅳ级响应',
+  guiyang:{name:'贵阳',sub:'贵阳市 · 黔中地区',type:'冰雪冻雨',tc:'ice',score:74,
+    last:'2026·1·19 / 21',lastDesc:'入冬最强寒潮，国家、贵州气象与贵州电网启动四级响应',
     freq:'近 3 年 3 次',next:'2027-01-15 前后',window:'1 月—2 月凝冻期',
     advice:'预置融冰装置与油机，优先保障县城、医院与安置点',
-    go:'guiyang',demo:'ice',
-    towns:[['开阳县','高','高海拔、线路覆冰','2026·1 寒潮'],['息烽县','高','高海拔、林区','2026·1 寒潮'],['云岩区','中','城区、人口密集','2026·1 寒潮'],['南明区','中','城区、交通枢纽','2026·1 寒潮'],['观山湖区','中','城区、配电线路','2026·1 寒潮'],['清镇市','中','城郊、线路覆冰','2026·1 寒潮']]},
-  dafang:{name:'大方',sub:'毕节市 · 大方县',type:'地震滑坡',tc:'slide',score:80,
-    last:'2025·5·22',lastDesc:'长石镇、果瓦乡两起山体滑坡，果瓦乡 8 户 19 人被困',
-    freq:'近 3 年 1 次',next:'2027-05-20 前后',window:'5 月—9 月汛期',
+    go:'case-ice',demo:'ice',
+    towns:[['开阳县','高','高海拔、线路覆冰','2026·1 寒潮'],['息烽县','高','高海拔、林区','2026·1 寒潮'],['威宁县','高','贵州屋脊、积雪覆冰','2025·1 凝冻'],['赫章县','高','高海拔、线路覆冰','2025·1 凝冻'],['云岩区','中','城区、人口密集','2026·1 寒潮'],['南明区','中','城区、交通枢纽','2026·1 寒潮'],['观山湖区','中','城区、配电线路','2026·1 寒潮'],['清镇市','中','城郊、线路覆冰','2026·1 寒潮']]},
+  dafang:{name:'大方',sub:'毕节市 · 大方县',type:'地震滑坡',tc:'slide',score:92,
+    last:'2025·5·22',lastDesc:'果瓦乡庆阳村大型滑坡，19 人死亡失踪（7 死 12 失）',
+    freq:'近 3 年 1 次大型滑坡',next:'2027-05-20 前后',window:'5 月—9 月汛期',
     advice:'排查坡脚与沟口住户，强降雨时执行“四个一律”避险转移',
-    go:'other',demo:'quake',
-    towns:[['果瓦乡','极高','庆阳村滑坡、沟谷','2025·5 滑坡'],['长石镇','高','坡地村寨','2025·5 滑坡'],['理化乡','中','山区公路','2025·5 降雨'],['黄泥塘镇','中','坡脚住户','2025·5 降雨'],['大方城区','中','人口密集','2025·5 降雨']]},
-  guiding:{name:'贵定',sub:'黔南州 · 贵定县',type:'暴雨山洪',tc:'flood',score:83,
+    go:'case-slide',demo:'quake',
+    towns:[['果瓦乡','极高','庆阳村大型滑坡、沟谷','2025·5 滑坡'],['长石镇','极高','坡地村寨、2 人遇难','2025·5 滑坡'],['理化乡','中','山区公路','2025·5 降雨'],['黄泥塘镇','中','坡脚住户','2025·5 降雨'],['大方城区','中','人口密集','2025·5 降雨']]},
+  guiding:{name:'贵定',sub:'黔南州 · 贵定县',type:'暴雨山洪',tc:'flood',score:83,tag:'近年暴雨',
     last:'2026·5·18 / 19',lastDesc:'特大暴雨，4 人遇难、5 人失联，部分区域通信中断',
     freq:'近 3 年 1 次',next:'2027-05-18 前后',window:'5 月—6 月主汛期',
     advice:'提前转移昌明镇沿河住户，前置通信抢修队与卫星终端',
-    go:'other',demo:'flood',
+    go:'sub-guiding',demo:'flood',
     towns:[['昌明镇','极高','沿河低洼、道路损毁','2026·5 洪灾'],['沿山镇','高','河谷村寨','2026·5 洪灾'],['盘江镇','高','沿河、旅游区','2026·5 洪灾'],['云雾镇','中','山区、坡地','2026·5 降雨'],['宝山街道','中','城区、人口密集','2026·5 降雨']]},
-  songtao:{name:'松桃—德江',sub:'铜仁市 · 松桃 / 德江',type:'暴雨山洪',tc:'flood',score:76,
+  songtao:{name:'松桃—德江',sub:'铜仁市 · 松桃 / 德江',type:'暴雨山洪',tc:'flood',score:76,tag:'近年暴雨',
     last:'2026·6·7 / 8',lastDesc:'特大暴雨，德江荆角乡转移 156 人，松桃等地紧急转移，无伤亡',
     freq:'近 3 年 1 次',next:'2027-06-08 前后',window:'6 月—7 月主汛期',
     advice:'关注山洪沟与沿河村寨，提前启用应急广播与叫应机制',
-    go:'other',demo:'flood',
+    go:'sub-songtao',demo:'flood',
     towns:[['德江荆角乡','极高','山洪沟、沿河村寨','2026·6 暴雨'],['松桃蓼皋街道','高','城区、河道','2026·6 暴雨'],['松桃盘石镇','高','山区、坡地','2026·6 暴雨'],['德江青龙街道','中','城区','2026·6 暴雨'],['德江煎茶镇','中','沿河','2026·6 暴雨'],['松桃大兴街道','中','低洼地带','2026·6 暴雨']]}
 };
 
+const TAB_GROUP={map:['map'],cases:['cases'],tools:['time','data','flow']};
+function showTab(name){
+  $$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));
+  $$('.sec').forEach(s=>s.classList.remove('on'));
+  (TAB_GROUP[name]||[name]).forEach(n=>{
+    const el=$('#sec-'+n);
+    if(el) el.classList.add('on');
+  });
+}
+function jumpTo(t){
+  if(!t) return;
+  const html=document.documentElement;
+  html.style.scrollBehavior='auto';
+  window.scrollTo(0,t.getBoundingClientRect().top+window.scrollY-70);
+  setTimeout(()=>{html.style.scrollBehavior='';},60);
+}
 function goTarget(go){
-  const showTab=(name)=>{
-    $$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));
-    $$('.sec').forEach(s=>s.classList.toggle('on',s.id==='sec-'+name));
-  };
-  const jump=(t)=>{
-    if(!t) return;
-    const html=document.documentElement;
-    html.style.scrollBehavior='auto';
-    window.scrollTo(0,t.getBoundingClientRect().top+window.scrollY-70);
-    setTimeout(()=>{html.style.scrollBehavior='';},60);
-  };
   if(go==='rongjiang'||go==='zhenyuan'){
     if(go!==CASE_ID) setCase(go);
     showTab('map');
-    jump(document.querySelector('#sec-map'));
-  }else{
-    showTab('cases');
-    jump(document.getElementById('case-'+go));
+    jumpTo($('#sec-map'));
+    return;
   }
+  showTab('cases');
+  const t=document.getElementById(go)||document.getElementById('case-'+go);
+  jumpTo(t);
 }
 
 function closeRisk(){
@@ -2032,7 +2140,7 @@ function openRisk(key){
   ).join('');
   $('#riskBody').innerHTML=
     '<div class="risk-head" style="--rc:'+color+'">'+
-      '<span class="risk-type">'+r.type+' · 当地最严重</span>'+
+      '<span class="risk-type">'+r.type+' · '+(r.tag||'当地最严重')+'</span>'+
       '<h3 id="riskTitle">'+r.name+'</h3><p>'+r.sub+'</p>'+
     '</div>'+
     '<div class="risk-grid">'+
@@ -2045,7 +2153,7 @@ function openRisk(key){
       '<p>模型推算：'+r.next+' 进入高风险窗口。'+r.advice+'。</p>'+
       '<small>推算依据：历史频次 + 季节窗口 + 地形/河谷/火险/覆冰条件；不是气象预报，仅用于演练与辅助决策。</small>'+
     '</div>'+
-    '<div class="risk-sub">乡镇级风险 <span>重点乡镇，可按同一模型继续扩展</span></div>'+
+    '<div class="risk-sub">乡镇级风险 <span>重点乡镇 / 区县 · 可继续扩展</span></div>'+
     '<div class="risk-table-wrap"><table class="risk-table"><thead><tr><th>乡镇 / 区县</th><th>等级</th><th>主要风险</th><th>最近事件</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
     '<div class="risk-actions"><button class="btn primary sm" data-act="go">查看完整案例</button><a class="btn ghost sm" href="demo.html?scene='+r.demo+'">进入推演</a></div>';
   const m=$('#riskModal');
@@ -2057,9 +2165,14 @@ function openRisk(key){
 
 /* ---------------- 事件绑定 ---------------- */
 function bind(){
-  /* 案例切换 */
-  $$('.case').forEach(b=>{
-    b.addEventListener('click',()=>{ if(b.dataset.case!==CASE_ID) setCase(b.dataset.case); });
+  /* 地图案例切换 */
+  $$('[data-map-case]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const id=b.dataset.mapCase;
+      if(id!==CASE_ID) setCase(id);
+      showTab('map');
+      jumpTo($('#sec-map'));
+    });
   });
 
   /* 全省总览：点击城市打开风险速览 */
@@ -2079,11 +2192,8 @@ function bind(){
   /* tabs */
   $$('.tab').forEach(t=>{
     t.addEventListener('click',()=>{
-      $$('.tab').forEach(x=>x.classList.remove('on'));
-      t.classList.add('on');
-      $$('.sec').forEach(s=>s.classList.remove('on'));
-      $('#sec-'+t.dataset.tab).classList.add('on');
-      window.scrollTo({top:Math.max(0, $('.tabs').offsetTop-58),behavior:'smooth'});
+      showTab(t.dataset.tab);
+      window.scrollTo({top:Math.max(0, $('.tabs').offsetTop-54),behavior:'smooth'});
     });
   });
 
@@ -2180,27 +2290,6 @@ const CASES={
       tl:'2025-06-23 → 06-30 · 两轮洪峰逐时复盘',
       flow:'48 小时值班链路 · 谁在什么时间做什么'
     },
-    hero:{
-      badge:'真实场景 · 贵州黔东南 · 都柳江流域',
-      title:'2025·6·24 / 6·28 榕江特大洪水<br><em>实景推演</em>：从两轮洪峰到卫星直连',
-      lede:'以榕江县 2025 年“6·24”“6·28”两轮特大洪水为真实蓝本：都柳江石灰厂水文站 6·24 实测洪峰水位 <b>256.71 m</b>，超保证水位 <b>5.21 m</b>，相应流量 <b>1.14 万 m³/s</b>，被媒体称为“百年一遇”；6·28 预报洪峰 <b>253.50 m</b>、流量 <b>8360 m³/s</b>。当地 6·28 12:30 将防汛应急响应升至Ⅰ级，全城拉响警报，截至 28 日 18 时转移 <b>11992 户 41574 人</b>。在同一套真实河谷格局上，推演“通信中断 → 影响评估 → 中继选点 → 卫星直连 → 资源调度 → 复盘”的完整处置链。',
-      kpis:[
-        {cls:'teal',num:'256.71',unit:'m',label:'6·24 实测洪峰 · 石灰厂站'},
-        {cls:'red',num:'+5.21',unit:'m',label:'超保证水位（251.5 m）'},
-        {num:'1.14',unit:'万 m³/s',label:'6·24 相应洪峰流量'},
-        {cls:'orange',num:'41574',unit:'人',label:'6·28 单日转移（11992 户）'},
-        {sim:true,num:'9400',unit:'人',label:'10 个点位失联（模型）'}
-      ],
-      hTitle:'数据说明：哪些是真的，哪些是推演',
-      p:'本页把两类信息严格分开，避免把推演结果当成灾情事实。<b style="color:#07756d">真实</b>：行政区划与地名、6·24 实测与 6·28 预报洪峰水位/流量、响应级别、转移人数、“七大洪区”撤离与全城警报、村超球场受淹。<b style="color:#a35a12">推演</b>：村寨级失联人数、基站退服清单、链路预算数值、中继与卫星直连方案。<b style="color:#93ada4">示意</b>：地图为示意图，非测绘图；地形由公开海拔区间重建，不代表实测 DEM。',
-      chips:[
-        {ok:true,text:'6·24 256.71 m / 1.14 万 m³/s · 真实'},
-        {ok:true,text:'6·28 转移 41574 人 · 真实'},
-        {ok:true,text:'Ⅰ级响应 / 全城警报 · 真实'},
-        {text:'失联人数 / 退服基站 · 推演'},
-        {text:'中继 / 卫星直连方案 · 推演'}
-      ]
-    },
     tlReal:TL_RJ_REAL, tlSim:TL_RJ_SIM, flow:FLOW_RJ,
     sample:SAMPLE_RJ,
     footnote:'<b>资料来源（公开报道 / 政府网站，2025-06-24 至 2025-07-01）</b><br>'+
@@ -2220,27 +2309,6 @@ const CASES={
       tl:'2024-06-28 → 06-30 · 逐时复盘',
       flow:'24 小时值班链路 · 谁在什么时间做什么'
     },
-    hero:{
-      badge:'真实场景 · 贵州黔东南 · 㵲阳河流域',
-      title:'2024·6·29 㵲阳河洪水<br><em>实景推演</em>：从洪峰到信道恢复',
-      lede:'以镇远县“6·29”洪峰为真实蓝本：㵲阳河镇远段洪峰水位 <b>465.5 m</b>，超保证水位 <b>4.5 m</b>，洪峰流量 <b>3235 m³/s</b>，创历史新高；当地 14:00 将防汛Ⅲ级响应上调为Ⅱ级，累计安全转移群众 <b>6000 余人</b>。在同一套真实河谷格局上，推演“通信中断 → 影响评估 → 中继选点 → 卫星直连 → 资源调度 → 复盘”的完整处置链。',
-      kpis:[
-        {cls:'teal',num:'465.5',unit:'m',label:'洪峰水位 · 大菜园（二）站'},
-        {cls:'red',num:'+4.5',unit:'m',label:'超保证水位（461 m）'},
-        {num:'3235',unit:'m³/s',label:'相应洪峰流量'},
-        {cls:'orange',num:'6000',unit:'余人',label:'累计安全转移群众'},
-        {sim:true,num:'5680',unit:'人',label:'5 个村寨失联（模型）'}
-      ],
-      hTitle:'数据说明：哪些是真的，哪些是推演',
-      p:'本页把两类信息严格分开，避免把推演结果当成灾情事实。<b style="color:#07756d">真实</b>：行政区划与地名、县域海拔区间（354–1132 m）、2024-06-29 洪峰水位/流量、响应级别、转移人数、通信受损的定性描述。<b style="color:#a35a12">推演</b>：村寨级失联人数、基站退服清单、链路预算数值、中继与卫星直连方案。<b style="color:#93ada4">示意</b>：地图为示意图，非测绘图；地形由公开海拔区间重建，不代表实测 DEM。',
-      chips:[
-        {ok:true,text:'地名 / 行政区划 · 真实'},
-        {ok:true,text:'洪峰 465.5 m / 3235 m³/s · 真实'},
-        {ok:true,text:'转移 6000 余人 · 真实'},
-        {text:'失联人数 / 退服基站 · 推演'},
-        {text:'中继 / 卫星直连方案 · 推演'}
-      ]
-    },
     tlReal:TL_ZY_REAL, tlSim:TL_ZY_SIM, flow:FLOW_ZY,
     sample:SAMPLE_ZY,
     footnote:'<b>资料来源（公开报道 / 政府网站，2024-06-29 至 2024-07-11）</b><br>'+
@@ -2256,22 +2324,6 @@ const CASES={
 };
 let CASE_ID='rongjiang';
 
-function renderHero(){
-  const h=C.hero;
-  $('#heroBadge').textContent=h.badge;
-  $('#heroTitle').innerHTML=h.title;
-  $('#heroLede').innerHTML=h.lede;
-  $('#kpis').innerHTML=h.kpis.map(k=>
-    '<div class="kpi '+(k.cls||'')+'"><b>'+k.num+(k.unit?'<small>'+k.unit+'</small>':'')+'</b>'+
-    '<span>'+k.label+'</span><span class="src '+(k.sim?'sim':'real')+'">'+(k.sim?'推演':'公开报道')+'</span></div>'
-  ).join('');
-  $('#honest').innerHTML=
-    '<div class="h-ico"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17v.01"/></svg></div>'+
-    '<div><h4>'+h.hTitle+'</h4><p>'+h.p+'</p><div class="row">'+
-      h.chips.map(c=>'<span class="chip '+(c.ok?'ok':'warn')+'">'+c.text+'</span>').join('')+
-    '</div></div>';
-}
-
 function setCase(id){
   CASE_ID=id; C=CASES[id];
   state.water=C.water.start;
@@ -2281,11 +2333,11 @@ function setCase(id){
   gContour.innerHTML=''; gRoad.innerHTML=''; gRiver.innerHTML=''; gLabel.innerHTML='';
   gFlood.innerHTML=''; gLink.innerHTML='';
 
-  renderHero();
   $('#mapTitle').textContent=C.titles.map;
   $('#tlTitle').textContent=C.titles.tl;
   $('#flowTitle').textContent=C.titles.flow;
   $('#tagLive').textContent=C.tag;
+  $$('.ms').forEach(b=>b.classList.toggle('on',b.dataset.mapCase===id));
   $('#lgRiver').textContent=C.geo.riverName;
   $('#lgScale').textContent='图宽约 '+Math.round(MAPW*C.geo.kmpp)+' km · 示意比例';
   $('#map').setAttribute('aria-label',C.geo.riverName+'流域实景示意地图');
@@ -2310,13 +2362,6 @@ function setCase(id){
   $('#planBox').style.display='none';
   $('#btnPlan').textContent='一键生成中继方案';
   $('#footnote').innerHTML=C.footnote;
-  document.title=C.docTitle;
-
-  $$('.case').forEach(b=>{
-    const on=b.dataset.case===id;
-    b.classList.toggle('on',on);
-    b.setAttribute('aria-selected',on?'true':'false');
-  });
 
   renderMap(); renderTimeline(); renderFlow(); renderDetail();
 }
@@ -2325,6 +2370,11 @@ function setCase(id){
 function boot(){
   bind();
   setCase('rongjiang');
+  $$('details[data-autopen]').forEach(d=>{ d.open=window.matchMedia('(min-width:761px)').matches; });
+  const hb=$('#honestBox');
+  if(hb) hb.open=window.matchMedia('(min-width:721px)').matches;
+  const yf=$('#yearFold');
+  if(yf) yf.open=window.matchMedia('(min-width:721px)').matches;
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
 else boot();
