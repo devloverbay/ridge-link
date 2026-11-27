@@ -26,3 +26,6 @@ __MACOSX/
 *.log
 tmp/
 node_modules/
+
+# ---- 动态公网地址（每次隧道重启都会变） ----
+public-url.txt
