@@ -32,6 +32,16 @@ foreach ($f in $files) {
     }
 }
 
+# ui/ 子目录（统一设计层）
+$uiSrc = Join-Path $web 'ui'
+if (Test-Path $uiSrc) {
+    $uiDst = Join-Path $dst 'ui'
+    if (-not (Test-Path $uiDst)) { New-Item -ItemType Directory -Force $uiDst | Out-Null }
+    Copy-Item (Join-Path $uiSrc '*') $uiDst -Force
+    Write-Host ("  OK  {0,-22}" -f 'ui/')
+    $count++
+}
+
 Write-Host ""
 Write-Host ("Done: {0} files -> {1}" -f $count, $dst)
 Write-Host "Next: Commit + Push to Gitee; rebuild APK locally (gradle assembleDebug)."

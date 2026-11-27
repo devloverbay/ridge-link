@@ -13,6 +13,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <title>山脊信使 · 应急通信指挥台</title>
+<link rel="stylesheet" href="ui/ridgelink.css">
 <style>
     :root{
     --bg:#0d1a17;
@@ -245,8 +246,12 @@
   .agent .a-top{display:flex;align-items:center;gap:8px}
   .agent .a-idx{font-size:10px;color:var(--teal);font-weight:800;border:1px solid rgba(11,143,132,.4);border-radius:5px;padding:1px 5px}
   .agent b{font-size:12px;letter-spacing:1px;flex:1}
-  .agent .a-st{font-size:9.5px;color:var(--orange);letter-spacing:1px}
-  .agent.done .a-st{color:var(--teal)}
+  .agent .a-st{font-size:9.5px;color:var(--ui-faint);letter-spacing:.08em;padding:1px 6px;border:1px solid var(--ui-line);border-radius:4px}
+  .agent.running .a-st{color:#e8b98a;border-color:rgba(224,168,119,.45);background:rgba(224,168,119,.1)}
+  .agent.done .a-st{color:#8fe6d3;border-color:rgba(67,208,178,.4);background:rgba(67,208,178,.1)}
+  .agent.done .a-top b{color:var(--ui-text-2)}
+  .agent.pending .a-top b{color:var(--ui-text-2)}
+  .agent.pending .a-idx{color:var(--ui-faint);border-color:var(--ui-line)}
   .agent .a-desc{font-size:10px;color:var(--muted);margin:5px 0 7px;letter-spacing:.5px}
   .agent .a-bar{height:3px;border-radius:3px;background:rgba(15,64,92,.13);overflow:hidden}
   .agent .a-bar i{display:block;height:100%;width:0%;background:var(--teal);border-radius:3px;transition:width .4s}
@@ -401,138 +406,156 @@
   /* ---------- 浅色主题补充 ---------- */
   .agent,.kpi,.pane-h{box-shadow:0 1px 2px rgba(15,64,92,.04)}
   .legend{box-shadow:0 6px 20px -12px rgba(15,64,92,.25)}
-    /* ---------- 便当盒（Bento）仪表盘 ---------- */
-  body{
-    margin:0;color:var(--text);
-    background-color:#f3f5f7;
-    background-image:
-      radial-gradient(44% 40% at 4% 0%, rgba(0,194,178,.30), rgba(0,194,178,0) 70%),
-      radial-gradient(42% 38% at 96% 2%, rgba(59,130,246,.27), rgba(59,130,246,0) 70%),
-      radial-gradient(40% 36% at 98% 98%, rgba(168,85,247,.24), rgba(168,85,247,0) 70%),
-      radial-gradient(42% 38% at 2% 96%, rgba(245,158,11,.22), rgba(245,158,11,0) 70%),
-      radial-gradient(48% 44% at 50% 52%, rgba(236,72,153,.09), rgba(236,72,153,0) 74%);
-    background-attachment:fixed;
-    background-repeat:no-repeat;
-  }
+  /* ==========================================================================
+     版式重排（在 ui/ridgelink.css 之后）
+     原来的样式里有 5 轮相互覆盖的 body/.top/panel 重定义（浅色 → 工程化 → 玻璃
+     → 深色），同一元素被反复改色，读起来就"碎"。这里收敛成一套：
+       - 只有一条横向前台栏，主操作「启动推演」唯一高亮
+       - 版面按"地图为主 → 面板为辅"重新分配
+       - 右侧智能体只显示状态，日志降到最低层级
+     ========================================================================== */
+  body{background-color:var(--ui-bg);background-image:none;color:var(--ui-text);overflow:hidden}
   .bg-grid{display:none}
-  .stage{grid-template-columns:300px minmax(0,1fr) 340px;grid-template-rows:minmax(0,1fr) 236px;gap:14px;padding:14px}
-  .panel{background:#13211d;border:1px solid rgba(206,236,226,.12);border-radius:20px;
-    box-shadow:0 1px 2px rgba(16,24,40,.04),0 14px 30px -22px rgba(16,24,40,.28)}
-  .panel.left{background:transparent;border:0;box-shadow:none;border-radius:0;overflow:visible}
-  .left .ph{height:auto;padding:2px 4px 6px;border-bottom:0}
-  .left-scroll{padding:0 0 4px;gap:12px}
-  .left .block{background:#13211d;border:1px solid rgba(206,236,226,.12);border-radius:16px;padding:14px;
-    box-shadow:0 1px 2px rgba(16,24,40,.04),0 14px 30px -22px rgba(16,24,40,.28)}
-  .scn{background:#13211d;border:1px solid rgba(206,236,226,.12);border-radius:14px}
-  .scn:hover{border-color:rgba(11,143,132,.4)}
-  .evt{background:#f7f9fa;border:1px solid rgba(16,24,40,.05);border-radius:12px}
-  .map-panel .ph{border-bottom:0;height:auto;min-height:54px;padding:12px 14px}
-  .map-panel .kpi span{white-space:nowrap}
-  .map-panel .map-stage{margin:0 12px 12px;border-radius:14px}
-  .right .agents{padding:12px;gap:10px}
-  .agent{background:#f7f9fa;border:1px solid rgba(16,24,40,.05);border-radius:12px}
-  .right .ph.sub{margin-top:10px;border-top:1px solid rgba(16,24,40,.05)}
-  .right .log{margin:0 12px 12px;padding:10px 12px;border-top:0;border-radius:12px;background:#f7f9fa}
-  .tabs{border-bottom:0;padding:10px 12px 8px}
-  .tab{border-radius:10px;border:1px solid transparent}
-  .tab.active{background:#f2f4f6;border-color:rgba(206,236,226,.12);box-shadow:none;top:0;color:#e8f3ee}
-  .tab-body{margin:0 12px 12px;background:#f7f9fa;border-radius:14px;overflow:hidden}
-  .pane-h{border-bottom:1px solid rgba(16,24,40,.05)}
-  .pane-body{padding:12px 14px 14px}
-  .map-prog{background:transparent}
-  .legend{background:rgba(20,34,30,0.82);border-color:rgba(206,236,226,.12)}
 
-  /* ---------- 品牌图标 ---------- */
-  .brand-mark,.top .brand-mark{background:#13211d;border:1px solid rgba(206,236,226,.14);overflow:hidden;padding:0}
-  .brand-mark img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
-
-  /* ---------- 启动推演：胶囊 ⇄ 圆形加载 ---------- */
-  .run-btn{position:relative;overflow:hidden;justify-content:center;white-space:nowrap;
-    transition:width .5s cubic-bezier(.4,0,.2,1),height .5s cubic-bezier(.4,0,.2,1),
-      padding .5s cubic-bezier(.4,0,.2,1),border-radius .5s ease,box-shadow .5s ease}
-  .run-btn>svg,.run-btn>span:not(.run-spin){transition:opacity .18s ease .18s}
-  .run-btn:disabled{opacity:1}
-  .btn.run-btn.is-loading{cursor:progress;pointer-events:none;padding:0 !important;border-radius:50%;
-    background:linear-gradient(135deg,#12a06a,#0b8f84);box-shadow:0 8px 22px -8px rgba(11,143,132,.55)}
-  .run-btn.is-loading>svg,.run-btn.is-loading>span:not(.run-spin){opacity:0;transition-delay:0s}
-  .run-spin{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:opacity .2s ease}
-  .run-btn.is-loading .run-spin{opacity:1;transition-delay:.2s}
-  .gradient-cone{width:20px;height:20px;border-radius:50%;
-    background:conic-gradient(from 0deg,transparent 0deg,#ffffff 300deg,transparent 360deg);
-    -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
-            mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));
-    animation:gradient-cone__spin .7s linear infinite;will-change:transform}
-  @keyframes gradient-cone__spin{to{transform:rotate(360deg)}}
-
-  /* ---------- 重置按钮：打勾反馈 ---------- */
-  .reset-btn{position:relative;overflow:hidden;justify-content:center}
-  .reset-label{transition:opacity .15s ease}
-  .reset-btn.is-resetting .reset-label{opacity:0}
-  .reset-check{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:opacity .12s ease}
-  .reset-check svg{width:19px;height:19px;fill:none;stroke:var(--teal);stroke-width:2.6;
-    stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24}
-  .reset-btn.is-checking .reset-check{opacity:1}
-  .reset-btn.is-checking .reset-check svg{animation:reset-draw .45s cubic-bezier(.4,0,.2,1) forwards}
-  @keyframes reset-draw{to{stroke-dashoffset:0}}
-
-  /* ---------- 工程化版式：去卡片化，细线分隔 ---------- */
-  body{background-color:#e8eeec;
-    background-image:
-      radial-gradient(44% 40% at 4% 0%, rgba(0,194,178,.12), rgba(0,194,178,0) 70%),
-      radial-gradient(42% 38% at 96% 2%, rgba(59,130,246,.10), rgba(59,130,246,0) 70%),
-      radial-gradient(40% 36% at 98% 98%, rgba(168,85,247,.07), rgba(168,85,247,0) 70%),
-      radial-gradient(42% 38% at 2% 96%, rgba(245,158,11,.07), rgba(245,158,11,0) 70%);}
-  .top{background:#13211d;border:0;border-bottom:1px solid var(--line);border-radius:0;
-    margin:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;height:58px}
-  .stage{gap:1px;padding:0;background:var(--line);border-top:0}
-  .panel{background:#13211d;border:0;border-radius:0;box-shadow:none;color:var(--text)}
-  .panel.left{background:#13211d;border:0;border-radius:0;box-shadow:none;overflow:hidden}
-  .left .ph{padding:12px 16px 6px;border-bottom:0}
-  .left-scroll{padding:0 16px 14px;gap:0}
-  .left .block{background:transparent;border:0;border-top:1px solid var(--line);border-radius:0;
-    padding:14px 0 16px;box-shadow:none}
-  .scn{background:#13211d;border:1px solid var(--line);border-radius:4px}
-  .evt{background:#101d1a;border:1px solid var(--line);border-radius:4px}
-  .map-panel .ph{border-bottom:1px solid var(--line);height:56px}
-  .map-panel .map-stage{margin:0;border-radius:0}
-  .agents{padding:12px 16px;gap:0}
-  .agent{background:transparent;border:0;border-top:1px solid var(--line);border-radius:0;padding:12px 0}
-  .right .ph.sub{margin-top:0;border-top:1px solid var(--line)}
-  .right .log{margin:0;padding:10px 16px 14px;border-top:0;border-radius:0;background:#101d1a}
-  .tabs{border-bottom:1px solid var(--line);padding:0 16px;gap:2px}
-  .tab{border-radius:0;border:0;padding:12px 12px 10px;color:var(--muted)}
-  .tab.active{background:transparent;border:0;box-shadow:inset 0 -2px 0 var(--teal);color:var(--ink);top:0}
-  .tab-body{margin:0;background:#13211d;border-radius:0}
-  .pane-h{border-bottom:1px solid var(--line);height:42px}
-  .legend{background:rgba(20,34,30,.9);border:1px solid var(--line);border-radius:4px;box-shadow:none}
-  .btn{border-radius:10px}
-  .btn.primary{border-radius:10px}
-
-  /* ---------- 顶栏：玻璃材质（与官网一致） ---------- */
+  /* ---- 顶栏 ---- */
   .top{
-    margin:6px 6px 0;
-    height:58px;
-    border-radius:14px;
+    margin:6px 6px 0;height:56px;padding:0 14px;border-radius:12px;
     background:rgba(15,30,26,.55);
     -webkit-backdrop-filter:blur(26px) saturate(180%);
     backdrop-filter:blur(26px) saturate(180%);
     border:1px solid rgba(214,244,236,.16);
-    box-shadow:
-      0 0 0 1px rgba(0,0,0,.35),
-      0 2px 4px -2px rgba(0,0,0,.4),
-      0 14px 30px -14px rgba(0,0,0,.55),
-      inset 0 1px 0 rgba(214,244,236,.12);
+    box-shadow:0 14px 30px -14px rgba(0,0,0,.55),inset 0 1px 0 rgba(214,244,236,.12);
+  }
+  .top-right{gap:8px}
+  /* 顶栏只留一个高亮主操作 */
+  .btn.primary{background:var(--ui-accent);color:#06201b;box-shadow:none;font-weight:800}
+  .btn.primary:hover{background:#54dcc0}
+  .btn.ghost{background:rgba(214,244,236,.05);border-color:var(--ui-line-2);color:var(--ui-text-2)}
+
+  /* ---- 版面：地图占主体，左栏收窄，右栏只放状态 ---- */
+  .stage{
+    height:calc(100vh - 62px);
+    grid-template-columns:272px minmax(0,1fr) 300px;
+    grid-template-rows:minmax(0,1fr) 236px;
+    gap:1px;padding:6px;background:var(--ui-line);
+  }
+  .panel{background:var(--ui-bg);border:0;border-radius:0;box-shadow:none}
+  .ph{height:44px;padding:0 14px}
+  .ph span{font-size:11.5px;letter-spacing:.14em;color:var(--ui-text-2)}
+  .ph-r{font-size:10.5px;color:var(--ui-faint)}
+
+  /* 左栏：场景卡片降为"选项卡"，事件摘要成为主信息 */
+  .left-scroll{padding:12px 14px 14px;gap:0}
+  .scn-grid{gap:6px;margin-bottom:14px}
+  .scn{padding:8px 10px;border-radius:8px;background:rgba(20,34,30,.6);gap:2px}
+  .scn b{font-size:12px;letter-spacing:.02em;font-weight:700}
+  .scn span{font-size:10px;color:var(--ui-faint)}
+  .scn.active{background:rgba(67,208,178,.1);border-color:rgba(67,208,178,.5)}
+  .left .block{border:0;border-top:1px solid var(--ui-line);border-radius:0;background:transparent;
+    padding:12px 0 14px}
+  .block-h{margin-bottom:8px;font-size:10.5px;letter-spacing:.14em;color:var(--ui-muted)}
+  .evt{background:transparent;border:0;border-left:2px solid var(--ui-accent);border-radius:0;padding:0 0 0 10px}
+  .evt h4{font-size:14.5px;margin-bottom:4px}
+  .evt p{font-size:11.5px;color:var(--ui-muted)}
+
+  /* 地图面板：标题下给出当前任务的三个关键数 */
+  /* 地图标题栏：左边标题与副标，右边四个关键数；数字在标签下方、同一基线 */
+  .map-panel .ph{border-bottom:1px solid var(--ui-line);padding:0 14px}
+  .map-panel .ph>span:first-child{flex:none;font-size:11.5px;letter-spacing:.14em;color:var(--ui-text-2)}
+  .map-panel .kpis{flex:0 0 auto;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(64px,auto);gap:0;align-items:stretch}
+  .map-panel .kpi{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:6px 0 6px 14px;border-left:1px solid var(--ui-line);min-width:0}
+  .map-panel .kpi:first-child{padding-left:0;border-left:0}
+  .map-panel .kpi span{display:block;font-size:9.5px;line-height:1.2;letter-spacing:.08em;color:var(--ui-faint)}
+  .map-panel .kpi b{font-size:17px;line-height:1.15;font-weight:800;font-variant-numeric:tabular-nums}
+
+  /* 右栏：智能体只保留"名称 + 状态 + 进度"，日志压低 */
+  .agents{padding:10px 14px;gap:0}
+  .agent{border:0;border-top:1px solid var(--ui-line);border-radius:0;padding:10px 0;background:transparent}
+  .agent.running{background:transparent;border-top-color:rgba(67,208,178,.45)}
+  .agent .a-desc{display:none}
+  .agent .a-out{min-height:0;padding-top:0;border-top:0;display:none}
+  .agent.done .a-out,.agent.running .a-out{display:block;color:var(--ui-muted);font-size:10.5px}
+  .right .log{background:transparent;border-top:1px solid var(--ui-line);padding:8px 14px 12px}
+
+  /* 底部面板：当前 Tab 唯一高亮 */
+  .tabs{padding:0 12px;gap:2px;border-bottom:1px solid var(--ui-line)}
+  .tab{padding:11px 14px 9px;border-radius:0;border:0;font-size:12px;letter-spacing:.06em}
+  .tab.active{background:transparent;box-shadow:inset 0 -2px 0 var(--ui-accent);color:var(--ui-text)}
+  .tab-body{background:var(--ui-bg)}
+  .pane-h{height:40px;border-bottom:1px solid var(--ui-line)}
+  .pane-h span{font-size:11px;letter-spacing:.14em;color:var(--ui-text-2)}
+
+  /* 窄屏：面板顺序改成"地图 → 场景 → 结果 → 智能体" */
+  @media(max-width:860px){
+    body{overflow:auto}
+    .stage{height:auto!important;display:flex!important;flex-direction:column;gap:8px;padding:8px;background:transparent}
+    .stream{min-height:300px;height:52vh}
+    .left{order:1}
+    .map-panel{order:0;height:auto}
+    .bottom{order:2;height:auto;min-height:360px}
+    .right{order:3;height:auto;min-height:0}
+    .right .agents{overflow:visible}
+    .right .log{max-height:180px}
+    .left{height:auto!important}
+    .left-scroll{overflow:visible;max-height:none}
+    .scn-grid{grid-template-columns:repeat(4,1fr)}
+    .scn{padding:8px 6px}
+    .scn .s-ico{display:none}
+    .scn span{display:none}
+  }
+  /* ---- 品牌图标与按钮：修掉图标被放大的问题 ---- */
+  .top .brand{flex:none;min-width:0}
+  .top .brand-mark{width:32px;height:32px;border-radius:9px;overflow:hidden;padding:0}
+  .top .brand-mark img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+  .btn ,.run-btn{white-space:nowrap}
+  .reset-btn{white-space:nowrap}
+
+  /* ---- 窄屏：顶栏一行放得下，主操作仍然最突出 ---- */
+  @media(max-width:860px){
+    .top{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none;gap:8px!important;padding:8px 10px!important}
+    .top::-webkit-scrollbar{display:none}
+    .top .brand-t b{font-size:12.5px;letter-spacing:.06em}
+    .top .brand-t span{display:none}
+    .top a.tag{display:none}
+    .top-right{gap:6px;margin-left:auto}
+    .top-right .tag.warn{padding:4px 8px;font-size:10.5px}
+    .btn.run-btn{min-width:96px;flex:none;white-space:nowrap}
+    .fast{white-space:nowrap;flex:none}
+    .map-panel{display:flex;flex-direction:column}
+    .map-panel .ph{flex:none}
+    .map-stage.stream{position:relative!important;flex:1 1 auto;min-height:300px;height:auto!important;overflow:hidden}
+    .btn.primary,.btn.ghost{padding:9px 12px;font-size:11.5px}
+    .reset-btn{min-width:0}
+    .map-panel .ph{min-height:auto;padding:8px 12px;flex-wrap:wrap;gap:4px 10px}
+    .map-panel .kpis{width:100%;grid-auto-columns:1fr;gap:0}
+    .map-panel .kpi{padding:4px 0 4px 10px}
+    .map-panel .kpi b{font-size:14px}
+    .map-stage{min-height:300px!important}
   }
 
-  /* ---------- 统一底色：中性浅灰，无彩色晕染 ---------- */
-  body{background-color:#0d1a17;background-image:none;color:#e8f3ee}
-
-  /* 智能体列表滚动时底部淡出，避免被硬切 */
-  .right .agents{
-    -webkit-mask-image:linear-gradient(#000 0%,#000 88%,transparent 100%);
-    mask-image:linear-gradient(#000 0%,#000 88%,transparent 100%);
+  /* ---- 窄屏最终修正（放在所有覆盖之后，用更高特异性确保生效） ---- */
+  @media(max-width:860px){
+    body .top>.top-right{flex:1 1 auto;min-width:0;justify-content:flex-end}
+    body .top .btn.run-btn{min-width:0!important;width:auto!important;flex:0 0 auto!important;padding:9px 10px!important}
+    body .top .btn.run-btn>span:not(.run-spin){display:none}
+    body .top .btn.run-btn svg{width:16px;height:16px}
+    body .top .btn.reset-btn{min-width:0!important;padding:9px 10px!important}
+    body .top .fast{order:-1;display:none}
+    body .top-right>.clock{display:none}
+    body .top .btn.reset-btn{order:2}
+    body .top .btn.run-btn{order:3}
+    body .top .tag.warn{order:1}
+    body .map-panel .ph{display:block!important;height:auto!important;min-height:0!important;padding:8px 12px!important}
+    body .map-panel .ph>span:first-child{display:block;margin-bottom:6px}
+    body .map-panel .kpis{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
+    body .map-panel .kpi{padding:0 8px;border-left:1px solid var(--ui-line)}
+    body .map-panel .kpi:first-child{padding-left:0;border-left:0}
+    body .map-panel .kpi span{font-size:9px}
+    body .map-panel .kpi b{font-size:14px}
+    body .map-panel .map-stage.stream{margin:0!important;border-radius:0!important;min-height:300px;flex:1 1 auto}
+    body .map-panel{height:auto!important;min-height:0!important;display:flex;flex-direction:column}
+    body .stage>.map-panel{flex:0 0 auto}
   }
-  h1,h2,h3{text-wrap:balance}
 
 </style>
 </head>
@@ -598,7 +621,7 @@
         <div class="kpi"><span>平均到达</span><b id="k4">—</b></div>
       </div>
     </div>
-    <div class="map-stage">
+    <div class="map-stage stream">
       <div class="map-pan" id="mapPan">
       <canvas id="terrain" width="480" height="300"></canvas>
       <svg id="mapSvg" viewBox="-28 -16 1016 632" preserveAspectRatio="xMidYMid meet">
@@ -1025,6 +1048,9 @@ function setAgent(id,status,out){
     if(status!=='待命')card.classList.add(status==='运行中'?'running':'done');
     const bar=card.querySelector('.a-bar i');
     if(bar)bar.style.width=status==='待命'?0:status==='运行中'?'40%':'100%';
+    /* 状态文字原来永远是"待命"，跑完也不变，读起来像没跑 */
+    const stEl=card.querySelector('.a-st');
+    if(stEl&&status){stEl.textContent=status==='运行中'?'运行中':status;}
     const outEl=card.querySelector('.a-out');
     if(outEl&&out!==undefined)outEl.textContent=out;
   }

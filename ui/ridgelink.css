@@ -1,0 +1,127 @@
+/* ==========================================================================
+   山脊信使 RidgeLink · UI 基础层
+   --------------------------------------------------------------------------
+   目的：三个页面原来各自写了一套字号、间距、颜色变量，同一层级的元素
+   在不同页面上大小不一，看久了就"零碎"。这里只放三件事：
+     1) 统一的层级令牌（字号阶梯 / 间距 / 颜色）
+     2) 统一的基础元素默认值
+     3) 少量跨页共用的小组件（序号、结论条、次级说明）
+   页面自己的布局样式仍然写在各 html 内部，这一层排在它们之前加载，
+   需要时页面样式可以直接覆盖。
+   ========================================================================== */
+
+:root{
+  /* —— 底色与文字：只用这四档，避免出现 6 种"差不多灰" —— */
+  --ui-bg:#0d1a17;
+  --ui-bg-2:#101d1a;
+  --ui-panel:rgba(20,34,30,.82);
+  --ui-text:#e8f3ee;      /* 一级：标题、关键数字 */
+  --ui-text-2:#c6d8d2;    /* 二级：正文 */
+  --ui-muted:#93ada4;     /* 三级：辅助说明 */
+  --ui-faint:#6f8ba4;     /* 四级：脚注、口径 */
+
+  /* —— 线 —— */
+  --ui-line:rgba(206,236,226,.14);
+  --ui-line-2:rgba(206,236,226,.26);
+
+  /* —— 语义色：主色只有一个，预警只用于"需要立刻注意" —— */
+  --ui-accent:#43d0b2;
+  --ui-warn:#e0a877;
+  --ui-danger:#d98a92;
+  --ui-info:#78b4f0;
+
+  /* —— 字号阶梯：一共 6 档 —— */
+  --ui-fs-display:clamp(30px,4.6vw,46px); /* 页面主标题，每页只有 1 个 */
+  --ui-fs-h2:clamp(20px,2.2vw,26px);      /* 区块标题 */
+  --ui-fs-h3:15px;                        /* 卡片/条目标题 */
+  --ui-fs-body:13.5px;                    /* 正文 */
+  --ui-fs-sm:12px;                        /* 辅助 */
+  --ui-fs-xs:11px;                        /* 脚注、口径 */
+
+  /* —— 间距阶梯：4 的倍数 —— */
+  --ui-s1:4px; --ui-s2:8px; --ui-s3:12px; --ui-s4:16px;
+  --ui-s5:24px; --ui-s6:32px; --ui-s7:48px; --ui-s8:64px;
+
+  /* —— 圆角：只有两档，大框和小元素 —— */
+  --ui-r-lg:14px; --ui-r-sm:8px;
+
+  --ui-max:1240px;
+  --ui-mono:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+
+/* --------------------------------------------------------------------------
+   基础元素：把"默认值"一次定死，页面里就不必反复声明
+   -------------------------------------------------------------------------- */
+html{-webkit-text-size-adjust:100%}
+body{
+  font-size:var(--ui-fs-body);
+  line-height:1.75;
+  color:var(--ui-text);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{text-wrap:balance;color:var(--ui-text)}
+h2{font-size:var(--ui-fs-h2);line-height:1.35;letter-spacing:.01em;font-weight:700;margin:0}
+h3{font-size:var(--ui-fs-h3);line-height:1.5;letter-spacing:.01em;font-weight:700;margin:0}
+h4{font-size:var(--ui-fs-title,14px);line-height:1.5;font-weight:700;margin:0}
+p,blockquote{text-wrap:pretty;margin:0}
+small{font-size:.82em}
+
+/* 序号 / 标签：三个页面原来各写一版，这里统一 */
+.ui-eyebrow{
+  display:inline-flex;align-items:center;gap:var(--ui-s2);
+  font:600 var(--ui-fs-xs)/1 var(--ui-mono);letter-spacing:.14em;color:var(--ui-muted);
+}
+.ui-eyebrow::before{content:"";width:14px;height:1px;background:currentColor;opacity:.6}
+
+/* 区块头：标题在左，一句话结论在右（小屏折行） */
+.ui-sechead{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:var(--ui-s3) var(--ui-s6);flex-wrap:wrap;margin-bottom:var(--ui-s5);
+}
+.ui-sechead .ui-h{display:flex;align-items:baseline;gap:var(--ui-s3);flex-wrap:wrap}
+.ui-sechead .ui-h .n{
+  font:600 var(--ui-fs-xs)/1 var(--ui-mono);letter-spacing:.1em;color:var(--ui-muted);
+}
+.ui-sechead .ui-sub{
+  font-size:var(--ui-fs-sm);color:var(--ui-muted);line-height:1.7;max-width:52ch;margin:0;
+}
+
+/* 口径 / 数据来源标记：颜色只区分"真 / 推"两类 */
+.ui-src{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;line-height:1;letter-spacing:.04em;
+  padding:3px 6px;border-radius:4px;white-space:nowrap;
+}
+.ui-src.real{color:#8fe6d3;background:rgba(67,208,178,.12)}
+.ui-src.sim{color:#e8b98a;background:rgba(224,168,119,.13)}
+
+/* 折叠块：把"说明 / 口径 / 详情"统一收起来，首屏只留结论 */
+.ui-fold{
+  border:1px solid var(--ui-line);border-radius:var(--ui-r-sm);
+  background:rgba(20,34,30,.62);
+}
+.ui-fold>summary{
+  display:flex;align-items:center;gap:var(--ui-s2);min-height:40px;
+  padding:0 var(--ui-s3);cursor:pointer;list-style:none;
+  font-size:var(--ui-fs-xs);letter-spacing:.04em;color:var(--ui-muted);
+}
+.ui-fold>summary::-webkit-details-marker{display:none}
+.ui-fold>summary::after{content:"展开";margin-left:auto;color:var(--ui-faint)}
+.ui-fold[open]>summary::after{content:"收起"}
+.ui-fold[open]>summary{color:var(--ui-text-2);border-bottom:1px solid var(--ui-line)}
+
+/* 手机端字号回收一档，避免"小字叠小字" */
+@media (max-width:560px){
+  :root{
+    --ui-fs-h2:19px;
+    --ui-fs-h3:14.5px;
+    --ui-fs-body:13px;
+    --ui-fs-sm:11.5px;
+    --ui-fs-xs:10.5px;
+  }
+}
+
+/* 尊重减弱动效偏好：所有页面统一关掉非必要动画 */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+}

@@ -13,6 +13,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <title>真实场景 · 贵州四类灾害 2021—2026 复盘 | 山脊信使</title>
+<link rel="stylesheet" href="ui/ridgelink.css">
 <style>
     :root{
     --bg:#ffffff;
@@ -167,12 +168,17 @@
     overflow-x:auto;scrollbar-width:none;
   }
   .tabs::-webkit-scrollbar{display:none}
+  .tabs{position:sticky;width:auto;max-width:100%}
   .tab{
-    flex:1;min-width:130px;padding:11px 14px;border-radius:10px;border:1px solid transparent;
+    flex:1;min-width:130px;padding:10px 14px;border-radius:10px;border:1px solid transparent;
     background:transparent;color:var(--muted);font-size:12.5px;letter-spacing:1px;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;
+    display:grid;grid-template-columns:auto auto;justify-content:center;align-items:baseline;gap:2px 8px;
+    white-space:nowrap;text-align:left;
     transition:background .18s,color .18s,border-color .18s;
   }
+  .tab .t{font-weight:700;letter-spacing:.06em}
+  .tab .d{grid-column:1/-1;font-style:normal;font-size:10px;letter-spacing:.02em;color:var(--ui-faint);font-weight:400;text-align:center}
+  .tab.on .d{color:rgba(67,208,178,.72)}
   .tab:hover{background:rgba(15,64,92,.08);color:var(--text)}
   .tab.on{background:rgba(11,143,132,.13);border-color:rgba(11,143,132,.35);color:var(--teal);font-weight:700}
   .tab .n{font-size:9.5px;opacity:.7;font-variant-numeric:tabular-nums}
@@ -197,8 +203,10 @@
 
   /* ---------- province overview ---------- */
   .province-scroll-tip{display:none;font-size:10px;color:var(--muted);padding:7px 16px 0;letter-spacing:.4px}
-  .province-wrap{overflow-x:auto;overscroll-behavior-x:contain;background:radial-gradient(ellipse at 50% 40%,#0b2035 0%,#061220 78%)}
-  #provinceMap{display:block;width:100%;min-width:760px;height:auto;touch-action:manipulation}
+  .province-wrap{overflow-x:auto;overscroll-behavior-x:contain;background:radial-gradient(ellipse at 50% 40%,#0b2035 0%,#061220 78%);max-width:100%}
+  html,body{overflow-x:clip}
+  main.wrap{max-width:100%}
+  #provinceMap{display:block;width:100%;min-width:760px;height:auto;touch-action:manipulation;max-height:min(62vh,540px);margin:0 auto}
   .pm-city{cursor:pointer;transition:opacity .18s}
   .pm-city:hover{opacity:.82}
   .pm-city:focus{outline:none}
@@ -535,9 +543,10 @@
     .risk-actions .btn{flex:1}
     .honest{grid-template-columns:1fr}
     .honest .h-ico{display:none}
-    .tabs{top:54px;padding:6px;margin:14px -12px 0;border-radius:0;border-left:0;border-right:0;overflow:visible}
+    .tabs{top:54px;padding:6px;margin:14px 0 0;border-radius:0;border-left:0;border-right:0;overflow-x:auto;overflow-y:hidden;position:sticky!important;width:100%}
     .tab{min-width:0;flex:1;padding:10px 4px;font-size:11px;gap:4px;min-height:44px}
     .tab .n{font-size:9px}
+    .tab .d{display:none}
     .nav a{padding:9px 10px;min-height:36px;display:inline-flex;align-items:center}
     .map-hint{display:block}
     .province-scroll-tip{display:block}
@@ -590,6 +599,71 @@
   .brand-mark,.top .brand-mark{background:#13211d;border:1px solid rgba(206,236,226,.16);overflow:hidden;padding:0}
   .brand-mark img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
 
+  /* ==========================================================================
+     版式重排（UI 基础层 ui/ridgelink.css 之后）
+     目标：一屏之内只讲一件事——先给结论，再给地图，最后才是细节。
+     ========================================================================== */
+  /* 首屏：左文案 / 右三条事实对照，高度压到一屏可见 */
+  .hero{padding:16px 0 0}
+  .hero-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:14px 40px;align-items:end}
+  .hero-copy .badge{margin-bottom:10px;padding:4px 11px}
+  .hero h1{font-size:clamp(26px,3.2vw,36px);line-height:1.2;margin:0 0 8px;font-weight:800;letter-spacing:-.3px}
+  .hero h1 em{font-style:normal;color:var(--teal)}
+  .hero-copy .lede{margin:0;max-width:640px;font-size:var(--ui-fs-body);line-height:1.85;color:var(--ui-text-2)}
+  .hero-jump{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:var(--ui-fs-sm);color:var(--ui-muted);border-bottom:1px solid var(--ui-line-2);padding-bottom:2px}
+  .hero-jump:hover{color:var(--teal);border-color:var(--teal)}
+  /* 三条事实：只留"最严重 / 最近一次 / 最大转移"，竖排对照 */
+  .hero-facts{list-style:none;margin:0;padding:0;border-top:1px solid var(--ui-line-2)}
+  .hero-facts li{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"k v" "k n";column-gap:14px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--ui-line)}
+  .hero-facts .hf-k{grid-area:k;font-size:var(--ui-fs-xs);color:var(--ui-muted);letter-spacing:.06em;white-space:nowrap}
+  .hero-facts .hf-v{grid-area:v;font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2;color:var(--ui-text)}
+  .hero-facts .hf-v small{font-size:11px;font-weight:600;margin-left:2px;color:var(--ui-muted)}
+  .hero-facts .hf-n{grid-area:n;font-size:var(--ui-fs-xs);color:var(--ui-faint);line-height:1.6}
+  /* 口径说明：默认收起，不占首屏 */
+  .hero-fold{margin-top:12px;margin-bottom:2px}
+  .hero-fold .honest-body{padding:12px 13px}
+  .hero-fold .honest-body p{font-size:var(--ui-fs-xs);line-height:1.85;color:var(--ui-text-2)}
+  .hero-fold .t-real{color:#8fe6d3;font-weight:700}
+  .hero-fold .t-sim{color:#e8b98a;font-weight:700}
+  .hero-fold .t-fake{color:var(--ui-faint);font-weight:700}
+
+  /* Tab 条：贴在顶栏下方，作为全页唯一导航 */
+  .tabs{top:76px;margin:12px 0 0}
+
+  /* 面板标题里的两位序号，让同一 Tab 内的区块有先后 */
+  .ph h3{font-size:13px}
+  .ph h3 .n{display:inline-block;margin-right:9px;font:700 10px/1 var(--ui-mono);color:var(--teal);letter-spacing:.06em;vertical-align:1px}
+  .panel-pad{padding:18px}
+  .panel-pad.sub{background:rgba(20,34,30,.55)}
+
+  /* 复盘工具的三块之间留出间距 */
+  #sec-flow .panel-pad{margin-bottom:14px}
+  #sec-flow .tool-nav{margin:0 0 14px}
+  #sec-flow .imp-grid{margin-bottom:0}
+
+  /* 案例区：年份速览默认收起，让四类案例先出来 */
+  .year-fold{margin-bottom:14px}
+
+  @media(max-width:900px){
+    .hero-main{grid-template-columns:1fr;gap:18px}
+    .hero h1{font-size:clamp(26px,7vw,34px)}
+    .hero-facts li{padding:9px 0}
+  }
+
+  /* ---- 窄屏：禁止横向撑开文档（sticky 元素 + 宽地图是常见元凶） ---- */
+  @media(max-width:780px){
+    html,body{overflow-x:hidden;max-width:100vw}
+    main.wrap{overflow-x:clip}
+    .tabs{position:static!important;width:100%!important;max-width:100%!important;margin:14px 0 0!important;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap}
+    .tab{flex:1 1 0;min-width:0;padding:10px 6px;font-size:11.5px}
+    .tab .d{display:none}
+    .hero-main{gap:16px}
+    .hero-jump{min-height:44px;display:inline-flex;align-items:center}
+    .tg{min-height:44px;padding:0}
+    .tg input{width:22px;height:22px}
+    .hero h1{font-size:clamp(24px,7.4vw,32px);white-space:normal}
+  }
+
 </style>
 </head>
 <body>
@@ -613,45 +687,39 @@
 <main class="wrap">
   <!-- ================= HERO ================= -->
   <section class="hero">
-    <div class="badge"><i></i>真实场景 · 贵州 · 2021—2026 公开报道</div>
-    <h1>贵州四类灾害<br><em>一张图看懂</em>：从灾情到通信处置</h1>
-    <p class="lede">暴雨山洪、地震滑坡、森林火灾、冰雪冻雨四类灾害落在同一张省级地图：先看哪里最严重、最近一次发生在什么时候，再展开时间线、通信影响与 RidgeLink 处置打法。真实数字标注来源，推演与示意单独标注。</p>
-    <div class="kpis">
-      <div class="kpi teal"><b>256.71<small>m</small></b><span>榕江 6·24 实测洪峰 · 超保证 5.21 m</span><span class="src real">公开报道</span></div>
-      <div class="kpi orange"><b>41574<small>人</small></b><span>榕江 6·28 单日转移（11992 户）</span><span class="src real">公开报道</span></div>
-      <div class="kpi"><b>72<small>人</small></b><span>水城 2025·7 崩塌前 15 分钟全部转移</span><span class="src real">公开报道</span></div>
-      <div class="kpi red"><b>19<small>人</small></b><span>大方 2025·5 滑坡死亡失踪（7 死 12 失）</span><span class="src real">公开报道</span></div>
+    <div class="hero-main">
+      <div class="hero-copy">
+        <div class="badge"><i></i>真实场景 · 贵州 · 2021—2026 公开报道</div>
+        <h1>贵州四类灾害，<em>一张图看清</em></h1>
+        <p class="lede">暴雨山洪、地震滑坡、森林火灾、冰雪冻雨落在同一张省级地图：先看哪里最严重、最近一次发生在什么时候，再展开时间线、通信影响与 RidgeLink 处置打法。</p>
+        <a class="hero-jump" href="#provinceSec">直接看全省态势图 ↓</a>
+      </div>
+      <ul class="hero-facts">
+        <li><span class="hf-k">最严重一次</span><b class="hf-v">256.71<small>m</small></b><span class="hf-n">榕江 6·24 实测洪峰 · 超保证 5.21 m</span></li>
+        <li><span class="hf-k">最近一次</span><b class="hf-v">2026·11·10</b><span class="hf-n">威宁、赫章初雪凝冻 · 电网Ⅳ级响应</span></li>
+        <li><span class="hf-k">单次最大转移</span><b class="hf-v">41,574<small>人</small></b><span class="hf-n">榕江 6·28 单日（11992 户）</span></li>
+      </ul>
     </div>
-    <details class="honest" id="honestBox">
-      <summary>
-        <span class="h-ico"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 9v5M12 17v.01"/></svg></span>
-        <h4>数据说明：哪些是真的，哪些是推演</h4>
-        <span class="hs">真实 / 推演 / 示意</span>
-      </summary>
+    <details class="ui-fold hero-fold" id="honestBox" open>
+      <summary>数据口径：哪些是公开报道，哪些是推演，哪些是示意</summary>
       <div class="honest-body">
-        <p>本页把两类信息严格分开，避免把推演结果当成灾情事实。<b style="color:#07756d">真实</b>：行政区划与地名、公开报道中的洪峰水位/流量、响应级别、转移与伤亡人数、通信受损的定性描述。<b style="color:#a35a12">推演</b>：村寨级失联人数、基站退服清单、链路预算数值、中继与卫星直连方案。<b style="color:#93ada4">示意</b>：地图为示意图，非测绘图。</p>
-        <div class="row">
-          <span class="chip ok">公开报道 · 真实</span>
-          <span class="chip ok">2021—2026 · 最近五年</span>
-          <span class="chip warn">失联人数 / 退服基站 · 推演</span>
-          <span class="chip warn">中继 / 卫星方案 · 推演</span>
-        </div>
+        <p><b class="t-real">公开报道</b>：行政区划与地名、洪峰水位/流量、响应级别、转移与伤亡人数、通信受损的定性描述。<b class="t-sim">推演</b>：村寨级失联人数、基站退服清单、链路预算数值、中继与卫星直连方案。<b class="t-fake">示意</b>：地图为示意图，非测绘图。</p>
       </div>
     </details>
   </section>
 
   <!-- ================= TABS ================= -->
   <div class="tabs" role="tablist">
-    <button class="tab on" data-tab="map"><span class="n">01</span>实景地图</button>
-    <button class="tab" data-tab="cases"><span class="n">02</span>灾情案例</button>
-    <button class="tab" data-tab="tools"><span class="n">03</span>复盘工具</button>
+    <button class="tab on" data-tab="map"><span class="n">01</span><span class="t">实景地图</span><em class="d">全省态势 · 逐村链路</em></button>
+    <button class="tab" data-tab="cases"><span class="n">02</span><span class="t">灾情案例</span><em class="d">四类灾害 · 2021—2026</em></button>
+    <button class="tab" data-tab="tools"><span class="n">03</span><span class="t">复盘工具</span><em class="d">时间线 · 处置链路 · 数据导入</em></button>
   </div>
 
   <!-- ================= 01 MAP ================= -->
   <section class="sec on" id="sec-map">
-    <div class="panel" style="margin-bottom:14px">
+    <div class="panel" id="provinceSec" style="margin-bottom:14px">
       <div class="ph">
-        <h3>贵州四类灾害 · 一图总览</h3>
+        <h3><span class="n">01</span>贵州四类灾害 · 一图总览</h3>
         <div class="r">点击城市查看对应真实案例</div>
       </div>
       <div class="province-scroll-tip">← 左右滑动查看全图 →</div>
@@ -749,9 +817,9 @@
       </div>
     </div>
 
-    <div class="panel">
+    <div class="panel" id="drillSec">
       <div class="ph">
-        <h3 id="mapTitle">都柳江 榕江段 · 三河汇流实景示意</h3>
+        <h3><span class="n">02</span><span id="mapTitle">都柳江 榕江段 · 三河汇流实景示意</span></h3>
         <div class="ph-right">
           <div class="map-switch" role="group" aria-label="切换详细地图">
             <button class="ms on" type="button" data-map-case="rongjiang">榕江</button>
@@ -829,11 +897,17 @@
     </div>
   </section>
 
-  <!-- ================= 02 TIME ================= -->
-  <section class="sec" id="sec-time">
-    <div class="panel" style="padding:18px">
+  <!-- ================= 03 复盘工具 ================= -->
+  <section class="sec" id="sec-flow">
+    <nav class="tool-nav" aria-label="复盘工具分节">
+      <a href="#tlTitle"><b>01</b>时间线复盘</a>
+      <a href="#flowTitle"><b>02</b>48 小时值班链路</a>
+      <a href="#sec-data"><b>03</b>导入村寨数据</a>
+    </nav>
+
+    <div class="panel panel-pad">
       <div class="ph" style="padding:0 0 14px;border-bottom:none">
-        <h3 id="tlTitle">2025-06-23 → 06-30 · 两轮洪峰逐时复盘</h3>
+        <h3><span class="n">01</span><span id="tlTitle">2025-06-23 → 06-30 · 两轮洪峰逐时复盘</span></h3>
         <div class="r">左：公开报道节点　右：模型推演节点</div>
       </div>
       <div class="tl-wrap">
@@ -847,31 +921,20 @@
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ================= 03a FLOW ================= -->
-  <section class="sec" id="sec-flow">
-    <nav class="tool-nav" aria-label="复盘工具快捷跳转">
-      <a href="#tlTitle"><b>01</b>时间线复盘</a>
-      <a href="#flowTitle"><b>02</b>处置链路</a>
-      <a href="#drop"><b>03</b>导入村寨数据</a>
-    </nav>
-    <div class="panel" style="padding:18px">
+    <div class="panel panel-pad">
       <div class="ph" style="padding:0 0 14px;border-bottom:none">
-        <h3 id="flowTitle">48 小时值班链路 · 谁在什么时间做什么</h3>
+        <h3><span class="n">02</span><span id="flowTitle">48 小时值班链路 · 谁在什么时间做什么</span></h3>
         <div class="r">点开每一步查看输出与时限</div>
       </div>
       <div class="flow-head" id="flowHead"></div>
       <div class="steps" id="steps"></div>
     </div>
-  </section>
 
-  <!-- ================= 03b DATA ================= -->
-  <section class="sec" id="sec-data">
-    <div class="imp-grid">
-      <div class="panel" style="padding:18px">
+    <div class="imp-grid" id="sec-data">
+      <div class="panel panel-pad sub">
         <div class="ph" style="padding:0 0 14px;border-bottom:none">
-          <h3>导入你自己的村寨数据</h3>
+          <h3><span class="n">03</span>导入你自己的村寨数据</h3>
         </div>
         <div class="drop" id="drop">
           <svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 15v4a1 1 0 001 1h14a1 1 0 001-1v-4"/></svg>
@@ -886,9 +949,9 @@
         <div class="msg" id="impMsg"></div>
       </div>
 
-      <div class="panel" style="padding:18px">
+      <div class="panel panel-pad sub">
         <div class="ph" style="padding:0 0 14px;border-bottom:none">
-          <h3>或直接粘贴</h3>
+          <h3><span class="n">03</span>或直接粘贴</h3>
         </div>
         <textarea id="ta" spellcheck="false" placeholder="id,name,type,x,y,elev,pop,station,status
 N01,古州镇,县城,470,306,255,86000,BS-01,down
@@ -904,12 +967,12 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
 
   <!-- ================= 02 CASES ================= -->
   <section class="sec" id="sec-cases">
-    <div class="panel" style="padding:18px">
+    <div class="panel panel-pad">
       <div class="ph" style="padding:0 0 14px;border-bottom:none">
-        <h3>2021—2026 · 贵州四类灾害案例</h3>
-        <div class="r">只收录最近五年公开报道 · 一个入口看全</div>
+        <h3><span class="n">01</span>2021—2026 · 贵州四类灾害案例</h3>
+        <div class="r">只收录最近五年公开报道</div>
       </div>
-      <p class="type-intro">四类灾害各选一个真实县域作为主案例，同类型近年案例收在同一张卡片里；点开“详情”再看时间线、通信影响与 RidgeLink 打法。2019 水城“7·23”、2008 凝冻仅作为历史背景，不进入本次案例主列表。</p>
+      <p class="type-intro">四类灾害各选一个真实县域作主案例，同类型近年案例收在同一张卡片里；展开“详情”看时间线、通信影响与 RidgeLink 打法。</p>
 
       <div class="case-index">
         <a href="#case-flood"><b>01</b>暴雨山洪 · 榕江</a>
@@ -918,7 +981,7 @@ N03,忠诚镇,镇,600,320,262,12000,BS-02,down"></textarea>
         <a href="#case-ice"><b>04</b>冰雪冻雨 · 贵州</a>
       </div>
 
-      <details class="year-fold" id="yearFold" open>
+      <details class="year-fold" id="yearFold">
         <summary><b>2024 — 2026</b><span>三年灾情速览 · 按年份</span></summary>
         <div class="year-strip">
         <div class="year-col">
@@ -2375,8 +2438,9 @@ function boot(){
   $$('details[data-autopen]').forEach(d=>{ d.open=window.matchMedia('(min-width:761px)').matches; });
   const hb=$('#honestBox');
   if(hb) hb.open=window.matchMedia('(min-width:721px)').matches;
+  /* 年份速览是"补充材料"，默认收起，让四类主案例先出现 */
   const yf=$('#yearFold');
-  if(yf) yf.open=window.matchMedia('(min-width:721px)').matches;
+  if(yf) yf.open=false;
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
 else boot();
