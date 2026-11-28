@@ -11,9 +11,9 @@ android {
         applicationId 'com.ridgelink.app'
         minSdk 21
         targetSdk 34
-        /* 2.1：手机端版式重排 + 统一样式层 */
-        versionCode 12
-        versionName '2.1'
+        /* 2.2：手机端 App 外壳（底部三块导航、演示页地图优先 + 底部抽屉） */
+        versionCode 13
+        versionName '2.2'
     }
 
     buildTypes {

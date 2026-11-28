@@ -1,0 +1,265 @@
+/* ==========================================================================
+   山脊信使 · 手机 App 外壳（ui/app.css）
+   --------------------------------------------------------------------------
+   用途：把网页包成"像 App"的手机形态——底部导航 + 单屏功能区，不再是长网页。
+   加载方式：只在手机端（窄屏 + 触摸）由页面顶部的内联脚本注入；
+   桌面浏览器不受影响，官网/演示/真实场景的桌面版保持原样。
+
+   规则：本文件只做"外壳 + 手机端密度"，不改任何业务逻辑与数据。
+   ========================================================================== */
+
+/* 只在手机上生效 */
+body.rl-app{
+  --rl-nav-h:64px;
+  --rl-safe-b:env(safe-area-inset-bottom,0px);
+  background:var(--ui-bg);
+  overflow-x:hidden;
+  padding-bottom:calc(var(--rl-nav-h) + var(--rl-safe-b));
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ---------- 顶部：一行状态栏，不再是导航条 ---------- */
+body.rl-app .rl-topbar{
+  position:sticky;top:0;z-index:90;
+  display:flex;align-items:center;gap:10px;
+  height:calc(48px + env(safe-area-inset-top,0px));
+  padding:env(safe-area-inset-top,0px) 14px 0;
+  background:rgba(13,26,23,.92);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid var(--ui-line);
+}
+body.rl-app .rl-topbar .rl-title{
+  font-size:15px;font-weight:800;letter-spacing:.04em;color:var(--ui-text);
+  display:flex;align-items:center;gap:8px;min-width:0;
+}
+body.rl-app .rl-topbar .rl-title img{width:22px;height:22px;border-radius:6px;display:block}
+body.rl-app .rl-topbar .rl-sub{
+  font-size:10.5px;color:var(--ui-faint);letter-spacing:.06em;margin-left:auto;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+body.rl-app .rl-topbar .rl-act{
+  margin-left:auto;display:flex;align-items:center;gap:8px;
+}
+body.rl-app .rl-topbar .rl-act+.rl-sub,body.rl-app .rl-sub+.rl-act{margin-left:8px}
+body.rl-app .rl-icon-btn{
+  width:36px;height:36px;border-radius:10px;border:1px solid var(--ui-line);
+  background:rgba(214,244,236,.05);color:var(--ui-text-2);
+  display:grid;place-items:center;cursor:pointer;padding:0;
+}
+body.rl-app .rl-icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- 底部：三块功能的唯一导航 ---------- */
+body.rl-app .rl-tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:100;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  height:calc(var(--rl-nav-h) + var(--rl-safe-b));
+  padding-bottom:var(--rl-safe-b);
+  background:rgba(16,29,26,.96);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  backdrop-filter:blur(20px) saturate(160%);
+  border-top:1px solid var(--ui-line);
+}
+body.rl-app .rl-tabbar a{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  color:var(--ui-faint);font-size:10.5px;letter-spacing:.04em;text-decoration:none;
+  position:relative;
+}
+body.rl-app .rl-tabbar a svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+body.rl-app .rl-tabbar a.on{color:var(--ui-accent)}
+body.rl-app .rl-tabbar a.on::before{
+  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:28px;height:2px;border-radius:2px;background:var(--ui-accent);
+}
+body.rl-app .rl-tabbar a:active{background:rgba(67,208,178,.06)}
+
+/* 隐藏网页版原有导航条（桌面样式在手机上会变成第二条导航） */
+body.rl-app .nav,
+body.rl-app .top,
+body.rl-app header.top,
+body.rl-app .cta,
+body.rl-app footer{display:none !important}
+
+/* ---------- 官网页 → App 形态：长网页收成单屏功能区 ---------- */
+body.rl-app.rl-page-index main>section.sec{display:none}
+body.rl-app.rl-page-index .hero{padding:18px 0 0}
+body.rl-app.rl-page-index .hero-contours{display:none}
+body.rl-app.rl-page-index .hero .eyebrow{display:none}
+body.rl-app.rl-page-index h1{font-size:26px;line-height:1.2;letter-spacing:0}
+body.rl-app.rl-page-index .hero-sub{font-size:15px;margin-top:6px}
+body.rl-app.rl-page-index .hero-desc{font-size:12.5px;line-height:1.75;margin-top:8px;color:var(--ui-muted)}
+/* 头部只留一句定位；操作全部交给下面的功能卡 */
+body.rl-app.rl-page-index .hero-actions{display:none}
+body.rl-app.rl-page-index .hero{padding:16px 16px 6px}
+body.rl-app.rl-page-index .hero .wrap{padding:0}
+body.rl-app.rl-page-index .hero-facts{display:none}
+
+/* 功能入口卡：替代原来 8 个滚动区块 */
+body.rl-app .rl-home{display:none;padding:14px 14px 8px}
+body.rl-app.rl-page-index .rl-home{display:block}
+body.rl-app .rl-home-h{
+  font-size:10.5px;letter-spacing:.14em;color:var(--ui-faint);
+  margin:6px 0 10px;display:flex;align-items:center;gap:8px;
+}
+body.rl-app .rl-home-h::after{content:"";flex:1;height:1px;background:var(--ui-line)}
+body.rl-app .rl-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+body.rl-app .rl-card{
+  display:flex;flex-direction:column;padding:13px;border-radius:14px;border:1px solid var(--ui-line);
+  background:linear-gradient(160deg,rgba(20,34,30,.92),rgba(16,29,26,.86));
+  color:var(--ui-text);text-decoration:none;min-height:104px;position:relative;
+}
+body.rl-app .rl-card:active{background:rgba(67,208,178,.08);border-color:rgba(67,208,178,.4)}
+body.rl-app .rl-card.hot{
+  grid-column:1/-1;min-height:0;display:flex;align-items:center;gap:14px;padding:16px;
+  border-color:rgba(67,208,178,.45);background:linear-gradient(135deg,rgba(67,208,178,.16),rgba(20,34,30,.9));
+}
+body.rl-app .rl-card .ic{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:none;
+  background:rgba(67,208,178,.12);border:1px solid rgba(67,208,178,.3);
+}
+body.rl-app .rl-card .ic svg{width:18px;height:18px;stroke:var(--ui-accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.rl-app .rl-card b{display:block;font-size:14px;letter-spacing:.02em;margin-bottom:4px;font-weight:700}
+body.rl-app .rl-card span{display:block;font-size:11.5px;line-height:1.6;color:var(--ui-muted)}
+body.rl-app .rl-card.hot b{font-size:16px}
+body.rl-app .rl-card .go{margin-left:auto;color:var(--ui-accent);font-size:18px;flex:none}
+
+/* 官网底部的"团队/计划"等收成一行说明 */
+body.rl-app .rl-home-note{font-size:11px;line-height:1.8;color:var(--ui-faint);padding:0 2px 8px}
+
+/* ---------- 真实场景页：去掉网页版首屏，Tab 变底栏 ---------- */
+body.rl-app.rl-page-scene .hero{display:none}
+body.rl-app.rl-page-scene .tabs{display:none}
+body.rl-app.rl-page-scene main.wrap{padding-top:8px}
+body.rl-app.rl-page-scene .footnote{display:none}
+body.rl-app.rl-page-scene .sec{padding:8px 0 0}
+/* 面板：手机上是"卡片堆"，不要网页那种大标题栏 */
+body.rl-app.rl-page-scene .panel{border-radius:14px}
+body.rl-app.rl-page-scene .panel-pad{padding:12px}
+body.rl-app.rl-page-scene .ph{padding:2px 2px 10px}
+body.rl-app.rl-page-scene .ph h3{font-size:13px}
+body.rl-app.rl-page-scene .ph .r{font-size:10.5px}
+body.rl-app.rl-page-scene #provinceMap{max-height:46vh;min-width:640px}
+/* 实景地图：手机竖屏先给地图，再给控制面板 */
+body.rl-app.rl-page-scene .map-grid{grid-template-columns:1fr;gap:0}
+body.rl-app.rl-page-scene .map-side{border-left:0;border-top:1px solid var(--ui-line)}
+body.rl-app.rl-page-scene .legend{display:none}
+body.rl-app.rl-page-scene .ctrl{padding:12px}
+body.rl-app.rl-page-scene .toggles{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}
+body.rl-app.rl-page-scene .link-order{display:none}
+body.rl-app.rl-page-scene .side-scroll{max-height:44vh}
+/* 复盘工具：分节导航在手机上横向可滑，不再堆两行 */
+body.rl-app.rl-page-scene .tool-nav{display:flex;overflow-x:auto;gap:6px;white-space:nowrap;scrollbar-width:none}
+body.rl-app.rl-page-scene .tool-nav::-webkit-scrollbar{display:none}
+body.rl-app.rl-page-scene .tool-nav a{flex:none}
+
+/* ---------- 交互演示页：地图独占一屏，其余收进底部抽屉 ---------- */
+body.rl-app.rl-page-demo{overflow:hidden}
+body.rl-app.rl-page-demo .stage{
+  display:block;height:auto;padding:0;background:transparent;
+}
+/* 演示页自带顶栏改成 App 顶栏的一部分：只保留运行控制 */
+body.rl-app.rl-page-demo .top{
+  display:flex !important;
+  position:static;margin:0;height:auto;padding:8px 10px;border-radius:0;
+  border:0;border-bottom:1px solid var(--ui-line);background:transparent;
+  -webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;
+  flex-wrap:nowrap;gap:8px;overflow-x:auto;scrollbar-width:none;
+}
+body.rl-app.rl-page-demo .top::-webkit-scrollbar{display:none}
+body.rl-app.rl-page-demo .top .brand,
+body.rl-app.rl-page-demo .top a.tag,
+body.rl-app.rl-page-demo .top .top-mid{display:none !important}
+body.rl-app.rl-page-demo .top .top-right{margin:0;flex:1;gap:8px}
+body.rl-app.rl-page-demo .top .btn{min-height:40px}
+/* 地图占据剩余高度 */
+body.rl-app.rl-page-demo .map-panel{
+  position:fixed;left:0;right:0;top:calc(48px + env(safe-area-inset-top,0px) + 56px);
+  bottom:calc(var(--rl-nav-h) + var(--rl-safe-b));margin:0;border:0;border-radius:0;
+  background:var(--ui-bg-2);
+}
+body.rl-app.rl-page-demo .map-panel .ph{display:none !important}
+body.rl-app.rl-page-demo .map-panel .kpis{display:none}
+body.rl-app.rl-page-demo .map-stage{margin:0 !important;border-radius:0 !important;height:100% !important;min-height:0 !important}
+body.rl-app.rl-page-demo .legend{
+  bottom:auto;top:10px;left:10px;right:10px;font-size:9.5px;padding:6px 8px;gap:4px 8px;
+  background:rgba(16,29,26,.86);
+}
+/* 左栏（场景/事件/资源）和右栏（智能体）收进抽屉 */
+body.rl-app.rl-page-demo .left,
+body.rl-app.rl-page-demo .right{
+  position:fixed;left:0;right:0;bottom:calc(var(--rl-nav-h) + var(--rl-safe-b));z-index:95;
+  max-height:62vh;overflow:auto;display:none;
+  border-radius:16px 16px 0 0;border:1px solid var(--ui-line);border-bottom:0;
+  background:rgba(16,29,26,.98);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  padding:12px 14px 16px;
+}
+body.rl-app.rl-page-demo .left.open,
+body.rl-app.rl-page-demo .right.open{display:block;animation:rl-up .22s ease}
+@keyframes rl-up{from{transform:translateY(18px);opacity:.4}to{transform:none;opacity:1}}
+body.rl-app.rl-page-demo .left .ph,body.rl-app.rl-page-demo .right .ph{display:none}
+body.rl-app.rl-page-demo .left-scroll{padding:0;max-height:none;overflow:visible}
+body.rl-app.rl-page-demo .agents{overflow:visible;padding:0}
+body.rl-app.rl-page-demo .scn-grid{grid-template-columns:repeat(2,1fr);margin-bottom:12px}
+body.rl-app.rl-page-demo .agent .a-out{display:block}
+body.rl-app.rl-page-demo .right .log{max-height:22vh;overflow:auto;padding:8px 0 0}
+/* 底部结果面板：放在地图下方的抽屉里 */
+body.rl-app.rl-page-demo .bottom{
+  position:fixed;left:0;right:0;bottom:calc(var(--rl-nav-h) + var(--rl-safe-b));z-index:95;
+  max-height:60vh;display:none;border-radius:16px 16px 0 0;border:1px solid var(--ui-line);border-bottom:0;
+  background:rgba(16,29,26,.98);
+}
+body.rl-app.rl-page-demo .bottom.open{display:flex}
+body.rl-app.rl-page-demo .bottom .tabs{overflow-x:auto;scrollbar-width:none;padding:8px 10px 0}
+body.rl-app.rl-page-demo .bottom .tabs::-webkit-scrollbar{display:none}
+body.rl-app.rl-page-demo .bottom .tab{flex:none;min-height:40px}
+body.rl-app.rl-page-demo .bottom .tab-body{margin:0;border-radius:0}
+body.rl-app.rl-page-demo .bottom .pane-body{padding:10px 12px 14px}
+body.rl-app.rl-page-demo .bottom .tbl{font-size:10.5px}
+body.rl-app.rl-page-demo .bottom .tbl th{padding:6px 6px;font-size:9px;letter-spacing:.06em}
+body.rl-app.rl-page-demo .bottom .tbl td{padding:7px 6px;white-space:nowrap}
+body.rl-app.rl-page-demo .bottom .tbl-wrap,
+body.rl-app.rl-page-demo .bottom .pane-body>div{overflow-x:auto}
+body.rl-app.rl-page-demo .bottom .pane-body::-webkit-scrollbar{height:4px}
+/* 地图面板：抽屉打开时压暗，突出抽屉 */
+body.rl-app.rl-page-demo .bottom.open~.map-panel,
+body.rl-app.rl-page-demo .left.open~.map-panel,
+body.rl-app.rl-page-demo .right.open~.map-panel{filter:brightness(.6)}
+/* 抽屉遮罩 */
+body.rl-app .rl-sheet-mask{
+  position:fixed;inset:0;z-index:94;background:rgba(2,7,12,.5);
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+body.rl-app .rl-sheet-mask.on{opacity:1;pointer-events:auto}
+/* 抽屉打开时隐藏快捷按钮条（否则会压在抽屉内容上） */
+body.rl-app .rl-quick.hidden{display:none !important}
+/* 抽屉打开时收窄地图上沿 */
+body.rl-app .rl-sheet-on .map-panel{opacity:.35;transition:opacity .2s}
+
+/* 抽屉里的宽表格：手机上一屏只看关键列，其余横向滑动，不挤压行高 */
+body.rl-app.rl-page-demo .bottom .tbl td:nth-child(n+5){display:none}
+body.rl-app.rl-page-demo .bottom .tbl th:nth-child(n+5){display:none}
+body.rl-app.rl-page-demo .bottom .tbl td:first-child{white-space:normal;min-width:88px}
+body.rl-app.rl-page-demo .bottom .pane-body{overflow-x:hidden}
+
+/* 地图上的快捷按钮条（打开抽屉） */
+body.rl-app .rl-quick{
+  position:fixed;left:0;right:0;z-index:96;
+  bottom:calc(var(--rl-nav-h) + var(--rl-safe-b) + 10px);
+  display:flex;gap:8px;padding:0 12px;pointer-events:none;
+}
+body.rl-app .rl-quick button{
+  pointer-events:auto;flex:1 1 0;min-width:0;width:auto;height:42px;min-height:42px;max-height:42px;
+  border-radius:12px;padding:0 8px;margin:0;
+  border:1px solid var(--ui-line-2);background:rgba(16,29,26,.94);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  color:var(--ui-text-2);font:600 11.5px/1 "PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  letter-spacing:.02em;font-family:inherit;white-space:nowrap;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:none;transform:none;
+}
+body.rl-app .rl-quick button svg{width:16px;height:16px;flex:none;stroke:var(--ui-accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.rl-app .rl-quick button:active{background:rgba(67,208,178,.12)}
+body.rl-app .rl-quick button i{
+  font-style:normal;font-size:10px;color:var(--ui-accent);
+  border:1px solid rgba(67,208,178,.4);border-radius:999px;padding:0 6px;
+}

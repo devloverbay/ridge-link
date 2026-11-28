@@ -13,6 +13,20 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <title>山脊信使 RidgeLink · 山区应急通信辅助智能体</title>
 <link rel="stylesheet" href="ui/ridgelink.css">
+<script>
+/* 手机 App 外壳：只在窄屏 + 触摸设备上加载 ui/app.css、ui/app.js；桌面不受影响 */
+(function(){
+  var mq = window.matchMedia('(max-width: 900px)');
+  if (!mq.matches) return;
+  var l = document.createElement('link');
+  l.rel = 'stylesheet'; l.href = 'ui/app.css';
+  document.head.appendChild(l);
+  var s = document.createElement('script');
+  s.src = 'ui/app.js'; s.defer = true;
+  document.head.appendChild(s);
+})();
+</script>
+
 <style>
   :root{
     --ink:#e8f3ee;
@@ -338,7 +352,7 @@
 
 </style>
 </head>
-<body>
+<body data-rl-page="index">
 
 <header class="nav">
   <div class="nav-in">
@@ -371,7 +385,7 @@
         <div class="hero-actions">
           <a class="btn-solid" href="demo.html">进入智能体演示</a>
           <a class="btn-ghost" href="scene.html">真实场景复盘</a>
-          <a class="link-more" href="download/RidgeLink-2.1.apk?v=2.1" download title="约 1.2 MB · 安装后无需电脑、无需网络">下载 APK</a>
+          <a class="link-more" href="download/RidgeLink-2.2.apk?v=2.2" download title="约 1.3 MB · 安装后无需电脑、无需网络">下载 APK</a>
           <button class="link-more" id="btnInstall" type="button" hidden style="background:none;border:0;border-bottom:1px solid var(--line-2);padding:0 0 2px;cursor:pointer;font-family:inherit;font-size:13px">添加到主屏幕</button>
         </div>
       </div>
